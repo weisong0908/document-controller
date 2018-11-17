@@ -20,13 +20,21 @@ namespace DocumentController.WPF.Views
     /// </summary>
     public partial class DocumentsWindow : Window
     {
-        public DocumentsWindowViewModel ViewModel { get { return DataContext as DocumentsWindowViewModel} set { DataContext = value; } }
+        public DocumentsWindowViewModel ViewModel { get { return DataContext as DocumentsWindowViewModel; } set { DataContext = value; } }
 
         public DocumentsWindow()
         {
             InitializeComponent();
 
-            ViewModel = new DocumentsWindowViewModel();
+            var documentService = (Application.Current as App).DocumentService;
+            var documentVersionService = (Application.Current as App).DocumentVersionService;
+            ViewModel = new DocumentsWindowViewModel(documentService, documentVersionService);
+        }
+
+        protected override void OnActivated(EventArgs e)
+        {
+            ViewModel.OnActivated();
+            base.OnActivated(e);
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -67,6 +75,11 @@ namespace DocumentController.WPF.Views
         private void DatabaseBackup_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.OnBackUpDatabase();
+        }
+
+        private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ViewModel.OnEditVersion();
         }
     }
 }

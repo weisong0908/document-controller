@@ -18,19 +18,16 @@
                 <MenuItem Header="_New" Click="New_Click"/>
                 <MenuItem Header="_Edit Version" Click="EditVersion_Click"/>
             </MenuItem>
-            <MenuItem Header="_Request">
-                <MenuItem Header="_Propose New Version" Click="DCR_Click"/>
-                <MenuItem Header="_Add/Remove Document" Click="QAIR_Click"/>
-            </MenuItem>
             <MenuItem Header="_Backup database" Click="DatabaseBackup_Click" Visibility="{Binding DocumentMenuItemVisibility}"/>
         </Menu>
         <DockPanel Grid.Row="1">
-            <TextBox DockPanel.Dock="Top" Margin="6" TextChanged="textBox_TextChanged"/>
+            <TextBlock DockPanel.Dock="Top" Margin="6 0" FontSize="10" Text="Search by document title or document number"/>
+            <TextBox DockPanel.Dock="Top" Margin="6 2" TextChanged="TextBox_TextChanged"/>
             <DataGrid Margin="6 0" ItemsSource="{Binding FilteredDocuments}" SelectionChanged="DataGrid_SelectionChanged"
                       SelectionMode="Single"
                       AutoGenerateColumns="False"
                       IsReadOnly="True" 
-                      GridLinesVisibility="None">
+                      GridLinesVisibility="None" MouseDoubleClick="DataGrid_MouseDoubleClick">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Title" Width="200" Binding="{Binding Title}" />
                     <DataGridTextColumn Header="Document No" Width="100" Binding="{Binding DocumentNumber}"/>
@@ -61,7 +58,7 @@
                         <TextBlock Text="Version:" Margin="4 3" VerticalAlignment="Center"/>
                         <TextBox IsReadOnly="True" Margin="4 3" Width="200" Text="{Binding SelectedDocument.VersionNumber}"/>
                         <TextBlock Text="Effective Date:" Margin="4 3" VerticalAlignment="Center"/>
-                        <TextBox IsReadOnly="True" Margin="4 3" Text="{Binding SelectedDocument.EffectiveDate, StringFormat=d}"/>
+                        <TextBox IsReadOnly="True" Margin="4 3" Text="{Binding SelectedDocument.EffectiveDate}"/>
                     </DockPanel>
                     <DockPanel>
                         <TextBlock Margin="4 3" VerticalAlignment="Center" DockPanel.Dock="Left" Width="70" Text="Department:"/>
