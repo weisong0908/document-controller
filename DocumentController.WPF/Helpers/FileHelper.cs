@@ -2,6 +2,8 @@
 using DocumentController.WPF.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,11 +12,6 @@ namespace DocumentController.WPF.Helpers
 {
     public static class FileHelper
     {
-        static FileHelper()
-        {
-
-        }
-
         public static string GetDocumentLocation(DocumentViewModel document)
         {
             string sharedDrive = @"\\csing.navitas.local\shared\Documents\";
@@ -38,10 +35,21 @@ namespace DocumentController.WPF.Helpers
                     break;
             }
 
-            string folderPath = System.IO.Path.Combine(sharedDrive, mainFolder);
-            string fullPath = System.IO.Path.Combine(folderPath, $"{document.Title} - V{document.VersionNumber}");
+            string folderPath = Path.Combine(sharedDrive, mainFolder);
+            string fullPath = Path.Combine(folderPath, $"{document.Title} - V{document.VersionNumber}");
 
             return fullPath;
+        }
+
+        public static void GoToFile(DocumentViewModel document)
+        {
+            if (!File.Exists(document.Location))
+            {
+                WindowHelper.ShowMessageBox("The path to the file is either invalid or the file has been removed. Please navigate to the file manually.", "File not found");
+                return;
+            }
+
+            Process.Start(document.Location);
         }
     }
 }
