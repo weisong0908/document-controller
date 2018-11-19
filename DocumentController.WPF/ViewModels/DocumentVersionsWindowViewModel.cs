@@ -48,11 +48,11 @@ namespace DocumentController.WPF.ViewModels
         {
             SelectedDocument = selectedDocument;
             DocumentVersions = mapper.Map<List<DocumentVersionViewModel>>((await documentVersionService.GetAllVersionsByDocumentId(_selectedDocument.Id)).OrderByDescending(dv => dv.EffectiveDate).ToList());
-        }
 
-        public void OnVersionSelected(DocumentVersionViewModel documentVersion)
-        {
-            SelectedDocumentVersion = documentVersion;
+            SelectedDocumentVersion = _documentVersions
+                .Where(dv => dv.Progress == Models.Progress.InEffect)
+                .OrderByDescending(dv => dv.EffectiveDate)
+                .FirstOrDefault();
         }
 
         public void OnSaveVersion()
