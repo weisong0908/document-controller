@@ -53,8 +53,9 @@ namespace DocumentController.WPF.ViewModels
 
         public void OnSearchTextChanged(string searchText)
         {
-            var results = _allDocuments.Where(d =>
-                d.Title.ToLower().Contains(searchText.ToLower()) || d.DocumentNumber.ToLower().Contains(searchText.ToLower())).ToList();
+            var results = _allDocuments
+                .Where(d => d.Title.ToLower().Contains(searchText.ToLower()) || d.DocumentNumber.ToLower().Contains(searchText.ToLower()))
+                .ToList();
 
             if (results == null)
                 return;

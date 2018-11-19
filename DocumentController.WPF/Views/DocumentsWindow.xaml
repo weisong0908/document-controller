@@ -38,7 +38,7 @@
             </DataGrid>            
         </DockPanel>
         <StackPanel Grid.Row="2">
-            <TextBlock Margin="6 3" Text="{Binding FilteredDocumentsCount, StringFormat='Records found: {0}'}"/>
+            <TextBlock Margin="6 3" Text="{Binding FilteredDocuments.Count, StringFormat='Records found: {0}'}"/>
             <TextBlock Margin="6 3" HorizontalAlignment="Center" Foreground="OrangeRed" Text="{Binding AlertMessage}"/>
             <GroupBox Margin="3 6 3 0" Header="Document Information">
                 <StackPanel Margin="0 3">
