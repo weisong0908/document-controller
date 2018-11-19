@@ -28,7 +28,7 @@
         </Menu>
         <DockPanel Grid.Row="1" Grid.Column="0">
             <TextBlock Margin="6 3" DockPanel.Dock="Top" Text="{Binding SearchResultsCount, StringFormat='Number of versions: {0}'}"/>
-            <ListView Margin="6 3" ItemsSource="{Binding DocumentVersions}" SelectionChanged="ListView_SelectionChanged"
+            <ListView Margin="6 3" ItemsSource="{Binding DocumentVersions}" SelectedItem="{Binding SelectedDocumentVersion}"
                       SelectionMode="Single"
                       ScrollViewer.VerticalScrollBarVisibility="Auto"
                       ScrollViewer.HorizontalScrollBarVisibility="Auto">

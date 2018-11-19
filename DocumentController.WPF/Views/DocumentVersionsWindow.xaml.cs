@@ -32,16 +32,6 @@ namespace DocumentController.WPF.Views
             ViewModel.OnStartUp(selectedDocument as DocumentViewModel);
         }
 
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (e.AddedItems.Count == 0)
-                return;
-
-            var selectedVersion = e.AddedItems[0] as DocumentVersionViewModel;
-
-            ViewModel.OnVersionSelected(selectedVersion);
-        }
-
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.OnSaveVersion();

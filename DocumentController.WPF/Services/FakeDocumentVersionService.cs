@@ -54,11 +54,25 @@ namespace DocumentController.WPF.Services
         {
             return await Task.Run(() =>
             {
-                var results = documentVersions.Where(v=>v.DocumentId==documentId);
+                var results = documentVersions.Where(dv => dv.DocumentId == documentId && dv.IsRemoved != "true");
                 if (results == null)
                     return null;
                 return results;
             });
+        }
+
+        public async Task<DocumentVersion> AddNewDocumentVersion(DocumentVersion documentVersion)
+        {
+            return await Task.Run(() => documentVersion);
+        }
+
+        public async Task<DocumentVersion> UpdateDocumentVersion(DocumentVersion documentVersion)
+        {
+            return await Task.Run(() => documentVersion);
+        }
+
+        public async void RemoveDocumentVersion(DocumentVersion documentVersion)
+        {
         }
     }
 }
