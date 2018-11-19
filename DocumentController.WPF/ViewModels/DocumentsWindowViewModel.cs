@@ -70,6 +70,7 @@ namespace DocumentController.WPF.ViewModels
 
             SelectedDocument.VersionNumber = latestDocumentVersion.VersionNumber;
             SelectedDocument.EffectiveDate = latestDocumentVersion.EffectiveDate;
+            SelectedDocument.Location = FileHelper.GetDocumentLocation(_selectedDocument);
         }
 
         public void OnEditVersion()
