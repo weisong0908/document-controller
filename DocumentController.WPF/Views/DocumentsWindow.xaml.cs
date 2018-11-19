@@ -39,7 +39,7 @@ namespace DocumentController.WPF.Views
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            ViewModel.OnSearchTextChanged((e.Source as TextBox).Text.ToString());
+            ViewModel.FilterDocuments((e.Source as TextBox).Text.ToString());
         }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -49,12 +49,12 @@ namespace DocumentController.WPF.Views
 
             var selectedDocument = e.AddedItems[0] as DocumentViewModel;
 
-            ViewModel.OnDocumentSelected(selectedDocument);
+            ViewModel.SelectDocument(selectedDocument);
         }
 
         private void EditVersion_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.OnEditVersion();
+            ViewModel.GoToVersionsWindow();
         }
 
         private void New_Click(object sender, RoutedEventArgs e)
@@ -79,7 +79,7 @@ namespace DocumentController.WPF.Views
 
         private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            ViewModel.OnEditVersion();
+            ViewModel.GoToVersionsWindow();
         }
     }
 }

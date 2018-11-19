@@ -51,7 +51,7 @@ namespace DocumentController.WPF.ViewModels
             FilteredDocuments = _allDocuments;
         }
 
-        public void OnSearchTextChanged(string searchText)
+        public void FilterDocuments(string searchText)
         {
             var results = _allDocuments
                 .Where(d => d.Title.ToLower().Contains(searchText.ToLower()) || d.DocumentNumber.ToLower().Contains(searchText.ToLower()))
@@ -62,7 +62,7 @@ namespace DocumentController.WPF.ViewModels
             FilteredDocuments = results;
         }
 
-        public async void OnDocumentSelected(DocumentViewModel selectedDocument)
+        public async void SelectDocument(DocumentViewModel selectedDocument)
         {
             SelectedDocument = selectedDocument;
 
@@ -74,7 +74,7 @@ namespace DocumentController.WPF.ViewModels
             SelectedDocument.Location = FileHelper.GetDocumentLocation(_selectedDocument);
         }
 
-        public void OnEditVersion()
+        public void GoToVersionsWindow()
         {
             if (_selectedDocument == null)
                 return;
@@ -89,7 +89,7 @@ namespace DocumentController.WPF.ViewModels
 
         public void OnNavigateToDocumentLocation()
         {
-
+            FileHelper.GoToFile(_selectedDocument);
         }
 
         public void OnBackUpDatabase()
