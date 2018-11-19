@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,8 +16,13 @@ namespace DocumentController.WPF.ViewModels
         private readonly IDocumentVersionService documentVersionService;
         private IMapper mapper;
 
+        public IEnumerable<string> Progresses { get; set; }
         private DocumentViewModel _selectedDocument;
-        public DocumentViewModel SelectedDocument { get { return _selectedDocument; } set { _selectedDocument = value; } }
+        public DocumentViewModel SelectedDocument
+        {
+            get { return _selectedDocument; }
+            set { SetValue(ref _selectedDocument, value); }
+        }
         private IList<DocumentVersionViewModel> _documentVersions;
         public IList<DocumentVersionViewModel> DocumentVersions
         {
@@ -35,6 +41,7 @@ namespace DocumentController.WPF.ViewModels
             this.documentVersionService = documentVersionService;
             mapper = Mapper.Instance;
 
+            Progresses = typeof(Models.Progress).GetFields().Select(f => f.GetValue(null).ToString());
             DocumentVersions = new ObservableCollection<DocumentVersionViewModel>();
         }
 
