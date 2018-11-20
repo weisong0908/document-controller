@@ -65,13 +65,16 @@ namespace DocumentController.WPF.ViewModels
         public async void SelectDocument(DocumentViewModel selectedDocument)
         {
             SelectedDocument = selectedDocument;
+            SelectedDocument.Location = FileHelper.GetDocumentLocation(_selectedDocument);
 
             var allDocumentVersions = mapper.Map<IList<DocumentVersionViewModel>>(await documentVersionService.GetAllVersionsByDocumentId(selectedDocument.Id));
             var latestDocumentVersion = allDocumentVersions.Where(dv => dv.Progress == Progress.InEffect && dv.IsRemoved.ToLower() != "true").OrderByDescending(dv => dv.EffectiveDate).FirstOrDefault();
 
+            if (latestDocumentVersion == null)
+                return;
+
             SelectedDocument.VersionNumber = latestDocumentVersion.VersionNumber;
             SelectedDocument.EffectiveDate = latestDocumentVersion.EffectiveDate;
-            SelectedDocument.Location = FileHelper.GetDocumentLocation(_selectedDocument);
         }
 
         public void GoToVersionsWindow()

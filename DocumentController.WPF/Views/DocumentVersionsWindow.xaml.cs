@@ -44,7 +44,7 @@ namespace DocumentController.WPF.Views
 
         private void Remove_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.OnRemoveVersion();
+            ViewModel.RemoveDocumentVersion();
         }
 
         private void UploadDocument_Click(object sender, RoutedEventArgs e)

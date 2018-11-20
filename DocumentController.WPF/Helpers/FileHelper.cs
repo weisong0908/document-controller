@@ -45,7 +45,7 @@ namespace DocumentController.WPF.Helpers
         {
             if (!File.Exists(document.Location))
             {
-                WindowHelper.ShowMessageBox("The path to the file is either invalid or the file has been removed. Please navigate to the file manually.", "File not found");
+                WindowHelper.Alert("The path to the file is either invalid or the file has been removed. Please navigate to the file manually.", "File not found");
                 return;
             }
 

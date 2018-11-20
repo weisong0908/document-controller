@@ -10,7 +10,7 @@ namespace DocumentController.WPF.Helpers
 {
     public static class WindowHelper
     {
-        public static void ShowMessageBox(string message, string caption)
+        public static void Alert(string message, string caption)
         {
             MessageBox.Show(message, caption);
         }
