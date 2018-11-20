@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocumentController.WPF.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -94,16 +95,8 @@ namespace DocumentController.WPF.ViewModels
 
         public DocumentVersionViewModel(int documentId)
         {
-            _documentId = documentId;
-            _versionNumber = string.Empty;
+            DocumentId = documentId;
             _effectiveDate = DateTime.Today;
-            _progress = string.Empty;
-            _descriptionOfChange = string.Empty;
-            _purposeOfChange = string.Empty;
-            _requestor = string.Empty;
-            _remarks = string.Empty;
-            _location_PDF = string.Empty;
-            _location_Editable = string.Empty;
         }
     }
 }
