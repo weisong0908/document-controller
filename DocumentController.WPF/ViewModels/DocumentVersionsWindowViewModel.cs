@@ -68,22 +68,29 @@ namespace DocumentController.WPF.ViewModels
             {
                 var originalDocumentVersions = DocumentVersions;
 
-                var documentVersion = mapper.Map<DocumentVersion>(_selectedDocumentVersion);
+                var documentVersionForChange = mapper.Map<DocumentVersion>(_selectedDocumentVersion);
+                object response;
 
-                if (documentVersion.Id == 0)
+                if (documentVersionForChange.Id == 0)
                 {
                     DocumentVersions.Add(SelectedDocumentVersion);
                     DocumentVersions = new ObservableCollection<DocumentVersionViewModel>(DocumentVersions.OrderByDescending(dv => dv.EffectiveDate));
 
-                    documentVersion = await documentVersionService.AddNewDocumentVersion(documentVersion);
+                    response = await documentVersionService.AddNewDocumentVersion(documentVersionForChange);
+                    if (response == null)
+                    {
+                        WindowHelper.Alert("Please update again", "Opps, something went wrong");
+                        DocumentVersions = originalDocumentVersions;
+                    }
                 }
                 else
                 {
-                    documentVersion = await documentVersionService.UpdateDocumentVersion(documentVersion);
+                    response = await documentVersionService.UpdateDocumentVersion(documentVersionForChange);
+                    if (response == null)
+                        WindowHelper.Alert("Please update again", "Opps, something went wrong");
                 }
 
-                if (documentVersion == null)
-                    DocumentVersions = originalDocumentVersions;
+                var documentVersions = mapper.Map<List<DocumentVersionViewModel>>((await documentVersionService.GetAllVersionsByDocumentId(_selectedDocument.Id)).OrderByDescending(dv => dv.EffectiveDate));
             }
         }
 
@@ -92,9 +99,12 @@ namespace DocumentController.WPF.ViewModels
             SelectedDocumentVersion = new DocumentVersionViewModel(_selectedDocument.Id);
         }
 
-        public void OnRemoveVersion()
+        public void RemoveDocumentVersion()
         {
+            var originalDocumentVersions = DocumentVersions;
 
+            documentVersionService.RemoveDocumentVersion(mapper.Map<DocumentVersion>(_selectedDocumentVersion));
+            DocumentVersions.Remove(_selectedDocumentVersion);
         }
 
         public void UploadDocument()
@@ -126,19 +136,19 @@ namespace DocumentController.WPF.ViewModels
         {
             if (string.IsNullOrWhiteSpace(_selectedDocumentVersion.VersionNumber))
             {
-                WindowHelper.ShowMessageBox("The version number cannot be empty", "Invalid input");
+                WindowHelper.Alert("The version number cannot be empty", "Invalid input");
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(_selectedDocumentVersion.Progress))
             {
-                WindowHelper.ShowMessageBox("The progress cannot be empty", "Invalid input");
+                WindowHelper.Alert("The progress cannot be empty", "Invalid input");
                 return false;
             }
 
             if (_selectedDocumentVersion.EffectiveDate == null)
             {
-                WindowHelper.ShowMessageBox("The effective date cannot be empty. Put a tentative effective date if unsure.", "Invalid input");
+                WindowHelper.Alert("The effective date cannot be empty. Put a tentative effective date if unsure.", "Invalid input");
                 return false;
             }
             

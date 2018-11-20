@@ -162,6 +162,12 @@ namespace DocumentController.WPF.Helpers
             }
         }
 
+        public static void GoToFile(DocumentViewModel document)
+        {
+            if (!File.Exists(document.Location))
+            {
+                WindowHelper.Alert("The path to the file is either invalid or the file has been removed. Please navigate to the file manually.", "File not found");
+                return;
         public enum FileType
         {
             PDF, Editable
