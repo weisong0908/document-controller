@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
+using DocumentController.WPF.Helpers;
+using DocumentController.WPF.Models;
 using DocumentController.WPF.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,13 +24,14 @@ namespace DocumentController.WPF.ViewModels
             get { return _selectedDocument; }
             set { SetValue(ref _selectedDocument, value); }
         }
-        private IList<DocumentVersionViewModel> _documentVersions;
-        public IList<DocumentVersionViewModel> DocumentVersions
+        private ObservableCollection<DocumentVersionViewModel> _documentVersions;
+        public ObservableCollection<DocumentVersionViewModel> DocumentVersions
         {
             get { return _documentVersions; }
             set { SetValue(ref _documentVersions, value); }
         }
         private DocumentVersionViewModel _selectedDocumentVersion;
+
         public DocumentVersionViewModel SelectedDocumentVersion
         {
             get { return _selectedDocumentVersion; }
@@ -39,29 +43,53 @@ namespace DocumentController.WPF.ViewModels
             this.documentVersionService = documentVersionService;
             mapper = Mapper.Instance;
 
-            Progresses = typeof(Models.Progress).GetFields().Select(f => f.GetValue(null).ToString());
+            Progresses = typeof(Progress).GetFields().Select(f => f.GetValue(null).ToString());
             DocumentVersions = new ObservableCollection<DocumentVersionViewModel>();
         }
 
         public async void OnStartUp(DocumentViewModel selectedDocument)
         {
             SelectedDocument = selectedDocument;
-            DocumentVersions = mapper.Map<List<DocumentVersionViewModel>>((await documentVersionService.GetAllVersionsByDocumentId(_selectedDocument.Id)).OrderByDescending(dv => dv.EffectiveDate).ToList());
+            var documentVersions = mapper.Map<List<DocumentVersionViewModel>>((await documentVersionService.GetAllVersionsByDocumentId(_selectedDocument.Id)).OrderByDescending(dv => dv.EffectiveDate));
+            DocumentVersions = new ObservableCollection<DocumentVersionViewModel>(documentVersions);
 
             SelectedDocumentVersion = _documentVersions
-                .Where(dv => dv.Progress == Models.Progress.InEffect)
+                .Where(dv => dv.Progress == Progress.InEffect)
                 .OrderByDescending(dv => dv.EffectiveDate)
                 .FirstOrDefault();
         }
 
-        public void OnSaveVersion()
+        public async void SaveDocumentVersion()
         {
+            if (SelectedDocumentVersion == null)
+                return;
 
+            if (ValidateDocumentVersionInput())
+            {
+                var originalDocumentVersions = DocumentVersions;
+
+                var documentVersion = mapper.Map<DocumentVersion>(_selectedDocumentVersion);
+
+                if (documentVersion.Id == 0)
+                {
+                    DocumentVersions.Add(SelectedDocumentVersion);
+                    DocumentVersions = new ObservableCollection<DocumentVersionViewModel>(DocumentVersions.OrderByDescending(dv => dv.EffectiveDate));
+
+                    documentVersion = await documentVersionService.AddNewDocumentVersion(documentVersion);
+                }
+                else
+                {
+                    documentVersion = await documentVersionService.UpdateDocumentVersion(documentVersion);
+                }
+
+                if (documentVersion == null)
+                    DocumentVersions = originalDocumentVersions;
+            }
         }
 
-        public void OnNewVersion()
+        public void CreateNewDocumentVersion()
         {
-
+            SelectedDocumentVersion = new DocumentVersionViewModel(_selectedDocument.Id);
         }
 
         public void OnRemoveVersion()
@@ -82,6 +110,29 @@ namespace DocumentController.WPF.ViewModels
         public void OnLocateEditable()
         {
 
+        }
+
+        private bool ValidateDocumentVersionInput()
+        {
+            if (string.IsNullOrWhiteSpace(_selectedDocumentVersion.VersionNumber))
+            {
+                WindowHelper.ShowMessageBox("The version number cannot be empty", "Invalid input");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(_selectedDocumentVersion.Progress))
+            {
+                WindowHelper.ShowMessageBox("The progress cannot be empty", "Invalid input");
+                return false;
+            }
+
+            if (_selectedDocumentVersion.EffectiveDate == null)
+            {
+                WindowHelper.ShowMessageBox("The effective date cannot be empty. Put a tentative effective date if unsure.", "Invalid input");
+                return false;
+            }
+
+            return true;
         }
     }
 }

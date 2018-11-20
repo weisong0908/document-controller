@@ -34,12 +34,12 @@ namespace DocumentController.WPF.Views
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.OnSaveVersion();
+            ViewModel.SaveDocumentVersion();
         }
 
         private void New_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.OnNewVersion();
+            ViewModel.CreateNewDocumentVersion();
         }
 
         private void Remove_Click(object sender, RoutedEventArgs e)
