@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DocumentController.WPF.Helpers
 {
@@ -43,44 +43,48 @@ namespace DocumentController.WPF.Helpers
 
         private static (string publicPDF, string publicEditable, string privateCurrentPDF, string privateCurrentEditable, string privateObselete) GetUploadPaths(DocumentViewModel document)
         {
-            string publicPDF = "";
-            string publicEditable = "";
-            string privateCurrentPDF = "";
-            string privateCurrentEditable = "";
-            string privateObselete = "";
+            //string sharedDrive = @"\\csing.navitas.local\shared\Documents\";
+            //string archivePath = @"\\csing.navitas.local\shared\Documents\Quality Assurance\#QA & COMPLIANCE Dept Functions#\Controlled Document";
+            string sharedDrive = @"C:\Users\weisong.teng\Desktop\S\";
+            string archivePath = @"C:\Users\weisong.teng\Desktop\S\Quality Assurance\#QA & COMPLIANCE Dept Functions#\Controlled Document";
+            string publicPDF = sharedDrive + @"\";
+            string publicEditable = sharedDrive + @"\";
+            string privateCurrentPDF = archivePath + @"\";
+            string privateCurrentEditable = archivePath + @"\";
+            string privateObselete = archivePath + @"\";
 
             switch (document.Type)
             {
                 case DocumentType.Policy:
-                    publicPDF = Path.Combine(@"# Curtin Singapore Corporate Policies #", document.Department);
-                    privateCurrentPDF = Path.Combine(document.Department, @"Current\Pol\PDF");
-                    privateCurrentEditable = Path.Combine(document.Department, @"Current\Pol\Editable");
-                    privateObselete = Path.Combine(document.Department, @"Obselete\Pol");
+                    publicPDF += Path.Combine(@"# Curtin Singapore Corporate Policies #", document.Department);
+                    privateCurrentPDF += Path.Combine(document.Department, @"Current\Pol\PDF");
+                    privateCurrentEditable += Path.Combine(document.Department, @"Current\Pol\Editable");
+                    privateObselete += Path.Combine(document.Department, @"Obselete\Pol");
                     break;
                 case DocumentType.Procedure:
-                    publicPDF = Path.Combine(@"# Curtin Singapore Corporate Procedures #", document.Department);
-                    privateCurrentPDF = Path.Combine(document.Department, @"Current\Pro\PDF");
-                    privateCurrentEditable = Path.Combine(document.Department, @"Current\Pro\Editable");
-                    privateObselete = Path.Combine(document.Department, @"Obselete\Pro");
+                    publicPDF += Path.Combine(@"# Curtin Singapore Corporate Procedures #", document.Department);
+                    privateCurrentPDF += Path.Combine(document.Department, @"Current\Pro\PDF");
+                    privateCurrentEditable += Path.Combine(document.Department, @"Current\Pro\Editable");
+                    privateObselete += Path.Combine(document.Department, @"Obselete\Pro");
                     break;
                 case DocumentType.Form:
-                    publicPDF = Path.Combine(@"= Controlled Document =\Forms & Templates", document.Department);
-                    publicEditable = Path.Combine(@"= Controlled Document =\Forms & Templates", document.Department);
-                    privateCurrentPDF = Path.Combine(document.Department, @"Current\F & T\PDF");
-                    privateCurrentEditable = Path.Combine(document.Department, @"Current\F & T\Editable");
-                    privateObselete = Path.Combine(document.Department, @"Obselete\F & T");
+                    publicPDF += Path.Combine(@"= Controlled Document =\Forms & Templates", document.Department + @"\PDF");
+                    publicEditable += Path.Combine(@"= Controlled Document =\Forms & Templates", document.Department + @"\Editable");
+                    privateCurrentPDF += Path.Combine(document.Department, @"Current\F & T\PDF");
+                    privateCurrentEditable += Path.Combine(document.Department, @"Current\F & T\Editable");
+                    privateObselete += Path.Combine(document.Department, @"Obselete\F & T");
                     break;
                 case DocumentType.WorkInstruction:
-                    publicPDF = Path.Combine(@"= Controlled Document =\Work Instructions & Guidelines", document.Department);
-                    privateCurrentPDF = Path.Combine(document.Department, @"Current\WI & GL\PDF");
-                    privateCurrentEditable = Path.Combine(document.Department, @"Current\WI & GL\Editable");
-                    privateObselete = Path.Combine(document.Department, @"Obselete\WI & GL");
+                    publicPDF += Path.Combine(@"= Controlled Document =\Work Instructions & Guidelines", document.Department);
+                    privateCurrentPDF += Path.Combine(document.Department, @"Current\WI & GL\PDF");
+                    privateCurrentEditable += Path.Combine(document.Department, @"Current\WI & GL\Editable");
+                    privateObselete += Path.Combine(document.Department, @"Obselete\WI & GL");
                     break;
                 case DocumentType.OrganisationChart:
-                    publicPDF = Path.Combine(@"= Controlled Document =", "Organisation Chart");
-                    privateCurrentPDF = Path.Combine(document.Department, @"Current\Organisation Chart\PDF");
-                    privateCurrentEditable = Path.Combine(document.Department, @"Current\Organisation Chart\Editable");
-                    privateObselete = Path.Combine(document.Department, @"Obselete\Organisation Chart");
+                    publicPDF += Path.Combine(@"= Controlled Document =", "Organisation Chart");
+                    privateCurrentPDF += Path.Combine(document.Department, @"Current\Organisation Chart\PDF");
+                    privateCurrentEditable += Path.Combine(document.Department, @"Current\Organisation Chart\Editable");
+                    privateObselete += Path.Combine(document.Department, @"Obselete\Organisation Chart");
                     break;
             }
 
@@ -139,6 +143,28 @@ namespace DocumentController.WPF.Helpers
                 DeleteFile(document, publicEditable);
                 CopyFile(document, documentVersion, documentVersion.Location_Editable, publicEditable);
             }
+        }
+
+        public static string GetFilePath(FileType fileType)
+        {
+            using (var fileDialog = new OpenFileDialog())
+            {
+                fileDialog.Title = $"Get File Path";
+                if (fileType == FileType.PDF)
+                    fileDialog.Filter = "PDF files (*.PDF)|*.PDF";
+
+                if (fileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    return fileDialog.FileName;
+                }
+
+                return string.Empty;
+            }
+        }
+
+        public enum FileType
+        {
+            PDF, Editable
         }
     }
 }

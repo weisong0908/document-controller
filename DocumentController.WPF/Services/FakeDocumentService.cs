@@ -18,10 +18,10 @@ namespace DocumentController.WPF.Services
                 new Document()
                 {
                     Id = 1,
-                    Title = "Document 1",
-                    Type = DocumentType.Procedure,
+                    Title = "Procedure Test 1",
+                    Type = DocumentType.Form,
                     Status = DocumentStatus.Active,
-                    Department = Department.Academic
+                    Department = Department.QualityCompliance
                 },
                 new Document()
                 {

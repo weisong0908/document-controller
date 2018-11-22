@@ -69,14 +69,24 @@ namespace DocumentController.WPF.ViewModels
             FileHelper.UpdateFiles(_selectedDocument, _selectedDocumentVersion);
         }
 
-        public void OnLocatePdf()
+        public void BrowsePDFFile()
         {
+            var filePath = FileHelper.GetFilePath(FileHelper.FileType.PDF);
 
+            if (string.IsNullOrEmpty(filePath))
+                return;
+
+            SelectedDocumentVersion.Location_PDF = filePath;
         }
 
-        public void OnLocateEditable()
+        public void BrowseEditableFile()
         {
+            var filePath = FileHelper.GetFilePath(FileHelper.FileType.Editable);
 
+            if (string.IsNullOrEmpty(filePath))
+                return;
+
+            SelectedDocumentVersion.Location_Editable = filePath;
         }
     }
 }

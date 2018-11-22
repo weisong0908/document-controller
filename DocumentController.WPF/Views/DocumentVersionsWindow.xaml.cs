@@ -64,12 +64,12 @@ namespace DocumentController.WPF.Views
 
         private void FindPdf_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.OnLocatePdf();
+            ViewModel.BrowsePDFFile();
         }
 
         private void FindEditable_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.OnLocateEditable();
+            ViewModel.BrowseEditableFile();
         }
     }
 }
