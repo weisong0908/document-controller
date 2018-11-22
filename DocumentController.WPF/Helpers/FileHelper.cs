@@ -12,11 +12,6 @@ namespace DocumentController.WPF.Helpers
 {
     public static class FileHelper
     {
-        static FileHelper()
-        {
-
-        }
-
         public static string GetDocumentLocation(DocumentViewModel document)
         {
             string sharedDrive = @"\\csing.navitas.local\shared\Documents\";

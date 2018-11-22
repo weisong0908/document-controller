@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DocumentController.WPF.Helpers;
 using DocumentController.WPF.Services;
 using System;
 using System.Collections.Generic;
@@ -65,7 +66,7 @@ namespace DocumentController.WPF.ViewModels
 
         public void UploadDocument()
         {
-
+            FileHelper.UpdateFiles(_selectedDocument, _selectedDocumentVersion);
         }
 
         public void OnLocatePdf()
