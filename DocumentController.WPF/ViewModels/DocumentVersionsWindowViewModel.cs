@@ -151,10 +151,8 @@ namespace DocumentController.WPF.ViewModels
                 WindowHelper.Alert("The effective date cannot be empty. Put a tentative effective date if unsure.", "Invalid input");
                 return false;
             }
-            
 
             return true;
-
         }
     }
 }
