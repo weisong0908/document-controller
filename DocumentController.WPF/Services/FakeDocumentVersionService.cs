@@ -29,7 +29,7 @@ namespace DocumentController.WPF.Services
                     DocumentId = 2,
                     VersionNumber = "2",
                     Progress = Progress.InEffect,
-                    EffectiveDate = DateTime.Today.AddDays(2)
+                    EffectiveDate = DateTime.Today.AddDays(-2)
                 },
                 new DocumentVersion()
                 {
@@ -37,7 +37,7 @@ namespace DocumentController.WPF.Services
                     DocumentId = 3,
                     VersionNumber = "3",
                     Progress = Progress.InEffect,
-                    EffectiveDate = DateTime.Today.AddDays(5)
+                    EffectiveDate = DateTime.Today.AddDays(-5)
                 },
                 new DocumentVersion()
                 {
@@ -56,10 +56,44 @@ namespace DocumentController.WPF.Services
         {
             return await Task.Run(() =>
             {
-                var results = documentVersions.Where(v=>v.DocumentId==documentId);
+                var results = documentVersions.Where(dv => dv.DocumentId == documentId && dv.IsRemoved != "true");
                 if (results == null)
                     return null;
                 return results;
+            });
+        }
+
+        public async Task<DocumentVersion> AddNewDocumentVersion(DocumentVersion documentVersion)
+        {
+            return await Task.Run(() =>
+            {
+                documentVersion.Id = documentVersions.Count + 1;
+                documentVersions.Add(documentVersion);
+                return documentVersion;
+            });
+        }
+
+        public async Task<DocumentVersion> UpdateDocumentVersion(DocumentVersion documentVersion)
+        {
+            return await Task.Run(() => {
+                var result = documentVersions.SingleOrDefault(dv => dv.Id == documentVersion.Id);
+                var index = documentVersions.IndexOf(result);
+
+                documentVersions.Remove(result);
+                documentVersions.Insert(index, documentVersion);
+                return documentVersion;
+            });
+        }
+
+        public async void RemoveDocumentVersion(DocumentVersion documentVersion)
+        {
+            var result = documentVersions.SingleOrDefault(dv => dv.Id == documentVersion.Id);
+            if (result == null)
+                return;
+
+            await Task.Run(() =>
+            {
+                result.IsRemoved = "true";
             });
         }
     }

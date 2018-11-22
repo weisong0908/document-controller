@@ -10,6 +10,11 @@ namespace DocumentController.WPF.Helpers
 {
     public static class WindowHelper
     {
+        public static void Alert(string message, string caption)
+        {
+            MessageBox.Show(message, caption);
+        }
+
         public static void ShowWindow(WindowType windowType, object parameter = null)
         {
             Window window = null;

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DocumentController.WPF.Views"
         mc:Ignorable="d"
-        Title="{Binding SelectedDocument.Title, StringFormat='Edit Document Version - {0}'}" Height="550" Width="645" MinHeight="500" MinWidth="645">
+        Title="{Binding SelectedDocument.Title, StringFormat='Edit Document Version - {0}'}" Height="550" Width="650" MinHeight="500" MinWidth="645">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -28,7 +28,7 @@
         </Menu>
         <DockPanel Grid.Row="1" Grid.Column="0">
             <TextBlock Margin="6 3" DockPanel.Dock="Top" Text="{Binding SearchResultsCount, StringFormat='Number of versions: {0}'}"/>
-            <ListView Margin="6 3" ItemsSource="{Binding DocumentVersions}" SelectionChanged="ListView_SelectionChanged"
+            <ListView Margin="6 3" ItemsSource="{Binding DocumentVersions}" SelectedItem="{Binding SelectedDocumentVersion}"
                       SelectionMode="Single"
                       ScrollViewer.VerticalScrollBarVisibility="Auto"
                       ScrollViewer.HorizontalScrollBarVisibility="Auto">

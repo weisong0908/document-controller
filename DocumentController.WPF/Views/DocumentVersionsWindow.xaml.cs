@@ -32,29 +32,19 @@ namespace DocumentController.WPF.Views
             ViewModel.OnStartUp(selectedDocument as DocumentViewModel);
         }
 
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (e.AddedItems.Count == 0)
-                return;
-
-            var selectedVersion = e.AddedItems[0] as DocumentVersionViewModel;
-
-            ViewModel.OnVersionSelected(selectedVersion);
-        }
-
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.OnSaveVersion();
+            ViewModel.SaveDocumentVersion();
         }
 
         private void New_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.OnNewVersion();
+            ViewModel.CreateNewDocumentVersion();
         }
 
         private void Remove_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.OnRemoveVersion();
+            ViewModel.RemoveDocumentVersion();
         }
 
         private void UploadDocument_Click(object sender, RoutedEventArgs e)
