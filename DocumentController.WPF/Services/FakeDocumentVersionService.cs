@@ -45,7 +45,9 @@ namespace DocumentController.WPF.Services
                     DocumentId = 1,
                     VersionNumber = "2",
                     Progress = Progress.InEffect,
-                    EffectiveDate = DateTime.Today.AddDays(1)
+                    EffectiveDate = DateTime.Today.AddDays(1),
+                    Location_PDF=@"C:\Users\weisong.teng\Desktop\S\Quality Assurance\#QA & COMPLIANCE Dept Functions#\Controlled Document\Procedure Test 1 - V2.pdf",
+                    Location_Editable=@"C:\Users\weisong.teng\Desktop\S\Quality Assurance\#QA & COMPLIANCE Dept Functions#\Controlled Document\Procedure Test 1 - V2.docx"
                 },
             };
         }
