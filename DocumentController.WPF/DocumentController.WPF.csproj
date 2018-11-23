@@ -75,6 +75,7 @@
     <Compile Include="Services\FakeDocumentVersionService.cs" />
     <Compile Include="Services\IDocumentService.cs" />
     <Compile Include="Services\IDocumentVersionService.cs" />
+    <Compile Include="Services\LocalDocumentService.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\DocumentsWindowViewModel.cs" />
     <Compile Include="ViewModels\DocumentVersionViewModel.cs" />
