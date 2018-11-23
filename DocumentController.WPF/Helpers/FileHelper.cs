@@ -14,7 +14,7 @@ namespace DocumentController.WPF.Helpers
     {
         public static string GetDocumentLocation(DocumentViewModel document)
         {
-            string sharedDrive = @"\\csing.navitas.local\shared\Documents\";
+            string sharedDrive = (System.Windows.Application.Current as App).SharedDrive;
             string mainFolder = "";
             switch (document.Type)
             {
@@ -52,15 +52,13 @@ namespace DocumentController.WPF.Helpers
 
         private static (string publicPDF, string publicEditable, string privateCurrentPDF, string privateCurrentEditable, string privateObselete) GetUploadPaths(DocumentViewModel document)
         {
-            //string sharedDrive = @"\\csing.navitas.local\shared\Documents\";
-            //string archivePath = @"\\csing.navitas.local\shared\Documents\Quality Assurance\#QA & COMPLIANCE Dept Functions#\Controlled Document";
-            string sharedDrive = @"C:\Users\weisong.teng\Desktop\S\";
-            string archivePath = @"C:\Users\weisong.teng\Desktop\S\Quality Assurance\#QA & COMPLIANCE Dept Functions#\Controlled Document";
-            string publicPDF = sharedDrive + @"\";
-            string publicEditable = sharedDrive + @"\";
-            string privateCurrentPDF = archivePath + @"\";
-            string privateCurrentEditable = archivePath + @"\";
-            string privateObselete = archivePath + @"\";
+            string sharedDrive = (System.Windows.Application.Current as App).SharedDrive;
+            string archiveFolder = (System.Windows.Application.Current as App).ArchivedFolder;
+            string publicPDF = sharedDrive;
+            string publicEditable = sharedDrive;
+            string privateCurrentPDF = archiveFolder;
+            string privateCurrentEditable = archiveFolder;
+            string privateObselete = archiveFolder;
 
             switch (document.Type)
             {
@@ -119,6 +117,9 @@ namespace DocumentController.WPF.Helpers
 
             var fileToMove = Path.GetFileName(searchResults[0]);
 
+            if (File.Exists(Path.Combine(destinationFolder, fileToMove)))
+                File.Delete(Path.Combine(destinationFolder, fileToMove));
+
             File.Move(Path.Combine(sourceFolder, fileToMove), Path.Combine(destinationFolder, fileToMove));
 
             Process.Start(sourceFolder);
@@ -131,7 +132,7 @@ namespace DocumentController.WPF.Helpers
             var destinationFileName = Path.Combine(destinationFolder, fileToCopy);
 
             if (File.Exists(sourceFileName))
-                File.Copy(sourceFileName, destinationFileName);
+                File.Copy(sourceFileName, destinationFileName, overwrite: true);
 
             Process.Start(destinationFolder);
         }

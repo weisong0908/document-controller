@@ -16,6 +16,11 @@ namespace DocumentController.WPF
     /// </summary>
     public partial class App : Application
     {
+        //public string SharedDrive { get; set; } = @"\\csing.navitas.local\shared\Documents\";
+        public string SharedDrive { get; set; } = @"C:\Users\weisong.teng\Desktop\S\";
+        //public string ArchivedFolder { get; set; } = @"\\csing.navitas.local\shared\Documents\Quality Assurance\#QA & COMPLIANCE Dept Functions#\Controlled Document\";
+        public string ArchivedFolder { get; set; } = @"C:\Users\weisong.teng\Desktop\S\Quality Assurance\#QA & COMPLIANCE Dept Functions#\Controlled Document\";
+
         public IDocumentService DocumentService;
         public IDocumentVersionService DocumentVersionService;
 
