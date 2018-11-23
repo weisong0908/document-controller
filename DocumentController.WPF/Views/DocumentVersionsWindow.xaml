@@ -42,60 +42,60 @@
             </ListView>
         </DockPanel>
         <StackPanel Grid.Row="1" Grid.Column="1">
-                <TextBlock Margin="6 3" HorizontalAlignment="Center" Foreground="OrangeRed" Text="{Binding AlertMessage}"/>
-                <DockPanel>
-                    <StackPanel Margin="4 3">
-                        <TextBlock Text="Version number"/>
-                        <TextBox Width="100" Text="{Binding SelectedDocumentVersion.VersionNumber, UpdateSourceTrigger=PropertyChanged}"/>
-                    </StackPanel>
-                    <StackPanel Margin="4 3">
-                        <TextBlock Text="Effective date"/>
-                        <DatePicker SelectedDate="{Binding SelectedDocumentVersion.EffectiveDate, UpdateSourceTrigger=PropertyChanged}"/>
-                    </StackPanel>
-                </DockPanel>
-                <DockPanel>
-                    <StackPanel Margin="4 3">
-                        <TextBlock Text="Progress"/>
-                        <ComboBox Width="100" Text="{Binding SelectedDocumentVersion.Progress, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Progresses}"/>
-                    </StackPanel>
-                    <StackPanel Margin="4 3">
-                        <TextBlock Text="Requestor"/>
-                        <TextBox Text="{Binding SelectedDocumentVersion.Requestor, UpdateSourceTrigger=PropertyChanged}"/>
-                    </StackPanel>
-                </DockPanel>
-                <DockPanel>
-                    <StackPanel Margin="4 3">
-                        <TextBlock Text="Description of change"/>
-                        <TextBox Height="100" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Text="{Binding SelectedDocumentVersion.DescriptionOfChange, UpdateSourceTrigger=PropertyChanged}"/>
-                    </StackPanel>
-                </DockPanel>
-                <DockPanel>
-                    <StackPanel Margin="4 3">
-                        <TextBlock Text="Purpose of change"/>
-                        <TextBox Height="50" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Text="{Binding SelectedDocumentVersion.PurposeOfChange, UpdateSourceTrigger=PropertyChanged}"/>
-                    </StackPanel>
-                </DockPanel>
-                <DockPanel>
-                    <StackPanel Margin="4 3">
-                        <TextBlock Text="PDF file location"/>
-                        <TextBox Width="300" Text="{Binding SelectedDocumentVersion.Location_PDF, UpdateSourceTrigger=PropertyChanged}"/>
-                    </StackPanel>
-                    <Button Margin="3" DockPanel.Dock="Right" Padding="0" Height="24" Width="26" Content="..." Click="FindPdf_Click" />
-                </DockPanel>
-                <DockPanel>
-                    <StackPanel Margin="4 3">
-                        <TextBlock Text="Editable file location"/>
-                        <TextBox Width="300" Text="{Binding SelectedDocumentVersion.Location_Editable, UpdateSourceTrigger=PropertyChanged}"/>
-                    </StackPanel>
-                    <Button Margin="3" DockPanel.Dock="Right" Padding="0" Height="24" Width="26" Content="..." Click="FindEditable_Click"/>
-                </DockPanel>
-                <DockPanel>
-                    <StackPanel Margin="4 3">
-                        <TextBlock Text="Remarks"/>
-                        <TextBox Height="48" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Text="{Binding SelectedDocumentVersion.Remarks, UpdateSourceTrigger=PropertyChanged}"/>
-                    </StackPanel>
-                </DockPanel>
-            </StackPanel>
+            <TextBlock Margin="6 3" HorizontalAlignment="Center" Foreground="OrangeRed" Text="{Binding AlertMessage}"/>
+            <DockPanel>
+                <StackPanel Margin="4 3">
+                    <TextBlock Text="Version number"/>
+                    <TextBox Width="100" Text="{Binding SelectedDocumentVersion.VersionNumber, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+                <StackPanel Margin="4 3">
+                    <TextBlock Text="Effective date"/>
+                    <DatePicker SelectedDate="{Binding SelectedDocumentVersion.EffectiveDate, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+            </DockPanel>
+            <DockPanel>
+                <StackPanel Margin="4 3">
+                    <TextBlock Text="Progress"/>
+                    <ComboBox Width="100" SelectedItem="{Binding SelectedDocumentVersion.Progress, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Progresses}"/>
+                </StackPanel>
+                <StackPanel Margin="4 3">
+                    <TextBlock Text="Requestor"/>
+                    <TextBox Text="{Binding SelectedDocumentVersion.Requestor, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+            </DockPanel>
+            <DockPanel>
+                <StackPanel Margin="4 3">
+                    <TextBlock Text="Description of change"/>
+                    <TextBox Height="100" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Text="{Binding SelectedDocumentVersion.DescriptionOfChange, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+            </DockPanel>
+            <DockPanel>
+                <StackPanel Margin="4 3">
+                    <TextBlock Text="Purpose of change"/>
+                    <TextBox Height="50" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Text="{Binding SelectedDocumentVersion.PurposeOfChange, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+            </DockPanel>
+            <DockPanel>
+                <StackPanel Margin="4 3">
+                    <TextBlock Text="PDF file location"/>
+                    <TextBox Width="300" Text="{Binding SelectedDocumentVersion.Location_PDF, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+                <Button Margin="3" DockPanel.Dock="Right" Padding="0" Height="24" Width="26" Content="..." Click="FindPdf_Click" />
+            </DockPanel>
+            <DockPanel>
+                <StackPanel Margin="4 3">
+                    <TextBlock Text="Editable file location"/>
+                    <TextBox Width="300" Text="{Binding SelectedDocumentVersion.Location_Editable, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+                <Button Margin="3" DockPanel.Dock="Right" Padding="0" Height="24" Width="26" Content="..." Click="FindEditable_Click"/>
+            </DockPanel>
+            <DockPanel>
+                <StackPanel Margin="4 3">
+                    <TextBlock Text="Remarks"/>
+                    <TextBox Height="48" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Text="{Binding SelectedDocumentVersion.Remarks, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+            </DockPanel>
+        </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Background="LightGray">
             <TextBlock Margin="3 6" />
         </StackPanel>
