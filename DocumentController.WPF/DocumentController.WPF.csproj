@@ -27,7 +27,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ProductName>Document Controller</ProductName>
     <PublisherName>CSING QA</PublisherName>
-    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationRevision>6</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
