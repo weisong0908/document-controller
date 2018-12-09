@@ -58,7 +58,12 @@ namespace DocumentController.WebAPI.Controllers
             if (documentVersionId != documentVersion.Id)
                 return BadRequest();
 
-            dbContext.Entry(documentVersion).State = EntityState.Modified;
+            var documentVersionInDb = await dbContext.DocumentVersions.SingleOrDefaultAsync(dv => dv.Id == documentVersionId);
+            if (documentVersionInDb == null)
+                return NotFound();
+            dbContext.Entry(documentVersionInDb).State = EntityState.Detached;
+
+            dbContext.DocumentVersions.Update(documentVersion);
             await dbContext.SaveChangesAsync();
 
             return documentVersion;
