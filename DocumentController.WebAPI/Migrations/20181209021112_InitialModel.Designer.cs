@@ -3,15 +3,17 @@ using System;
 using DocumentController.WebAPI.Migrations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace DocumentController.WebAPI.Migrations
 {
     [DbContext(typeof(DocumentControllerDbContext))]
-    partial class DocumentControllerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181209021112_InitialModel")]
+    partial class InitialModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,13 +51,6 @@ namespace DocumentController.WebAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("documents");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DocumentNumber = "DOC-01"
-                        });
                 });
 
             modelBuilder.Entity("DocumentController.WebAPI.Models.DocumentVersion", b =>
@@ -99,33 +94,7 @@ namespace DocumentController.WebAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DocumentId");
-
                     b.ToTable("document_versions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DocumentId = 1,
-                            EffectiveDate = new DateTime(2018, 11, 29, 0, 0, 0, 0, DateTimeKind.Local),
-                            VersionNumber = "1"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DocumentId = 1,
-                            EffectiveDate = new DateTime(2018, 12, 9, 0, 0, 0, 0, DateTimeKind.Local),
-                            VersionNumber = "2"
-                        });
-                });
-
-            modelBuilder.Entity("DocumentController.WebAPI.Models.DocumentVersion", b =>
-                {
-                    b.HasOne("DocumentController.WebAPI.Models.Document", "Document")
-                        .WithMany("DocumentVersions")
-                        .HasForeignKey("DocumentId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

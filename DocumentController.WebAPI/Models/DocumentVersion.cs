@@ -1,11 +1,11 @@
 using System;
+using System.Reflection.Metadata;
 
 namespace DocumentController.WebAPI.Models
 {
     public class DocumentVersion
     {
         public int Id { get; set; }
-        public int DocumentId { get; set; }
         public string VersionNumber { get; set; }
         public DateTime? EffectiveDate { get; set; }
         public string Progress { get; set; }
@@ -16,5 +16,7 @@ namespace DocumentController.WebAPI.Models
         public string Location_PDF { get; set; }
         public string Location_Editable { get; set; }
         public string IsRemoved { get; set; }
+        public Document Document { get; set; }
+        public int DocumentId { get; set; }
     }
 }
