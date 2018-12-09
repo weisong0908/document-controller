@@ -18,7 +18,7 @@ namespace DocumentController.WebAPI.Controllers
             this.dbContext = dbContext;
         }
 
-        [HttpGet("/document/{documentId}")]
+        [HttpGet("document/{documentId}")]
         public async Task<ActionResult<IEnumerable<DocumentVersion>>> GetDocumentVersionsByDocumentId(int documentId)
         {
             var documentVersions = await dbContext.DocumentVersions.Where(dv => dv.DocumentId == documentId).ToListAsync();
@@ -29,7 +29,7 @@ namespace DocumentController.WebAPI.Controllers
             return documentVersions;
         }
 
-                [HttpGet("{documentVersionId}")]
+        [HttpGet("{documentVersionId}")]
         public async Task<ActionResult<DocumentVersion>> GetDocumentVersion(int documentVersionId)
         {
             var documentVersion = await dbContext.DocumentVersions.SingleOrDefaultAsync(dv => dv.Id == documentVersionId);
@@ -40,13 +40,45 @@ namespace DocumentController.WebAPI.Controllers
             return documentVersion;
         }
 
-[HttpPost]
+        [HttpPost]
         public async Task<ActionResult<DocumentVersion>> AddNewDocumentVersion(DocumentVersion documentVersion)
         {
             dbContext.DocumentVersions.Add(documentVersion);
             await dbContext.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetDocumentVersion), new { documentVersionId = documentVersion.Id }, documentVersion);
+        }
+
+        [HttpPut("{documentVersionId}")]
+        public async Task<ActionResult<DocumentVersion>> UpdateDocumentVersion(int documentVersionId, DocumentVersion documentVersion)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            if (documentVersionId != documentVersion.Id)
+                return BadRequest();
+
+            dbContext.Entry(documentVersion).State = EntityState.Modified;
+            await dbContext.SaveChangesAsync();
+
+            return documentVersion;
+        }
+
+        [HttpDelete("{documentVersionId}")]
+        public async Task<ActionResult<DocumentVersion>> RemoveDocumentVersion(int documentVersionId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var documentVersion = await dbContext.DocumentVersions.SingleOrDefaultAsync(dv => dv.Id == documentVersionId);
+
+            if (documentVersion == null)
+                return NotFound();
+
+            dbContext.DocumentVersions.Remove(documentVersion);
+            await dbContext.SaveChangesAsync();
+
+            return documentVersion;
         }
     }
 }
