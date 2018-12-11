@@ -21,7 +21,7 @@ namespace DocumentController.WebAPI.Controllers
         [HttpGet("document/{documentId}")]
         public async Task<ActionResult<IEnumerable<DocumentVersion>>> GetDocumentVersionsByDocumentId(int documentId)
         {
-            var documentVersions = await dbContext.DocumentVersions.Where(dv => dv.DocumentId == documentId).ToListAsync();
+            var documentVersions = await dbContext.DocumentVersions.Where(dv => dv.DocumentId == documentId).Where(dv => dv.IsRemoved != "true").ToListAsync();
 
             if (documentVersions == null)
                 return NotFound();
@@ -32,7 +32,7 @@ namespace DocumentController.WebAPI.Controllers
         [HttpGet("{documentVersionId}")]
         public async Task<ActionResult<DocumentVersion>> GetDocumentVersion(int documentVersionId)
         {
-            var documentVersion = await dbContext.DocumentVersions.SingleOrDefaultAsync(dv => dv.Id == documentVersionId);
+            var documentVersion = await dbContext.DocumentVersions.Where(dv => dv.IsRemoved != "true").SingleOrDefaultAsync(dv => dv.Id == documentVersionId);
 
             if (documentVersion == null)
                 return NotFound();
@@ -61,7 +61,7 @@ namespace DocumentController.WebAPI.Controllers
             if (documentVersionId != documentVersion.Id)
                 return BadRequest();
 
-            var documentVersionInDb = await dbContext.DocumentVersions.SingleOrDefaultAsync(dv => dv.Id == documentVersionId);
+            var documentVersionInDb = await dbContext.DocumentVersions.Where(dv => dv.IsRemoved != "true").SingleOrDefaultAsync(dv => dv.Id == documentVersionId);
             if (documentVersionInDb == null)
                 return NotFound();
             dbContext.Entry(documentVersionInDb).State = EntityState.Detached;
@@ -79,11 +79,11 @@ namespace DocumentController.WebAPI.Controllers
                 return BadRequest();
 
             var documentVersion = await dbContext.DocumentVersions.SingleOrDefaultAsync(dv => dv.Id == documentVersionId);
-
             if (documentVersion == null)
                 return NotFound();
+            documentVersion.IsRemoved = "true";
 
-            dbContext.DocumentVersions.Remove(documentVersion);
+            dbContext.DocumentVersions.Update(documentVersion);
             await dbContext.SaveChangesAsync();
 
             return documentVersion;
