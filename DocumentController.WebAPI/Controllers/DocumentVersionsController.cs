@@ -43,6 +43,9 @@ namespace DocumentController.WebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<DocumentVersion>> AddNewDocumentVersion(DocumentVersion documentVersion)
         {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
             dbContext.DocumentVersions.Add(documentVersion);
             await dbContext.SaveChangesAsync();
 
