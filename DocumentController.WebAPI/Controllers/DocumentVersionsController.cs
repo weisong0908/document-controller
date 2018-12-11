@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DocumentController.WebAPI.Migrations;
 using DocumentController.WebAPI.Models;
+using DocumentController.WebAPI.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,31 +14,33 @@ namespace DocumentController.WebAPI.Controllers
     public class DocumentVersionsController : ControllerBase
     {
         private readonly DocumentControllerDbContext dbContext;
-        public DocumentVersionsController(DocumentControllerDbContext dbContext)
+        private readonly IDocumentVersionRepository documentVersionRepository;
+        public DocumentVersionsController(DocumentControllerDbContext dbContext, IDocumentVersionRepository documentVersionRepository)
         {
             this.dbContext = dbContext;
+            this.documentVersionRepository = documentVersionRepository;
         }
 
         [HttpGet("document/{documentId}")]
         public async Task<ActionResult<IEnumerable<DocumentVersion>>> GetDocumentVersionsByDocumentId(int documentId)
         {
-            var documentVersions = await dbContext.DocumentVersions.Where(dv => dv.DocumentId == documentId).Where(dv => dv.IsRemoved != "true").ToListAsync();
+            var documentVersions = await documentVersionRepository.GetAllDocumentVersionsByDocumentId(documentId);
 
             if (documentVersions == null)
                 return NotFound();
 
-            return documentVersions;
+            return Ok(documentVersions);
         }
 
         [HttpGet("{documentVersionId}")]
         public async Task<ActionResult<DocumentVersion>> GetDocumentVersion(int documentVersionId)
         {
-            var documentVersion = await dbContext.DocumentVersions.Where(dv => dv.IsRemoved != "true").SingleOrDefaultAsync(dv => dv.Id == documentVersionId);
+            var documentVersion = await documentVersionRepository.GetDocumentVersion(documentVersionId);
 
             if (documentVersion == null)
                 return NotFound();
 
-            return documentVersion;
+            return Ok(documentVersion);
         }
 
         [HttpPost]

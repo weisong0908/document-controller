@@ -2,7 +2,7 @@ using System;
 using DocumentController.WebAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace DocumentController.WebAPI.Migrations
+namespace DocumentController.WebAPI.Persistence
 {
     public class DocumentControllerDbContext : DbContext
     {
@@ -37,7 +37,7 @@ namespace DocumentController.WebAPI.Migrations
             modelBuilder.Entity<DocumentVersion>().Property(dv => dv.Remarks).HasColumnName("remarks");
             modelBuilder.Entity<DocumentVersion>().Property(dv => dv.Requestor).HasColumnName("requestor");
             modelBuilder.Entity<DocumentVersion>().Property(dv => dv.VersionNumber).HasColumnName("version_number");
-            
+
             SeedDatabase(modelBuilder);
         }
 

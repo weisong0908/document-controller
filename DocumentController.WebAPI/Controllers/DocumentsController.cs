@@ -3,8 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using DocumentController.WebAPI.Migrations;
 using DocumentController.WebAPI.Models;
+using DocumentController.WebAPI.Persistence;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace DocumentController.WebAPI.Controllers
 {
@@ -12,34 +12,35 @@ namespace DocumentController.WebAPI.Controllers
     [ApiController]
     public class DocumentsController : ControllerBase
     {
-        private readonly DocumentControllerDbContext dbContext;
-        public DocumentsController(DocumentControllerDbContext dbContext)
+        private readonly IDocumentRepository documentRepository;
+        public DocumentsController(IDocumentRepository documentRepository)
         {
-            this.dbContext = dbContext;
+            this.documentRepository = documentRepository;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Document>>> GetDocuments()
         {
-            var documents = await dbContext.Documents.ToListAsync();
+            var documents = await documentRepository.GetAllDocuments();
 
-            if(documents==null)
+            if (documents == null)
                 return NotFound();
 
-            return documents;
+            return Ok(documents);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Document>> GetDocument(int id)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return BadRequest();
 
-            var document = await dbContext.Documents.Include(d => d.DocumentVersions).SingleOrDefaultAsync(d => d.Id == id);
+            var document = await documentRepository.GetDocument(id);
+
             if (document == null)
                 return NotFound();
 
-            return document;
+            return Ok(document);
         }
     }
 }
