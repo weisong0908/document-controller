@@ -71,6 +71,9 @@
     <Reference Include="AutoMapper, Version=7.0.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.7.0.1\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
@@ -104,6 +107,8 @@
     <Compile Include="Models\DocumentType.cs" />
     <Compile Include="Models\DocumentVersion.cs" />
     <Compile Include="Models\Progress.cs" />
+    <Compile Include="Services\CloudDocumentService.cs" />
+    <Compile Include="Services\CloudDocumentVersionService.cs" />
     <Compile Include="Services\FakeDocumentService.cs" />
     <Compile Include="Services\FakeDocumentVersionService.cs" />
     <Compile Include="Services\IDocumentService.cs" />

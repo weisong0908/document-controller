@@ -16,6 +16,7 @@ namespace DocumentController.WPF
     /// </summary>
     public partial class App : Application
     {
+        public string ApiEndPointBaseAddress { get; } = @"http://178.128.119.129/api/";
         public string ConnectionString { get; } = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=\\csing.navitas.local\shared\Documents\z-Public\QA and Compliance\Controlled Document\Controlled Document Master List.mdb;Persist Security Info=False;Jet OLEDB:Database Password=1234;";
         //public string ConnectionString { get; } = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\Users\weisong.teng\Desktop\Controlled Document Master List.mdb;Persist Security Info=False;Jet OLEDB:Database Password=1234;";
         public string SharedDrive { get; set; } = @"\\csing.navitas.local\shared\Documents\";
@@ -28,8 +29,8 @@ namespace DocumentController.WPF
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            DocumentService = new LocalDocumentService();
-            DocumentVersionService = new LocalDocumentVersionService();
+            DocumentService = new CloudDocumentService();
+            DocumentVersionService = new CloudDocumentVersionService();
             Mapper.Initialize(c => c.AddProfile<MappingProfile>());
 
             var startupWindow = new Views.DocumentsWindow();
