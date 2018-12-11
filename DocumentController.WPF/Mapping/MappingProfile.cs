@@ -14,15 +14,10 @@ namespace DocumentController.WPF.Mapping
         public MappingProfile()
         {
             CreateMap<Document, DocumentViewModel>()
-                .AfterMap((d, dvm) =>
-                {
-                    if (d.DocumentNumber == null) dvm.DocumentNumber = string.Empty;
-                });
-            CreateMap<DocumentVersion, DocumentVersionViewModel>()
-                .AfterMap((dv, dvvm) =>
-                {
-                    if (dv.IsRemoved == null) dvvm.IsRemoved = "false";
-                });
+                .ForMember(d => d.Title, opt => opt.NullSubstitute(string.Empty))
+                .ForMember(d => d.DocumentNumber, opt => opt.NullSubstitute(string.Empty));
+            CreateMap<DocumentVersion, DocumentVersionViewModel>();
+                //.ForMember(dvvm => dvvm.IsRemoved, opt => opt.NullSubstitute("false"));
 
             CreateMap<DocumentViewModel, Document>();
             CreateMap<DocumentVersionViewModel, DocumentVersion>();
