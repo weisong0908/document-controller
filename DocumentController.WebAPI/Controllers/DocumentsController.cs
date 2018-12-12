@@ -13,9 +13,11 @@ namespace DocumentController.WebAPI.Controllers
     public class DocumentsController : ControllerBase
     {
         private readonly IDocumentRepository documentRepository;
-        public DocumentsController(IDocumentRepository documentRepository)
+        private readonly IUnitOfWork unitOfWork;
+        public DocumentsController(IDocumentRepository documentRepository, IUnitOfWork unitOfWork)
         {
             this.documentRepository = documentRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         [HttpGet]

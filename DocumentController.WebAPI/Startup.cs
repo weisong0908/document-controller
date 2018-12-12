@@ -29,6 +29,7 @@ namespace DocumentController.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DocumentControllerDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IDocumentRepository, DocumentRepository>();
             services.AddScoped<IDocumentVersionRepository, DocumentVersionRepository>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

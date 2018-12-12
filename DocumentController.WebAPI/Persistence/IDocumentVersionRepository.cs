@@ -8,5 +8,8 @@ namespace DocumentController.WebAPI.Persistence
     {
         Task<IEnumerable<DocumentVersion>> GetAllDocumentVersionsByDocumentId(int documentId);
         Task<DocumentVersion> GetDocumentVersion(int id);
+        Task AddNewDocumentVersion(DocumentVersion documentVersion);
+        Task<DocumentVersion> UpdateDocumentVersion(DocumentVersion documentVersion);
+        Task<DocumentVersion> RemoveDocumentVersion(int documentVersionId);
     }
 }

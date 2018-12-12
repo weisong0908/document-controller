@@ -5,7 +5,6 @@ using DocumentController.WebAPI.Migrations;
 using DocumentController.WebAPI.Models;
 using DocumentController.WebAPI.Persistence;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace DocumentController.WebAPI.Controllers
 {
@@ -13,12 +12,12 @@ namespace DocumentController.WebAPI.Controllers
     [ApiController]
     public class DocumentVersionsController : ControllerBase
     {
-        private readonly DocumentControllerDbContext dbContext;
         private readonly IDocumentVersionRepository documentVersionRepository;
-        public DocumentVersionsController(DocumentControllerDbContext dbContext, IDocumentVersionRepository documentVersionRepository)
+        private readonly IUnitOfWork unitOfWork;
+        public DocumentVersionsController(IDocumentVersionRepository documentVersionRepository, IUnitOfWork unitOfWork)
         {
-            this.dbContext = dbContext;
             this.documentVersionRepository = documentVersionRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         [HttpGet("document/{documentId}")]
@@ -49,8 +48,8 @@ namespace DocumentController.WebAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            dbContext.DocumentVersions.Add(documentVersion);
-            await dbContext.SaveChangesAsync();
+            await documentVersionRepository.AddNewDocumentVersion(documentVersion);
+            await unitOfWork.CompleteAsync();
 
             return CreatedAtAction(nameof(GetDocumentVersion), new { documentVersionId = documentVersion.Id }, documentVersion);
         }
@@ -64,15 +63,13 @@ namespace DocumentController.WebAPI.Controllers
             if (documentVersionId != documentVersion.Id)
                 return BadRequest();
 
-            var documentVersionInDb = await dbContext.DocumentVersions.Where(dv => dv.IsRemoved != "true").SingleOrDefaultAsync(dv => dv.Id == documentVersionId);
-            if (documentVersionInDb == null)
+            var result = await documentVersionRepository.UpdateDocumentVersion(documentVersion);
+            if (result == null)
                 return NotFound();
-            dbContext.Entry(documentVersionInDb).State = EntityState.Detached;
 
-            dbContext.DocumentVersions.Update(documentVersion);
-            await dbContext.SaveChangesAsync();
+            await unitOfWork.CompleteAsync();
 
-            return documentVersion;
+            return Ok(documentVersion);
         }
 
         [HttpDelete("{documentVersionId}")]
@@ -81,15 +78,10 @@ namespace DocumentController.WebAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var documentVersion = await dbContext.DocumentVersions.SingleOrDefaultAsync(dv => dv.Id == documentVersionId);
-            if (documentVersion == null)
-                return NotFound();
-            documentVersion.IsRemoved = "true";
+            var result = await documentVersionRepository.RemoveDocumentVersion(documentVersionId);
+            await unitOfWork.CompleteAsync();
 
-            dbContext.DocumentVersions.Update(documentVersion);
-            await dbContext.SaveChangesAsync();
-
-            return documentVersion;
+            return Ok(result);
         }
     }
 }
