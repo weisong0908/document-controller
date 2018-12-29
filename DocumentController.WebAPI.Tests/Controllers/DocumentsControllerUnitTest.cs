@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DocumentController.WebAPI.Tests
+namespace DocumentController.WebAPI.Tests.Controllers
 {
     public class DocumentsControllerUnitTest
     {
