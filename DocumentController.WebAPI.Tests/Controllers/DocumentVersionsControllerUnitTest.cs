@@ -23,7 +23,10 @@ namespace DocumentController.WebAPI.Tests.Controllers
             mockRespository.Setup(r => r.GetDocumentVersion(It.IsAny<int>())).Returns(Task.FromResult<DocumentVersion>(new DocumentVersion()));
             mockRespository.Setup(r => r.GetDocumentVersion(999)).Returns(Task.FromResult<DocumentVersion>(null));
             mockRespository.Setup(r => r.UpdateDocumentVersion(It.IsAny<DocumentVersion>())).Returns(Task.FromResult<DocumentVersion>(new DocumentVersion()));
+            mockRespository.Setup(r => r.RemoveDocumentVersion(It.IsAny<int>())).Returns(Task.FromResult<DocumentVersion>(new DocumentVersion()));
+
             stubUnitOfWork = new Mock<IUnitOfWork>();
+
             controller = new DocumentVersionsController(mockRespository.Object, stubUnitOfWork.Object);
         }
 
@@ -119,6 +122,24 @@ namespace DocumentController.WebAPI.Tests.Controllers
             var documentVersion = new DocumentVersion();
 
             var result = await controller.UpdateDocumentVersion(documentVersion.Id, documentVersion);
+
+            Assert.IsType<OkObjectResult>(result.Result);
+        }
+
+        [Theory]
+        [InlineData(1)]
+        public async void RemoveDocumentVersion_WhenCalled_RemovesDocumentVersionFromDatabase(int documentVersionId)
+        {
+            await controller.RemoveDocumentVersion(documentVersionId);
+
+            mockRespository.Verify(r => r.RemoveDocumentVersion(documentVersionId));
+        }
+
+        [Theory]
+        [InlineData(1)]
+        public async void RemoveDocumentVersion_WhenCalled_ReturnsOkResult(int documentVersionId)
+        {
+            var result = await controller.RemoveDocumentVersion(documentVersionId);
 
             Assert.IsType<OkObjectResult>(result.Result);
         }
