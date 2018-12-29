@@ -29,6 +29,7 @@ namespace DocumentController.WPF.Tests.ViewModels
             mockDocumentService.Setup(ds => ds.GetDocuments()).Returns(Task.FromResult<IEnumerable<Document>>(documents));
 
             mockDocumentVersonService = new Mock<IDocumentVersionService>();
+            Mapper.Reset();
             Mapper.Initialize(c => c.AddProfile<MappingProfile>());
 
             documentsWindowViewModel = new DocumentsWindowViewModel(mockDocumentService.Object, mockDocumentVersonService.Object);
@@ -37,8 +38,6 @@ namespace DocumentController.WPF.Tests.ViewModels
         [Fact]
         public void OnActivated_WhenCalled_ReturnsDocumentsFromDocumentService()
         {
-            Mapper.Reset();
-
             documentsWindowViewModel.OnActivated();
 
             mockDocumentService.Verify(ds => ds.GetDocuments());
@@ -47,8 +46,6 @@ namespace DocumentController.WPF.Tests.ViewModels
         [Fact]
         public void OnActivated_WhenCalled_SetFilteredDocumentsToDatabaseDocuments()
         {
-            Mapper.Reset();
-
             documentsWindowViewModel.OnActivated();
 
             var result = documentsWindowViewModel.FilteredDocuments;
