@@ -40,7 +40,7 @@ namespace DocumentController.WebAPI.Tests.Controllers
         }
 
         [Fact]
-        public async void GetDocuments_WhenCalled_ReturnsOkObjectResult()
+        public async void GetDocuments_WhenCalledAndHasData_ReturnsOkObjectResult()
         {
             var result = await controller.GetDocuments();
 
