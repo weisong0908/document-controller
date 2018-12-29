@@ -22,7 +22,7 @@ namespace DocumentController.WebAPI.Tests.Controllers
             mockRespository.Setup(r => r.GetAllDocumentVersionsByDocumentId(999)).Returns(Task.FromResult<IEnumerable<DocumentVersion>>(null));
             mockRespository.Setup(r => r.GetDocumentVersion(It.IsAny<int>())).Returns(Task.FromResult<DocumentVersion>(new DocumentVersion()));
             mockRespository.Setup(r => r.GetDocumentVersion(999)).Returns(Task.FromResult<DocumentVersion>(null));
-            // mockRespository.Setup(r => r.AddNewDocumentVersion(It.IsAny<DocumentVersion>()));
+            mockRespository.Setup(r => r.UpdateDocumentVersion(It.IsAny<DocumentVersion>())).Returns(Task.FromResult<DocumentVersion>(new DocumentVersion()));
             stubUnitOfWork = new Mock<IUnitOfWork>();
             controller = new DocumentVersionsController(mockRespository.Object, stubUnitOfWork.Object);
         }
@@ -101,6 +101,26 @@ namespace DocumentController.WebAPI.Tests.Controllers
             var result = await controller.AddNewDocumentVersion(documentVersion);
 
             Assert.IsType<CreatedAtActionResult>(result.Result);
+        }
+
+        [Fact]
+        public async void UpdateDocumentVersion_WhenCalled_UpdatesDocumentVersionInDatabase()
+        {
+            var documentVersion = new DocumentVersion();
+
+            await controller.UpdateDocumentVersion(documentVersion.Id, documentVersion);
+
+            mockRespository.Verify(r => r.UpdateDocumentVersion(documentVersion));
+        }
+
+        [Fact]
+        public async void UpdateDocumentVersion_WhenCalled_ReturnsOkResult()
+        {
+            var documentVersion = new DocumentVersion();
+
+            var result = await controller.UpdateDocumentVersion(documentVersion.Id, documentVersion);
+
+            Assert.IsType<OkObjectResult>(result.Result);
         }
     }
 }
