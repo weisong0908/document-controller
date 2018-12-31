@@ -15,6 +15,8 @@ namespace DocumentController.WPF.ViewModels
     {
         private readonly IDocumentService documentService;
         private readonly IDocumentVersionService documentVersionService;
+        private readonly IFileHelper fileHelper;
+        private readonly IWindowHelper windowHelper;
         private readonly IMapper mapper;
 
         private IList<DocumentViewModel> _allDocuments;
@@ -31,10 +33,12 @@ namespace DocumentController.WPF.ViewModels
             set { SetValue(ref _selectedDocument, value); }
         }
 
-        public DocumentsWindowViewModel(IDocumentService documentService, IDocumentVersionService documentVersionService)
+        public DocumentsWindowViewModel(IDocumentService documentService, IDocumentVersionService documentVersionService, IFileHelper fileHelper, IWindowHelper windowHelper)
         {
             this.documentService = documentService;
             this.documentVersionService = documentVersionService;
+            this.fileHelper = fileHelper;
+            this.windowHelper = windowHelper;
             mapper = Mapper.Instance;
 
             FilteredDocuments = new ObservableCollection<DocumentViewModel>();
@@ -65,7 +69,7 @@ namespace DocumentController.WPF.ViewModels
         public async void SelectDocument(DocumentViewModel selectedDocument)
         {
             SelectedDocument = selectedDocument;
-            SelectedDocument.Location = FileHelper.GetDocumentLocation(_selectedDocument);
+            SelectedDocument.Location = fileHelper.GetDocumentLocation(_selectedDocument);
 
             var allDocumentVersions = mapper.Map<IList<DocumentVersionViewModel>>(await documentVersionService.GetAllVersionsByDocumentId(selectedDocument.Id));
             var latestDocumentVersion = allDocumentVersions.Where(dv => dv.Progress == Progress.InEffect && dv.IsRemoved.ToLower() != "true").OrderByDescending(dv => dv.EffectiveDate).FirstOrDefault();
@@ -82,7 +86,7 @@ namespace DocumentController.WPF.ViewModels
             if (_selectedDocument == null)
                 return;
 
-            WindowHelper.ShowWindow(WindowHelper.WindowType.DocumentVersionWindow, _selectedDocument);
+            windowHelper.ShowWindow(WindowType.DocumentVersionWindow, _selectedDocument);
         }
 
         public void OnNewDocument()
@@ -92,7 +96,7 @@ namespace DocumentController.WPF.ViewModels
 
         public void OnNavigateToDocumentLocation()
         {
-            FileHelper.GoToFile(_selectedDocument);
+            fileHelper.GoToFile(_selectedDocument);
         }
 
         public void OnBackUpDatabase()

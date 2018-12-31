@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DocumentController.WPF.Helpers;
 using DocumentController.WPF.Mapping;
 using DocumentController.WPF.Services;
 using System;
@@ -26,11 +27,15 @@ namespace DocumentController.WPF
 
         public IDocumentService DocumentService;
         public IDocumentVersionService DocumentVersionService;
+        public IFileHelper FileHelper;
+        public IWindowHelper WindowHelper;
 
         protected override void OnStartup(StartupEventArgs e)
         {
             DocumentService = new CloudDocumentService();
             DocumentVersionService = new CloudDocumentVersionService();
+            FileHelper = new FileHelper();
+            WindowHelper = new WindowHelper();
             Mapper.Initialize(c => c.AddProfile<MappingProfile>());
 
             var startupWindow = new Views.DocumentsWindow();

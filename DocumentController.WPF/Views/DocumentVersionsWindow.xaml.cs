@@ -27,8 +27,9 @@ namespace DocumentController.WPF.Views
             InitializeComponent();
 
             var documentVersionService = (Application.Current as App).DocumentVersionService;
-
-            ViewModel = new DocumentVersionsWindowViewModel(documentVersionService);
+            var fileHelper = (Application.Current as App).FileHelper;
+            var windowHelper = (Application.Current as App).WindowHelper;
+            ViewModel = new DocumentVersionsWindowViewModel(documentVersionService, fileHelper, windowHelper);
             ViewModel.OnStartUp(selectedDocument as DocumentViewModel);
         }
 

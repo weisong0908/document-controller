@@ -28,7 +28,9 @@ namespace DocumentController.WPF.Views
 
             var documentService = (Application.Current as App).DocumentService;
             var documentVersionService = (Application.Current as App).DocumentVersionService;
-            ViewModel = new DocumentsWindowViewModel(documentService, documentVersionService);
+            var fileHelper = (Application.Current as App).FileHelper;
+            var windowHelper = (Application.Current as App).WindowHelper;
+            ViewModel = new DocumentsWindowViewModel(documentService, documentVersionService, fileHelper, windowHelper);
         }
 
         protected override void OnActivated(EventArgs e)

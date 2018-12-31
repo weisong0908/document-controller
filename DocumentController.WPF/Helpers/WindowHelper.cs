@@ -8,14 +8,14 @@ using System.Windows;
 
 namespace DocumentController.WPF.Helpers
 {
-    public static class WindowHelper
+    public class WindowHelper: IWindowHelper
     {
-        public static void Alert(string message, string caption)
+        public void Alert(string message, string caption)
         {
             MessageBox.Show(message, caption);
         }
 
-        public static void ShowWindow(WindowType windowType, object parameter = null)
+        public void ShowWindow(WindowType windowType, object parameter = null)
         {
             Window window = null;
 
@@ -31,11 +31,6 @@ namespace DocumentController.WPF.Helpers
                     }
                     break;
             }
-        }
-
-        public enum WindowType
-        {
-            DocumentVersionWindow
         }
     }
 }

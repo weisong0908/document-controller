@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace DocumentController.WPF.Helpers
 {
-    public static class FileHelper
+    public class FileHelper: IFileHelper
     {
-        public static string GetDocumentLocation(DocumentViewModel document)
+        public string GetDocumentLocation(DocumentViewModel document)
         {
             string sharedDrive = (System.Windows.Application.Current as App).SharedDrive;
             string mainFolder = "";
@@ -41,16 +41,13 @@ namespace DocumentController.WPF.Helpers
             return fullPath;
         }
 
-        public static void GoToFile(DocumentViewModel document)
+        public void GoToFile(DocumentViewModel document)
         {
             if (!File.Exists(document.Location))
-            {
-                WindowHelper.Alert("The path to the file is either invalid or the file has been removed. Please navigate to the file manually.", "File not found");
                 return;
-            }
         }
 
-        private static (string publicPDF, string publicEditable, string privateCurrentPDF, string privateCurrentEditable, string privateObselete) GetUploadPaths(DocumentViewModel document)
+        private (string publicPDF, string publicEditable, string privateCurrentPDF, string privateCurrentEditable, string privateObselete) GetUploadPaths(DocumentViewModel document)
         {
             string sharedDrive = (System.Windows.Application.Current as App).SharedDrive;
             string archiveFolder = (System.Windows.Application.Current as App).ArchivedFolder;
@@ -98,7 +95,7 @@ namespace DocumentController.WPF.Helpers
             return (publicPDF, publicEditable, privateCurrentPDF, privateCurrentEditable, privateObselete);
         }
 
-        private static void DeleteFile(DocumentViewModel document, string folder)
+        private void DeleteFile(DocumentViewModel document, string folder)
         {
             var filesToDelete = Directory.GetFiles(folder, document.Title + "*", SearchOption.TopDirectoryOnly);
 
@@ -108,7 +105,7 @@ namespace DocumentController.WPF.Helpers
             File.Delete(filesToDelete[0]);
         }
 
-        private static void MoveFile(DocumentViewModel document, string sourceFolder, string destinationFolder)
+        private void MoveFile(DocumentViewModel document, string sourceFolder, string destinationFolder)
         {
             var searchResults = Directory.GetFiles(sourceFolder, document.Title + "*", SearchOption.TopDirectoryOnly);
 
@@ -126,7 +123,7 @@ namespace DocumentController.WPF.Helpers
             Process.Start(destinationFolder);
         }
 
-        private static void CopyFile(DocumentViewModel document, DocumentVersionViewModel documentVersion, string sourceFileName, string destinationFolder)
+        private void CopyFile(DocumentViewModel document, DocumentVersionViewModel documentVersion, string sourceFileName, string destinationFolder)
         {
             var fileToCopy = document.Title + " - V" + documentVersion.VersionNumber + Path.GetExtension(sourceFileName);
             var destinationFileName = Path.Combine(destinationFolder, fileToCopy);
@@ -137,7 +134,7 @@ namespace DocumentController.WPF.Helpers
             Process.Start(destinationFolder);
         }
 
-        public static void UpdateFiles(DocumentViewModel document, DocumentVersionViewModel documentVersion)
+        public void UpdateFiles(DocumentViewModel document, DocumentVersionViewModel documentVersion)
         {
             var (publicPDF, publicEditable, privateCurrentPDF, privateCurrentEditable, privateObselete) = GetUploadPaths(document);
 
@@ -155,7 +152,7 @@ namespace DocumentController.WPF.Helpers
             }
         }
 
-        public static string GetFilePath(FileType fileType)
+        public string GetFilePath(FileType fileType)
         {
             using (var fileDialog = new OpenFileDialog())
             {
@@ -170,11 +167,6 @@ namespace DocumentController.WPF.Helpers
 
                 return string.Empty;
             }
-        }
-
-        public enum FileType
-        {
-            PDF, Editable
         }
     }
 }

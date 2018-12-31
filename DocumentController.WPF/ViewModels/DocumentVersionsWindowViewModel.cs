@@ -15,6 +15,8 @@ namespace DocumentController.WPF.ViewModels
     public class DocumentVersionsWindowViewModel : BaseViewModel
     {
         private readonly IDocumentVersionService documentVersionService;
+        private readonly IFileHelper fileHelper;
+        private readonly IWindowHelper windowHelper;
         private IMapper mapper;
 
         public IEnumerable<string> Progresses { get; set; }
@@ -38,9 +40,11 @@ namespace DocumentController.WPF.ViewModels
             set { SetValue(ref _selectedDocumentVersion, value); }
         }
 
-        public DocumentVersionsWindowViewModel(IDocumentVersionService documentVersionService)
+        public DocumentVersionsWindowViewModel(IDocumentVersionService documentVersionService, IFileHelper fileHelper, IWindowHelper windowHelper)
         {
             this.documentVersionService = documentVersionService;
+            this.fileHelper = fileHelper;
+            this.windowHelper = windowHelper;
             mapper = Mapper.Instance;
 
             Progresses = typeof(Progress).GetFields().Select(f => f.GetValue(null).ToString());
@@ -79,7 +83,7 @@ namespace DocumentController.WPF.ViewModels
                     response = await documentVersionService.AddNewDocumentVersion(documentVersionForChange);
                     if (response == null)
                     {
-                        WindowHelper.Alert("Please update again", "Opps, something went wrong");
+                        windowHelper.Alert("Please update again", "Opps, something went wrong");
                         DocumentVersions = originalDocumentVersions;
                     }
                 }
@@ -87,7 +91,7 @@ namespace DocumentController.WPF.ViewModels
                 {
                     response = await documentVersionService.UpdateDocumentVersion(documentVersionForChange);
                     if (response == null)
-                        WindowHelper.Alert("Please update again", "Opps, something went wrong");
+                        windowHelper.Alert("Please update again", "Opps, something went wrong");
                 }
 
                 var documentVersions = mapper.Map<List<DocumentVersionViewModel>>((await documentVersionService.GetAllVersionsByDocumentId(_selectedDocument.Id)).OrderByDescending(dv => dv.EffectiveDate));
@@ -109,12 +113,12 @@ namespace DocumentController.WPF.ViewModels
 
         public void UploadDocument()
         {
-            FileHelper.UpdateFiles(_selectedDocument, _selectedDocumentVersion);
+            fileHelper.UpdateFiles(_selectedDocument, _selectedDocumentVersion);
         }
 
         public void BrowsePDFFile()
         {
-            var filePath = FileHelper.GetFilePath(FileHelper.FileType.PDF);
+            var filePath = fileHelper.GetFilePath(FileType.PDF);
 
             if (string.IsNullOrEmpty(filePath))
                 return;
@@ -124,7 +128,7 @@ namespace DocumentController.WPF.ViewModels
 
         public void BrowseEditableFile()
         {
-            var filePath = FileHelper.GetFilePath(FileHelper.FileType.Editable);
+            var filePath = fileHelper.GetFilePath(FileType.Editable);
 
             if (string.IsNullOrEmpty(filePath))
                 return;
@@ -136,19 +140,19 @@ namespace DocumentController.WPF.ViewModels
         {
             if (string.IsNullOrWhiteSpace(_selectedDocumentVersion.VersionNumber))
             {
-                WindowHelper.Alert("The version number cannot be empty", "Invalid input");
+                windowHelper.Alert("The version number cannot be empty", "Invalid input");
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(_selectedDocumentVersion.Progress))
             {
-                WindowHelper.Alert("The progress cannot be empty", "Invalid input");
+                windowHelper.Alert("The progress cannot be empty", "Invalid input");
                 return false;
             }
 
             if (_selectedDocumentVersion.EffectiveDate == null)
             {
-                WindowHelper.Alert("The effective date cannot be empty. Put a tentative effective date if unsure.", "Invalid input");
+                windowHelper.Alert("The effective date cannot be empty. Put a tentative effective date if unsure.", "Invalid input");
                 return false;
             }
 
