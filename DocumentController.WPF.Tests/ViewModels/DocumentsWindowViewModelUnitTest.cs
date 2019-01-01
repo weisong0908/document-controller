@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using DocumentController.WPF.Models;
 using System.Linq;
+using DocumentController.WPF.Helpers;
 
 namespace DocumentController.WPF.Tests.ViewModels
 {
@@ -16,6 +17,8 @@ namespace DocumentController.WPF.Tests.ViewModels
         private readonly DocumentsWindowViewModel documentsWindowViewModel;
         private readonly Mock<IDocumentService> mockDocumentService;
         private readonly Mock<IDocumentVersionService> mockDocumentVersonService;
+        private readonly Mock<IFileHelper> stubFileHelper;
+        private readonly Mock<IWindowHelper> stubWindowHelper;
 
         private IList<Document> documents;
 
@@ -32,7 +35,11 @@ namespace DocumentController.WPF.Tests.ViewModels
             Mapper.Reset();
             Mapper.Initialize(c => c.AddProfile<MappingProfile>());
 
-            documentsWindowViewModel = new DocumentsWindowViewModel(mockDocumentService.Object, mockDocumentVersonService.Object);
+            stubFileHelper = new Mock<IFileHelper>();
+
+            stubWindowHelper = new Mock<IWindowHelper>();
+
+            documentsWindowViewModel = new DocumentsWindowViewModel(mockDocumentService.Object, mockDocumentVersonService.Object, stubFileHelper.Object, stubWindowHelper.Object);
         }
 
         [Fact]
@@ -50,8 +57,27 @@ namespace DocumentController.WPF.Tests.ViewModels
 
             var result = documentsWindowViewModel.FilteredDocuments;
 
-            Assert.Equal(result.Count(), documents.Count());
+            Assert.Equal(documents.Count(), result.Count());
         }
 
+        [Fact]
+        public void SelectDocument_WhenCalled_ReturnsDocumentVersionFromDatabase()
+        {
+            var document = new DocumentViewModel() { Id = 1 };
+
+            documentsWindowViewModel.SelectDocument(document);
+
+            mockDocumentVersonService.Verify(dvs => dvs.GetAllVersionsByDocumentId(document.Id));
+        }
+
+        [Fact]
+        public void SelectDocument_WhenCalled_SetsSelectedDocument()
+        {
+            var document = new DocumentViewModel() { Id = 1 };
+
+            documentsWindowViewModel.SelectDocument(document);
+
+            Assert.Equal(document, documentsWindowViewModel.SelectedDocument);
+        }
     }
 }
