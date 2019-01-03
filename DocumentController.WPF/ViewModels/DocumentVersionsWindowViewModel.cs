@@ -40,12 +40,12 @@ namespace DocumentController.WPF.ViewModels
             set { SetValue(ref _selectedDocumentVersion, value); }
         }
 
-        public DocumentVersionsWindowViewModel(IDocumentVersionService documentVersionService, IFileHelper fileHelper, IWindowHelper windowHelper)
+        public DocumentVersionsWindowViewModel(IDocumentVersionService documentVersionService, IFileHelper fileHelper, IWindowHelper windowHelper, IMapper mapper)
         {
             this.documentVersionService = documentVersionService;
             this.fileHelper = fileHelper;
             this.windowHelper = windowHelper;
-            mapper = Mapper.Instance;
+            this.mapper = mapper;
 
             Progresses = typeof(Progress).GetFields().Select(f => f.GetValue(null).ToString());
             DocumentVersions = new ObservableCollection<DocumentVersionViewModel>();

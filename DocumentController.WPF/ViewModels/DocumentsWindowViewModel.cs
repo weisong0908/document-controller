@@ -33,13 +33,13 @@ namespace DocumentController.WPF.ViewModels
             set { SetValue(ref _selectedDocument, value); }
         }
 
-        public DocumentsWindowViewModel(IDocumentService documentService, IDocumentVersionService documentVersionService, IFileHelper fileHelper, IWindowHelper windowHelper)
+        public DocumentsWindowViewModel(IDocumentService documentService, IDocumentVersionService documentVersionService, IFileHelper fileHelper, IWindowHelper windowHelper, IMapper mapper)
         {
             this.documentService = documentService;
             this.documentVersionService = documentVersionService;
             this.fileHelper = fileHelper;
             this.windowHelper = windowHelper;
-            mapper = Mapper.Instance;
+            this.mapper = mapper;
 
             FilteredDocuments = new ObservableCollection<DocumentViewModel>();
 

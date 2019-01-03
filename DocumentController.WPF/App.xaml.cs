@@ -29,6 +29,7 @@ namespace DocumentController.WPF
         public IDocumentVersionService DocumentVersionService;
         public IFileHelper FileHelper;
         public IWindowHelper WindowHelper;
+        public IMapper Mapper;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -36,7 +37,7 @@ namespace DocumentController.WPF
             DocumentVersionService = new CloudDocumentVersionService();
             FileHelper = new FileHelper();
             WindowHelper = new WindowHelper();
-            Mapper.Initialize(c => c.AddProfile<MappingProfile>());
+            Mapper = new MapperConfiguration(c => c.AddProfile<MappingProfile>()).CreateMapper();
 
             var startupWindow = new Views.DocumentsWindow();
             startupWindow.Show();

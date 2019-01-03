@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using DocumentController.WPF.Models;
 using System.Linq;
 using DocumentController.WPF.Helpers;
+using System;
 
 namespace DocumentController.WPF.Tests.ViewModels
 {
@@ -19,6 +20,7 @@ namespace DocumentController.WPF.Tests.ViewModels
         private readonly Mock<IDocumentVersionService> mockDocumentVersonService;
         private readonly Mock<IFileHelper> stubFileHelper;
         private readonly Mock<IWindowHelper> stubWindowHelper;
+        private readonly IMapper mapper;
 
         private IList<Document> documents;
 
@@ -32,14 +34,14 @@ namespace DocumentController.WPF.Tests.ViewModels
             mockDocumentService.Setup(ds => ds.GetDocuments()).Returns(Task.FromResult<IEnumerable<Document>>(documents));
 
             mockDocumentVersonService = new Mock<IDocumentVersionService>();
-            Mapper.Reset();
-            Mapper.Initialize(c => c.AddProfile<MappingProfile>());
 
             stubFileHelper = new Mock<IFileHelper>();
 
             stubWindowHelper = new Mock<IWindowHelper>();
 
-            documentsWindowViewModel = new DocumentsWindowViewModel(mockDocumentService.Object, mockDocumentVersonService.Object, stubFileHelper.Object, stubWindowHelper.Object);
+            mapper = new MapperConfiguration(c => c.AddProfile<MappingProfile>()).CreateMapper();
+
+            documentsWindowViewModel = new DocumentsWindowViewModel(mockDocumentService.Object, mockDocumentVersonService.Object, stubFileHelper.Object, stubWindowHelper.Object, mapper);
         }
 
         [Fact]

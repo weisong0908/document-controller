@@ -19,6 +19,7 @@ namespace DocumentController.WPF.Tests.ViewModels
         private readonly Mock<IDocumentVersionService> mockDocumentVersionService;
         private readonly Mock<IFileHelper> stubFileHelper;
         private readonly Mock<IWindowHelper> stubWindowHelper;
+        private readonly IMapper mapper;
         private IList<DocumentVersionViewModel> documentVersions;
 
         public DocumentVersionsWindowViewModelUnitTest()
@@ -26,9 +27,9 @@ namespace DocumentController.WPF.Tests.ViewModels
             mockDocumentVersionService = new Mock<IDocumentVersionService>();
             stubFileHelper = new Mock<IFileHelper>();
             stubWindowHelper = new Mock<IWindowHelper>();
-            Mapper.Reset();
-            Mapper.Initialize(c => c.AddProfile<MappingProfile>());
-            documentVersionsWindowViewModel = new DocumentVersionsWindowViewModel(mockDocumentVersionService.Object, stubFileHelper.Object, stubWindowHelper.Object);
+            mapper = new MapperConfiguration(c => c.AddProfile<MappingProfile>()).CreateMapper();
+
+            documentVersionsWindowViewModel = new DocumentVersionsWindowViewModel(mockDocumentVersionService.Object, stubFileHelper.Object, stubWindowHelper.Object, mapper);
 
             documentVersions = new List<DocumentVersionViewModel>()
             {
@@ -37,7 +38,7 @@ namespace DocumentController.WPF.Tests.ViewModels
                 new DocumentVersionViewModel(1){ Id = 3 , VersionNumber = "Version 3", Progress="Some progress", EffectiveDate=DateTime.Today }
             };
 
-            mockDocumentVersionService.Setup(dvs => dvs.UpdateDocumentVersion(It.IsAny<DocumentVersion>())).Returns(Task.FromResult(Mapper.Map<DocumentVersion>(documentVersions[0])));
+            mockDocumentVersionService.Setup(dvs => dvs.UpdateDocumentVersion(It.IsAny<DocumentVersion>())).Returns(Task.FromResult(mapper.Map<DocumentVersion>(documentVersions[0])));
 
             documentVersionsWindowViewModel.DocumentVersions = new ObservableCollection<DocumentVersionViewModel>(documentVersions);
         }
