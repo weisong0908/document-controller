@@ -36,7 +36,7 @@ namespace DocumentController.WPF.Helpers
             }
 
             string folderPath = Path.Combine(sharedDrive, mainFolder);
-            string fullPath = Path.Combine(folderPath, $"{document.Title} - V{document.VersionNumber}");
+            string fullPath = Path.Combine(folderPath, $"{document.Title} - V{document.VersionNumber}.pdf");
 
             return fullPath;
         }
@@ -48,6 +48,8 @@ namespace DocumentController.WPF.Helpers
                 WindowHelper.Alert("The path to the file is either invalid or the file has been removed. Please navigate to the file manually.", "File not found");
                 return;
             }
+
+            Process.Start(Path.GetDirectoryName(document.Location));
         }
 
         private static (string publicPDF, string publicEditable, string privateCurrentPDF, string privateCurrentEditable, string privateObselete) GetUploadPaths(DocumentViewModel document)
