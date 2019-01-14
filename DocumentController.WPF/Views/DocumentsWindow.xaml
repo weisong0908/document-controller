@@ -68,7 +68,7 @@
                     <DockPanel>
                         <TextBlock Text="Location" Margin="4 3" VerticalAlignment="Center"/>
                         <TextBox IsReadOnly="True" Margin="4 3" VerticalAlignment="Center" Width="480" Text="{Binding SelectedDocument.Location}"/>
-                        <Button Margin="3" DockPanel.Dock="Right" Padding="0" Height="24" Content="Go to folder" Click="Open_Click"/>
+                        <Button Margin="3" DockPanel.Dock="Right" Padding="0" Height="24" Content="Go to folder" Click="OpenFolder_Click"/>
                     </DockPanel>
                 </StackPanel>
             </GroupBox>
