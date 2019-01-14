@@ -50,7 +50,7 @@ namespace DocumentController.WPF.Services
             dataReader.Close();
             dbConnection.Close();
 
-            return documentVersions;
+            return documentVersions.Where(dv => dv.IsRemoved != "true");
         }
 
         public async Task<DocumentVersion> AddNewDocumentVersion(DocumentVersion documentVersion)
@@ -145,7 +145,7 @@ namespace DocumentController.WPF.Services
             dbConnection.Open();
             command = new OleDbCommand(sql, dbConnection);
 
-            OleDbParameter isRemoved = new OleDbParameter("@IsRemoved", documentVersion.IsRemoved);
+            OleDbParameter isRemoved = new OleDbParameter("@IsRemoved", "true");
             command.Parameters.Add(isRemoved);
 
             await command.ExecuteNonQueryAsync();
