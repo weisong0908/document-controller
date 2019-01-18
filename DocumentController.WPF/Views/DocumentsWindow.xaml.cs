@@ -70,7 +70,7 @@ namespace DocumentController.WPF.Views
             ViewModel.OnActivated();
         }
 
-        private void Open_Click(object sender, RoutedEventArgs e)
+        private void OpenFolder_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.OnNavigateToDocumentLocation();
         }

@@ -50,7 +50,7 @@ namespace DocumentController.WPF.Services
             dataReader.Close();
             dbConnection.Close();
 
-            return documentVersions;
+            return documentVersions.Where(dv => dv.IsRemoved != "true");
         }
 
         public async Task<DocumentVersion> AddNewDocumentVersion(DocumentVersion documentVersion)
@@ -68,12 +68,12 @@ namespace DocumentController.WPF.Services
             OleDbParameter versionNumber = new OleDbParameter("@VersionNumber", documentVersion.VersionNumber);
             OleDbParameter effectiveDate = new OleDbParameter("@EffectiveDate", documentVersion.EffectiveDate);
             OleDbParameter progress = new OleDbParameter("@Progress", documentVersion.Progress);
-            OleDbParameter descriptionOfChange = new OleDbParameter("@DescriptionOfChange", documentVersion.DescriptionOfChange);
-            OleDbParameter purposeOfChange = new OleDbParameter("@PurposeOfChange", documentVersion.PurposeOfChange);
-            OleDbParameter requestor = new OleDbParameter("@Requestor", documentVersion.Requestor);
-            OleDbParameter remarks = new OleDbParameter("@Remarks", documentVersion.Remarks);
-            OleDbParameter location_PDF = new OleDbParameter("@Location_PDF", documentVersion.Location_PDF);
-            OleDbParameter location_Editable = new OleDbParameter("@Location_Editable", documentVersion.Location_Editable);
+            OleDbParameter descriptionOfChange = new OleDbParameter("@DescriptionOfChange", documentVersion.DescriptionOfChange ?? string.Empty);
+            OleDbParameter purposeOfChange = new OleDbParameter("@PurposeOfChange", documentVersion.PurposeOfChange ?? string.Empty);
+            OleDbParameter requestor = new OleDbParameter("@Requestor", documentVersion.Requestor ?? string.Empty);
+            OleDbParameter remarks = new OleDbParameter("@Remarks", documentVersion.Remarks ?? string.Empty);
+            OleDbParameter location_PDF = new OleDbParameter("@Location_PDF", documentVersion.Location_PDF ?? string.Empty);
+            OleDbParameter location_Editable = new OleDbParameter("@Location_Editable", documentVersion.Location_Editable ?? string.Empty);
 
             command.Parameters.Add(documentId);
             command.Parameters.Add(versionNumber);
@@ -114,12 +114,12 @@ namespace DocumentController.WPF.Services
             OleDbParameter versionNumber = new OleDbParameter("@VersionNumber", documentVersion.VersionNumber);
             OleDbParameter effectiveDate = new OleDbParameter("@EffectiveDate", documentVersion.EffectiveDate);
             OleDbParameter progress = new OleDbParameter("@Progress", documentVersion.Progress);
-            OleDbParameter descriptionOfChange = new OleDbParameter("@DescriptionOfChange", documentVersion.DescriptionOfChange);
-            OleDbParameter purposeOfChange = new OleDbParameter("@PurposeOfChange", documentVersion.PurposeOfChange);
-            OleDbParameter requestor = new OleDbParameter("@Requestor", documentVersion.Requestor);
-            OleDbParameter remarks = new OleDbParameter("@Remarks", documentVersion.Remarks);
-            OleDbParameter locationPDF = new OleDbParameter("@LocationPDF", documentVersion.Location_PDF);
-            OleDbParameter locationEditable = new OleDbParameter("@LocationEditable", documentVersion.Location_Editable);
+            OleDbParameter descriptionOfChange = new OleDbParameter("@DescriptionOfChange", documentVersion.DescriptionOfChange ?? string.Empty);
+            OleDbParameter purposeOfChange = new OleDbParameter("@PurposeOfChange", documentVersion.PurposeOfChange ?? string.Empty);
+            OleDbParameter requestor = new OleDbParameter("@Requestor", documentVersion.Requestor ?? string.Empty);
+            OleDbParameter remarks = new OleDbParameter("@Remarks", documentVersion.Remarks ?? string.Empty);
+            OleDbParameter locationPDF = new OleDbParameter("@LocationPDF", documentVersion.Location_PDF ?? string.Empty);
+            OleDbParameter locationEditable = new OleDbParameter("@LocationEditable", documentVersion.Location_Editable ?? string.Empty);
 
             command.Parameters.Add(documentId);
             command.Parameters.Add(versionNumber);
@@ -145,7 +145,7 @@ namespace DocumentController.WPF.Services
             dbConnection.Open();
             command = new OleDbCommand(sql, dbConnection);
 
-            OleDbParameter isRemoved = new OleDbParameter("@IsRemoved", documentVersion.IsRemoved);
+            OleDbParameter isRemoved = new OleDbParameter("@IsRemoved", "true");
             command.Parameters.Add(isRemoved);
 
             await command.ExecuteNonQueryAsync();
