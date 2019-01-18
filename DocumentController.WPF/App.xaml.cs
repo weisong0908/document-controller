@@ -33,8 +33,8 @@ namespace DocumentController.WPF
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            DocumentService = new CloudDocumentService();
-            DocumentVersionService = new CloudDocumentVersionService();
+            DocumentService = new LocalDocumentService();
+            DocumentVersionService = new LocalDocumentVersionService();
             FileHelper = new FileHelper();
             WindowHelper = new WindowHelper();
             Mapper = new MapperConfiguration(c => c.AddProfile<MappingProfile>()).CreateMapper();
