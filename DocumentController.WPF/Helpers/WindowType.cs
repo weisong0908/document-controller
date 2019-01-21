@@ -8,6 +8,7 @@ namespace DocumentController.WPF.Helpers
 {
     public enum WindowType
     {
-        DocumentVersionWindow
+        DocumentVersionWindow,
+        NewDocumentWindow
     }
 }

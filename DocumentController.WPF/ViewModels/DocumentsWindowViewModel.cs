@@ -91,7 +91,7 @@ namespace DocumentController.WPF.ViewModels
 
         public void OnNewDocument()
         {
-
+            windowHelper.ShowWindow(WindowType.NewDocumentWindow);
         }
 
         public void OnNavigateToDocumentLocation()

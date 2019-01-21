@@ -127,11 +127,15 @@
     <Compile Include="ViewModels\DocumentVersionViewModel.cs" />
     <Compile Include="ViewModels\DocumentVersionsWindowViewModel.cs" />
     <Compile Include="ViewModels\DocumentViewModel.cs" />
+    <Compile Include="ViewModels\NewDocumentWindowViewModel.cs" />
     <Compile Include="Views\DocumentsWindow.xaml.cs">
       <DependentUpon>DocumentsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DocumentVersionsWindow.xaml.cs">
       <DependentUpon>DocumentVersionsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NewDocumentWindow.xaml.cs">
+      <DependentUpon>NewDocumentWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -150,6 +154,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DocumentVersionsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NewDocumentWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -30,7 +30,23 @@ namespace DocumentController.WPF.Helpers
                         window.ShowDialog();
                     }
                     break;
+
+                case WindowType.NewDocumentWindow:
+                    window = Application.Current.Windows.OfType<NewDocumentWindow>().SingleOrDefault();
+
+                    if(window == null)
+                    {
+                        window = new NewDocumentWindow();
+                        window.ShowDialog();
+                    }
+                    break;
             }
+        }
+
+        public void CloseWindow()
+        {
+            Window window = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.IsActive == true);
+            window.Close();
         }
     }
 }

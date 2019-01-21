@@ -1,0 +1,33 @@
+﻿<Window x:Class="DocumentController.WPF.Views.NewDocumentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DocumentController.WPF.Views"
+        mc:Ignorable="d"
+        Title="New Document" Height="200" Width="655">
+    <Grid>
+        <StackPanel Margin="0 3">
+            <DockPanel>
+                <TextBlock VerticalAlignment="Center" Margin="4 3" Width="50" Text="Type:"/>
+                <ComboBox VerticalAlignment="Center" Margin="4 3" Width="150" ItemsSource="{Binding DocumentTypes}"/>
+                <TextBlock VerticalAlignment="Center" Margin="4 3" Text="Document Number:"/>
+                <TextBox VerticalAlignment="Center" Margin="4 3" Text="{Binding SelectedDocument.DocumentNumber}"/>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Text="Document Title:" Margin="4 3" VerticalAlignment="Center"/>
+                <TextBox Margin="4 3" VerticalAlignment="Center" Text="{Binding SelectedDocument.Title}"/>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Margin="4 3" VerticalAlignment="Center" DockPanel.Dock="Left" Width="70" Text="Department:"/>
+                <ComboBox Margin="4 3" VerticalAlignment="Center" DockPanel.Dock="Left" Width="260" Text="{Binding SelectedDocument.Department}"/>
+                <TextBlock Margin="4 3" VerticalAlignment="Center" DockPanel.Dock="Left" Width="70" Text="Function:"/>
+                <ComboBox Margin="4 3" VerticalAlignment="Center" Text="{Binding SelectedDocument.Function}"/>
+            </DockPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20">
+                <Button Margin="4 3" Width="100" Content="Create" Click="Create_Click"/>
+                <Button Margin="4 3" Width="100" Content="Cancel" Click="Cancel_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
