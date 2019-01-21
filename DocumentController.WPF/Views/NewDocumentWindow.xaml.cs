@@ -41,5 +41,10 @@ namespace DocumentController.WPF.Views
         {
             ViewModel.CancelNewDocument();
         }
+
+        private void Departments_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ViewModel.OnDepartmentChanged();
+        }
     }
 }

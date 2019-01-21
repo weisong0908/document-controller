@@ -113,6 +113,7 @@
     <Compile Include="Models\DocumentStatus.cs" />
     <Compile Include="Models\DocumentType.cs" />
     <Compile Include="Models\DocumentVersion.cs" />
+    <Compile Include="Models\Function.cs" />
     <Compile Include="Models\Progress.cs" />
     <Compile Include="Services\CloudDocumentService.cs" />
     <Compile Include="Services\CloudDocumentVersionService.cs" />

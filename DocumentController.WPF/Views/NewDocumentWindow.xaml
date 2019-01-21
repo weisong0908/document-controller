@@ -10,19 +10,19 @@
         <StackPanel Margin="0 3">
             <DockPanel>
                 <TextBlock VerticalAlignment="Center" Margin="4 3" Width="50" Text="Type:"/>
-                <ComboBox VerticalAlignment="Center" Margin="4 3" Width="150" ItemsSource="{Binding DocumentTypes}"/>
+                <ComboBox VerticalAlignment="Center" Margin="4 3" Width="150" SelectedItem="{Binding Document.Type, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DocumentTypes}"/>
                 <TextBlock VerticalAlignment="Center" Margin="4 3" Text="Document Number:"/>
-                <TextBox VerticalAlignment="Center" Margin="4 3" Text="{Binding SelectedDocument.DocumentNumber}"/>
+                <TextBox VerticalAlignment="Center" Margin="4 3" Text="{Binding Document.DocumentNumber, UpdateSourceTrigger=PropertyChanged}"/>
             </DockPanel>
             <DockPanel>
                 <TextBlock Text="Document Title:" Margin="4 3" VerticalAlignment="Center"/>
-                <TextBox Margin="4 3" VerticalAlignment="Center" Text="{Binding SelectedDocument.Title}"/>
+                <TextBox Margin="4 3" VerticalAlignment="Center" Text="{Binding Document.Title, UpdateSourceTrigger=PropertyChanged}"/>
             </DockPanel>
             <DockPanel>
                 <TextBlock Margin="4 3" VerticalAlignment="Center" DockPanel.Dock="Left" Width="70" Text="Department:"/>
-                <ComboBox Margin="4 3" VerticalAlignment="Center" DockPanel.Dock="Left" Width="260" Text="{Binding SelectedDocument.Department}"/>
+                <ComboBox Margin="4 3" VerticalAlignment="Center" DockPanel.Dock="Left" Width="260" SelectedItem="{Binding Document.Department, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Departments}" SelectionChanged="Departments_SelectionChanged"/>
                 <TextBlock Margin="4 3" VerticalAlignment="Center" DockPanel.Dock="Left" Width="70" Text="Function:"/>
-                <ComboBox Margin="4 3" VerticalAlignment="Center" Text="{Binding SelectedDocument.Function}"/>
+                <ComboBox Margin="4 3" VerticalAlignment="Center" SelectedItem="{Binding Document.Function, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Functions}"/>
             </DockPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20">
                 <Button Margin="4 3" Width="100" Content="Create" Click="Create_Click"/>

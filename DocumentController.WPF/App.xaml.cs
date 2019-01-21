@@ -18,8 +18,8 @@ namespace DocumentController.WPF
     public partial class App : Application
     {
         public string ApiEndPointBaseAddress { get; } = @"http://178.128.119.129/api/";
-        public string ConnectionString { get; } = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=\\csing.navitas.local\shared\Documents\z-Public\QA and Compliance\Controlled Document\Controlled Document Master List.mdb;Persist Security Info=False;Jet OLEDB:Database Password=1234;";
-        //public string ConnectionString { get; } = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\Users\weisong.teng\Desktop\Controlled Document Master List.mdb;Persist Security Info=False;Jet OLEDB:Database Password=1234;";
+        //public string ConnectionString { get; } = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=\\csing.navitas.local\shared\Documents\z-Public\QA and Compliance\Controlled Document\Controlled Document Master List.mdb;Persist Security Info=False;Jet OLEDB:Database Password=1234;";
+        public string ConnectionString { get; } = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\Users\weisong.teng\Desktop\Controlled Document Master List.mdb;Persist Security Info=False;Jet OLEDB:Database Password=1234;";
         public string SharedDrive { get; set; } = @"\\csing.navitas.local\shared\Documents\";
         //public string SharedDrive { get;} = @"C:\Users\weisong.teng\Desktop\S\";
         public string ArchivedFolder { get; set; } = @"\\csing.navitas.local\shared\Documents\Quality Assurance\#QA & COMPLIANCE Dept Functions#\Controlled Document\";
