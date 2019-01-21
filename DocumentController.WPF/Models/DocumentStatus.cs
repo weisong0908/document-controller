@@ -9,6 +9,6 @@ namespace DocumentController.WPF.Models
     public static class DocumentStatus
     {
         public const string Active = "Active";
-        public const string Rescind = "Rescind";
+        public const string Rescinded = "Rescinded";
     }
 }

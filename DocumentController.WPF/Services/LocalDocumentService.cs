@@ -45,7 +45,7 @@ namespace DocumentController.WPF.Services
             dataReader.Close();
             dbConnection.Close();
 
-            return documents;
+            return documents.Where(d => d.Status == DocumentStatus.Active);
         }
     }
 }

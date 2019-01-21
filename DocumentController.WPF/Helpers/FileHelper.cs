@@ -12,26 +12,36 @@ namespace DocumentController.WPF.Helpers
 {
     public class FileHelper: IFileHelper
     {
+        readonly string constitutionsPublicPath = @"# Constitution and Terms of Reference #\";
+        readonly string policiesPublicPath = @"# Curtin Singapore Corporate Policies #\";
+        readonly string proceduresPublicPath = @"# Curtin Singapore Corporate Procedures #\";
+        readonly string formsPublicPath = @"= Controlled Document =\Forms & Templates\";
+        readonly string workInstructionsPublicPath = @"= Controlled Document =\Work Instructions & Guidelines\";
+        readonly string organisationChartPublicPath = @"= Controlled Document =\Organisation Chart";
+
         public string GetDocumentLocation(DocumentViewModel document)
         {
             string sharedDrive = (System.Windows.Application.Current as App).SharedDrive;
             string mainFolder = "";
             switch (document.Type)
             {
+                case DocumentType.Constitution:
+                    mainFolder = constitutionsPublicPath;
+                    break;
                 case DocumentType.Policy:
-                    mainFolder = @"# Curtin Singapore Corporate Policies #\" + document.Department;
+                    mainFolder = policiesPublicPath + document.Department;
                     break;
                 case DocumentType.Procedure:
-                    mainFolder = @"# Curtin Singapore Corporate Procedures #\" + document.Department;
+                    mainFolder = proceduresPublicPath + document.Department;
                     break;
                 case DocumentType.Form:
-                    mainFolder = @"= Controlled Document =\Forms & Templates\" + document.Department + @"\Editable";
+                    mainFolder = formsPublicPath + document.Department + @"\Editable";
                     break;
                 case DocumentType.WorkInstruction:
-                    mainFolder = @"= Controlled Document =\Work Instructions & Guidelines\" + document.Department;
+                    mainFolder = workInstructionsPublicPath + document.Department;
                     break;
                 case DocumentType.OrganisationChart:
-                    mainFolder = @"= Controlled Document =\Organisation Chart";
+                    mainFolder = organisationChartPublicPath;
                     break;
             }
 
@@ -53,52 +63,58 @@ namespace DocumentController.WPF.Helpers
             Process.Start(Path.GetDirectoryName(document.Location));
         }
 
-        private (string publicPDF, string publicEditable, string privateCurrentPDF, string privateCurrentEditable, string privateObselete) GetUploadPaths(DocumentViewModel document)
+        private (string publicPDF, string publicEditable, string privateCurrentPDF, string privateCurrentEditable, string privateObsolete) GetUploadPaths(DocumentViewModel document)
         {
-            string sharedDrive = (System.Windows.Application.Current as App).SharedDrive;
+            string publicDrive = (System.Windows.Application.Current as App).SharedDrive;
             string archiveFolder = (System.Windows.Application.Current as App).ArchivedFolder;
-            string publicPDF = sharedDrive;
-            string publicEditable = sharedDrive;
+            string publicPDF = publicDrive;
+            string publicEditable = publicDrive;
             string privateCurrentPDF = archiveFolder;
             string privateCurrentEditable = archiveFolder;
-            string privateObselete = archiveFolder;
+            string privateObsolete = archiveFolder;
 
             switch (document.Type)
             {
+                case DocumentType.Constitution:
+                    publicPDF += Path.Combine(constitutionsPublicPath);
+                    privateCurrentPDF += Path.Combine(document.Department, @"Current\Cons\PDF");
+                    privateCurrentEditable += Path.Combine(document.Department, @"Current\Cons\Editable");
+                    privateObsolete += Path.Combine(document.Department, @"Obsolete\Cons");
+                    break;
                 case DocumentType.Policy:
-                    publicPDF += Path.Combine(@"# Curtin Singapore Corporate Policies #", document.Department);
+                    publicPDF += Path.Combine(policiesPublicPath, document.Department);
                     privateCurrentPDF += Path.Combine(document.Department, @"Current\Pol\PDF");
                     privateCurrentEditable += Path.Combine(document.Department, @"Current\Pol\Editable");
-                    privateObselete += Path.Combine(document.Department, @"Obselete\Pol");
+                    privateObsolete += Path.Combine(document.Department, @"Obsolete\Pol");
                     break;
                 case DocumentType.Procedure:
-                    publicPDF += Path.Combine(@"# Curtin Singapore Corporate Procedures #", document.Department);
+                    publicPDF += Path.Combine(proceduresPublicPath, document.Department);
                     privateCurrentPDF += Path.Combine(document.Department, @"Current\Pro\PDF");
                     privateCurrentEditable += Path.Combine(document.Department, @"Current\Pro\Editable");
-                    privateObselete += Path.Combine(document.Department, @"Obselete\Pro");
+                    privateObsolete += Path.Combine(document.Department, @"Obsolete\Pro");
                     break;
                 case DocumentType.Form:
-                    publicPDF += Path.Combine(@"= Controlled Document =\Forms & Templates", document.Department + @"\PDF");
-                    publicEditable += Path.Combine(@"= Controlled Document =\Forms & Templates", document.Department + @"\Editable");
+                    publicPDF += Path.Combine(formsPublicPath, document.Department + @"\PDF");
+                    publicEditable += Path.Combine(formsPublicPath, document.Department + @"\Editable");
                     privateCurrentPDF += Path.Combine(document.Department, @"Current\F & T\PDF");
                     privateCurrentEditable += Path.Combine(document.Department, @"Current\F & T\Editable");
-                    privateObselete += Path.Combine(document.Department, @"Obselete\F & T");
+                    privateObsolete += Path.Combine(document.Department, @"Obsolete\F & T");
                     break;
                 case DocumentType.WorkInstruction:
-                    publicPDF += Path.Combine(@"= Controlled Document =\Work Instructions & Guidelines", document.Department);
+                    publicPDF += Path.Combine(workInstructionsPublicPath, document.Department);
                     privateCurrentPDF += Path.Combine(document.Department, @"Current\WI & GL\PDF");
                     privateCurrentEditable += Path.Combine(document.Department, @"Current\WI & GL\Editable");
-                    privateObselete += Path.Combine(document.Department, @"Obselete\WI & GL");
+                    privateObsolete += Path.Combine(document.Department, @"Obsolete\WI & GL");
                     break;
                 case DocumentType.OrganisationChart:
-                    publicPDF += Path.Combine(@"= Controlled Document =", "Organisation Chart");
+                    publicPDF += organisationChartPublicPath;
                     privateCurrentPDF += Path.Combine(document.Department, @"Current\Organisation Chart\PDF");
                     privateCurrentEditable += Path.Combine(document.Department, @"Current\Organisation Chart\Editable");
-                    privateObselete += Path.Combine(document.Department, @"Obselete\Organisation Chart");
+                    privateObsolete += Path.Combine(document.Department, @"Obsolete\Organisation Chart");
                     break;
             }
 
-            return (publicPDF, publicEditable, privateCurrentPDF, privateCurrentEditable, privateObselete);
+            return (publicPDF, publicEditable, privateCurrentPDF, privateCurrentEditable, privateObsolete);
         }
 
         private void DeleteFile(DocumentViewModel document, string folder)

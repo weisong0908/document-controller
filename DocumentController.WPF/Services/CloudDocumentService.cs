@@ -32,7 +32,7 @@ namespace DocumentController.WPF.Services
                 documents = JsonConvert.DeserializeObject<List<Document>>(await response.Content.ReadAsStringAsync());
             }
 
-            return documents;
+            return documents.Where(d => d.Status == DocumentStatus.Active);
         }
     }
 }

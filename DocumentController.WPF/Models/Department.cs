@@ -12,6 +12,7 @@ namespace DocumentController.WPF.Models
         public const string Administration = "Administration";
         public const string Admissions = "Admissions";
         public const string CorporateGovernance = "Corporate Governance";
+        public const string ExecutiveCommittee = "Executive Committee";
         public const string Facilities = "Facilities";
         public const string Finance = "Finance";
         public const string HumanResource = "Human Resource";
