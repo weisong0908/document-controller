@@ -16,13 +16,14 @@
         <Menu Grid.Column="0" Grid.Row="0">
             <MenuItem Header="_Document" Visibility="{Binding DocumentMenuItemVisibility}">
                 <MenuItem Header="_New" Click="New_Click"/>
+                <MenuItem Header="_Rescind" Click="Rescind_Click"/>
                 <MenuItem Header="_Edit Version" Click="EditVersion_Click"/>
             </MenuItem>
             <MenuItem Header="_Backup database" Click="DatabaseBackup_Click" Visibility="{Binding DocumentMenuItemVisibility}"/>
         </Menu>
         <DockPanel Grid.Row="1">
             <TextBlock DockPanel.Dock="Top" Margin="6 0" FontSize="10" Text="Search by document title or document number"/>
-            <TextBox DockPanel.Dock="Top" Margin="6 2" TextChanged="TextBox_TextChanged"/>
+            <TextBox DockPanel.Dock="Top" Margin="6 2" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
             <DataGrid Margin="6 0" ItemsSource="{Binding FilteredDocuments}" SelectionChanged="DataGrid_SelectionChanged"
                       SelectionMode="Single"
                       AutoGenerateColumns="False"

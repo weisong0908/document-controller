@@ -32,6 +32,16 @@ namespace DocumentController.WPF.ViewModels
             get { return _selectedDocument; }
             set { SetValue(ref _selectedDocument, value); }
         }
+        private string _searchText;
+        public string SearchText
+        {
+            get { return _searchText; }
+            set
+            {
+                SetValue(ref _searchText, value);
+                FilterDocuments();
+            }
+        }
 
         public DocumentsWindowViewModel(IDocumentService documentService, IDocumentVersionService documentVersionService, IFileHelper fileHelper, IWindowHelper windowHelper, IMapper mapper)
         {
@@ -52,13 +62,14 @@ namespace DocumentController.WPF.ViewModels
             if (_allDocuments == null)
                 return;
 
-            FilteredDocuments = _allDocuments;
+            if (string.IsNullOrEmpty(_searchText))
+                FilteredDocuments = _allDocuments;
         }
 
-        public void FilterDocuments(string searchText)
+        public void FilterDocuments()
         {
             var results = _allDocuments
-                .Where(d => d.Title.ToLower().Contains(searchText.ToLower()) || d.DocumentNumber.ToLower().Contains(searchText.ToLower()))
+                .Where(d => d.Title.ToLower().Contains(_searchText.ToLower()) || d.DocumentNumber.ToLower().Contains(_searchText.ToLower()))
                 .ToList();
 
             if (results == null)
@@ -92,6 +103,17 @@ namespace DocumentController.WPF.ViewModels
         public void OnNewDocument()
         {
             windowHelper.ShowWindow(WindowType.NewDocumentWindow);
+        }
+
+        public void OnRescindDocument()
+        {
+            if (_selectedDocument == null)
+                return;
+
+            if(windowHelper.Confirmation($"Are you sure you want to rescind {_selectedDocument.Title}?", "Rescind document"))
+            {
+                documentService.RemoveDocument(mapper.Map<Document>(_selectedDocument));
+            }
         }
 
         public void OnNavigateToDocumentLocation()

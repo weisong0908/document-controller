@@ -40,11 +40,6 @@ namespace DocumentController.WPF.Views
             base.OnActivated(e);
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            ViewModel.FilterDocuments((e.Source as TextBox).Text.ToString());
-        }
-
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count == 0)
@@ -83,6 +78,11 @@ namespace DocumentController.WPF.Views
         private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             ViewModel.GoToVersionsWindow();
+        }
+
+        private void Rescind_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.OnRescindDocument();
         }
     }
 }
