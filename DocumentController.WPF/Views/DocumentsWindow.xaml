@@ -58,7 +58,7 @@
                         <TextBlock Text="Version:" Margin="4 3" VerticalAlignment="Center"/>
                         <TextBox IsReadOnly="True" Margin="4 3" Width="200" Text="{Binding SelectedDocument.VersionNumber}"/>
                         <TextBlock Text="Effective Date:" Margin="4 3" VerticalAlignment="Center"/>
-                        <TextBox IsReadOnly="True" Margin="4 3" Text="{Binding SelectedDocument.EffectiveDate}"/>
+                        <TextBox IsReadOnly="True" Margin="4 3" Text="{Binding SelectedDocument.EffectiveDate, StringFormat='{}{0:dd/MM/yyyy}'}"/>
                     </DockPanel>
                     <DockPanel>
                         <TextBlock Margin="4 3" VerticalAlignment="Center" DockPanel.Dock="Left" Width="70" Text="Department:"/>
