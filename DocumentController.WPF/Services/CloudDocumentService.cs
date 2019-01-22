@@ -34,5 +34,10 @@ namespace DocumentController.WPF.Services
 
             return documents.Where(d => d.Status == DocumentStatus.Active);
         }
+
+        public Task<Document> AddNewDocument(Document document)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

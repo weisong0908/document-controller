@@ -42,6 +42,11 @@ namespace DocumentController.WPF.Services
             };
         }
 
+        public async Task<Document> AddNewDocument(Document document)
+        {
+            return await Task.Run(() => document);
+        }
+
         public async Task<IEnumerable<Document>> GetDocuments()
         {
             return await Task.Run(() => documents);

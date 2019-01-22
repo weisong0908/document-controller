@@ -67,10 +67,14 @@ namespace DocumentController.WPF.ViewModels
             }
         }
 
-        public void CreateNewDocument()
+        public async void CreateNewDocument()
         {
-            _document.Id = 571;
+            if (!ValidateInput())
+                return;
+
             _document.Status = DocumentStatus.Active;
+            var newDocument = await documentService.AddNewDocument(mapper.Map<Document>(_document));
+            _document.Id = newDocument.Id;
 
             windowHelper.CloseWindow();
             windowHelper.ShowWindow(WindowType.DocumentVersionWindow, _document);
@@ -79,6 +83,29 @@ namespace DocumentController.WPF.ViewModels
         public void CancelNewDocument()
         {
             windowHelper.CloseWindow();
+        }
+
+        private bool ValidateInput()
+        {
+            if(string.IsNullOrEmpty(_document.Type))
+            {
+                windowHelper.Alert("The document type cannot be empty", "Invalid input");
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(_document.Title))
+            {
+                windowHelper.Alert("The document title cannot be empty", "Invalid input");
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(_document.Department))
+            {
+                windowHelper.Alert("The department cannot be empty", "Invalid input");
+                return false;
+            }
+
+            return true;
         }
     }
 }
