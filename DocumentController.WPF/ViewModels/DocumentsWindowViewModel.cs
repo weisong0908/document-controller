@@ -123,7 +123,7 @@ namespace DocumentController.WPF.ViewModels
 
         public void OnBackUpDatabase()
         {
-
+            fileHelper.BackUpDatabase();
         }
     }
 }

@@ -19,6 +19,10 @@ namespace DocumentController.WPF.Helpers
         readonly string workInstructionsPublicPath = @"= Controlled Document =\Work Instructions & Guidelines\";
         readonly string organisationChartPublicPath = @"= Controlled Document =\Organisation Chart";
 
+        readonly string databaseLocation = @"\\csing.navitas.local\shared\Documents\z-Public\QA and Compliance\Controlled Document\Controlled Document Master List.mdb";
+        readonly string backupFolder = @"\\csing.navitas.local\shared\Documents\Quality Assurance\#QA & COMPLIANCE Dept Functions#\Controlled Document\z - Controlled Document Master List backups";
+
+
         public string GetDocumentLocation(DocumentViewModel document)
         {
             string sharedDrive = (System.Windows.Application.Current as App).SharedDrive;
@@ -193,6 +197,13 @@ namespace DocumentController.WPF.Helpers
 
                 return string.Empty;
             }
+        }
+
+        public void BackUpDatabase()
+        {
+            var now = DateTime.Now;
+            var newFilename = $"Controlled Document Master List - {now.Year}-{now.Month}-{now.Day}-{now.Ticks}.mdb";
+            File.Copy(databaseLocation, Path.Combine(backupFolder, newFilename));
         }
     }
 }
