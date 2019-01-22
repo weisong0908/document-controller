@@ -107,13 +107,12 @@ namespace DocumentController.WPF.Services
 
         public async void RemoveDocument(Document document)
         {
-            string sql = $"UPDATE Documents SET Is_Removed = @IsRemoved WHERE ID = {document.Id}";
+            string sql = $"UPDATE Documents SET Document_Status = @Status WHERE ID = {document.Id}";
 
             dbConnection.Open();
             command = new OleDbCommand(sql, dbConnection);
 
-            OleDbParameter isRemoved = new OleDbParameter("@IsRemoved", "true");
-            command.Parameters.Add(isRemoved);
+            command.Parameters.AddWithValue("@Status", DocumentStatus.Rescinded);
 
             await command.ExecuteNonQueryAsync();
             dbConnection.Close();

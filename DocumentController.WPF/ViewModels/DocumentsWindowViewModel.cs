@@ -63,7 +63,7 @@ namespace DocumentController.WPF.ViewModels
                 return;
 
             if (string.IsNullOrEmpty(_searchText))
-                FilteredDocuments = _allDocuments;
+                FilteredDocuments = new ObservableCollection<DocumentViewModel>(_allDocuments);
         }
 
         public void FilterDocuments()
@@ -72,9 +72,7 @@ namespace DocumentController.WPF.ViewModels
                 .Where(d => d.Title.ToLower().Contains(_searchText.ToLower()) || d.DocumentNumber.ToLower().Contains(_searchText.ToLower()))
                 .ToList();
 
-            if (results == null)
-                return;
-            FilteredDocuments = results;
+            FilteredDocuments = new ObservableCollection<DocumentViewModel>(results);
         }
 
         public async void SelectDocument(DocumentViewModel selectedDocument)
@@ -113,6 +111,7 @@ namespace DocumentController.WPF.ViewModels
             if(windowHelper.Confirmation($"Are you sure you want to rescind {_selectedDocument.Title}?", "Rescind document"))
             {
                 documentService.RemoveDocument(mapper.Map<Document>(_selectedDocument));
+                FilteredDocuments.Remove(_selectedDocument);
             }
         }
 
