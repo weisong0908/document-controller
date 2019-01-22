@@ -23,7 +23,7 @@ namespace DocumentController.WPF.Services
         public async Task<IEnumerable<DocumentVersion>> GetAllVersionsByDocumentId(int documentId)
         {
             dbConnection.Open();
-            command = new OleDbCommand("SELECT * FROM Versions WHERE Doc_ID =" + documentId, dbConnection);
+            command = new OleDbCommand("SELECT * FROM Versions WHERE Document_ID =" + documentId, dbConnection);
             dataReader = command.ExecuteReader();
 
             var documentVersions = new List<DocumentVersion>();
@@ -33,7 +33,7 @@ namespace DocumentController.WPF.Services
                 documentVersions.Add(new DocumentVersion()
                 {
                     Id = int.Parse(dataReader["ID"].ToString()),
-                    DocumentId = int.Parse(dataReader["Doc_ID"].ToString()),
+                    DocumentId = int.Parse(dataReader["Document_ID"].ToString()),
                     VersionNumber = dataReader["Version"].ToString(),
                     EffectiveDate = (dataReader["Effective_Date"] == DBNull.Value) ? DateTime.MinValue : DateTime.Parse(dataReader["Effective_Date"].ToString()),
                     Progress = dataReader["Update_Status"].ToString(),
@@ -43,7 +43,7 @@ namespace DocumentController.WPF.Services
                     Remarks = dataReader["Remarks"].ToString(),
                     Location_PDF = dataReader["Location_PDF"].ToString(),
                     Location_Editable = dataReader["Location_Editable"].ToString(),
-                    IsRemoved = dataReader["IsRemoved"].ToString().ToLower()
+                    IsRemoved = dataReader["Is_Removed"].ToString().ToLower()
                 });
             }
 
@@ -56,7 +56,7 @@ namespace DocumentController.WPF.Services
         public async Task<DocumentVersion> AddNewDocumentVersion(DocumentVersion documentVersion)
         {
             string sql = "INSERT INTO Versions " +
-                "(Doc_ID, Version, Effective_Date, Update_Status, Description_of_Change, Purpose_of_Change, " +
+                "(Document_ID, Version, Effective_Date, Update_Status, Description_of_Change, Purpose_of_Change, " +
                 "Requestor, Remarks, Location_PDF, Location_Editable) VALUES " +
                 "(@DocumentId, @VersionNumber, @EffectiveDate, @Progress, @DescriptionOfChange, @PurposeOfChange, " +
                 "@Requestor, @Remarks, @Location_PDF, @Location_Editable)";
@@ -95,7 +95,7 @@ namespace DocumentController.WPF.Services
         public async Task<DocumentVersion> UpdateDocumentVersion(DocumentVersion documentVersion)
         {
             string sql = "UPDATE Versions SET " +
-                "Doc_ID = @DocumentId, " +
+                "Document_ID = @DocumentId, " +
                 "Version = @VersionNumber, " +
                 "Effective_Date = @EffectiveDate, " +
                 "Update_Status = @Progress, " +
@@ -140,7 +140,7 @@ namespace DocumentController.WPF.Services
 
         public async void RemoveDocumentVersion(DocumentVersion documentVersion)
         {
-            string sql = "UPDATE Versions SET IsRemoved = @IsRemoved WHERE ID = " + documentVersion.Id;
+            string sql = "UPDATE Versions SET Is_Removed = @IsRemoved WHERE ID = " + documentVersion.Id;
 
             dbConnection.Open();
             command = new OleDbCommand(sql, dbConnection);

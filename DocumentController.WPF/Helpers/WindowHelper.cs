@@ -15,6 +15,16 @@ namespace DocumentController.WPF.Helpers
             MessageBox.Show(message, caption);
         }
 
+        public bool Confirmation(string message, string caption)
+        {
+            var result = MessageBox.Show(message, caption, MessageBoxButton.YesNoCancel);
+
+            if (result == MessageBoxResult.Yes)
+                return true;
+
+            return false;
+        }
+
         public void ShowWindow(WindowType windowType, object parameter = null)
         {
             Window window = null;

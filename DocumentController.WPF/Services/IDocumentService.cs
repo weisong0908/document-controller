@@ -9,5 +9,7 @@ namespace DocumentController.WPF.Services
         Task<IEnumerable<Document>> GetDocuments();
 
         Task<Document> AddNewDocument(Document document);
+
+        void RemoveDocument(Document document);
     }
 }

@@ -51,5 +51,10 @@ namespace DocumentController.WPF.Services
         {
             return await Task.Run(() => documents);
         }
+
+        public void RemoveDocument(Document document)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

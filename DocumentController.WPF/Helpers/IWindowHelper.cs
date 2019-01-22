@@ -10,6 +10,8 @@ namespace DocumentController.WPF.Helpers
     {
         void Alert(string message, string caption);
 
+        bool Confirmation(string message, string caption);
+
         void ShowWindow(WindowType windowType, object parameter = null);
 
         void CloseWindow();

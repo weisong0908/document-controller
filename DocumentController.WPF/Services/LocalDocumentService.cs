@@ -23,7 +23,7 @@ namespace DocumentController.WPF.Services
         public async Task<IEnumerable<Document>> GetDocuments()
         {
             dbConnection.Open();
-            command = new OleDbCommand("SELECT ID, Document_No, Document_Title, Department, Function, Document_type, Document_Status FROM Documents", dbConnection);
+            command = new OleDbCommand("SELECT ID, Document_No, Document_Title, Department, Function, Document_Type, Document_Status FROM Documents", dbConnection);
 
             dataReader = command.ExecuteReader();
 
@@ -38,7 +38,7 @@ namespace DocumentController.WPF.Services
                     Title = (dataReader["Document_Title"].ToString()),
                     Department = (dataReader["Department"].ToString()),
                     Function = (dataReader["Function"].ToString()),
-                    Type = (dataReader["Document_type"].ToString()),
+                    Type = (dataReader["Document_Type"].ToString()),
                     Status = (dataReader["Document_Status"].ToString())
                 });
             }
@@ -52,7 +52,7 @@ namespace DocumentController.WPF.Services
         public async Task<Document> AddNewDocument(Document document)
         {
             string sql = "INSERT INTO Documents " +
-                "(Document_No, Document_Title, Department, Function, Document_type, Document_Status) VALUES " +
+                "(Document_No, Document_Title, Department, Function, Document_Type, Document_Status) VALUES " +
                 "(@DocumentNumber, @DocumentTitle, @Department, @Function, @DocumentType, @DocumentStatus)";
 
             dbConnection.Open();
@@ -83,7 +83,7 @@ namespace DocumentController.WPF.Services
 
         private async Task<Document> GetDocument(Document document)
         {
-            string sql = $"SELECT ID, Document_No, Document_Title, Department, Function, Document_type, Document_Status FROM Documents WHERE Document_Title = '{document.Title}' AND Document_type = '{document.Type}'";
+            string sql = $"SELECT ID, Document_No, Document_Title, Department, Function, Document_Type, Document_Status FROM Documents WHERE Document_Title = '{document.Title}' AND Document_type = '{document.Type}'";
             command = new OleDbCommand(sql, dbConnection);
             dataReader = command.ExecuteReader();
 
@@ -96,13 +96,27 @@ namespace DocumentController.WPF.Services
                 result.Title = (dataReader["Document_Title"].ToString());
                 result.Department = (dataReader["Department"].ToString());
                 result.Function = (dataReader["Function"].ToString());
-                result.Type = (dataReader["Document_type"].ToString());
+                result.Type = (dataReader["Document_Type"].ToString());
                 result.Status = (dataReader["Document_Status"].ToString());
             }
 
             dataReader.Close();
 
             return result;
+        }
+
+        public async void RemoveDocument(Document document)
+        {
+            string sql = $"UPDATE Documents SET Is_Removed = @IsRemoved WHERE ID = {document.Id}";
+
+            dbConnection.Open();
+            command = new OleDbCommand(sql, dbConnection);
+
+            OleDbParameter isRemoved = new OleDbParameter("@IsRemoved", "true");
+            command.Parameters.Add(isRemoved);
+
+            await command.ExecuteNonQueryAsync();
+            dbConnection.Close();
         }
     }
 }

@@ -39,5 +39,10 @@ namespace DocumentController.WPF.Services
         {
             throw new NotImplementedException();
         }
+
+        public void RemoveDocument(Document document)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
