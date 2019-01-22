@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace DocumentController.WPF.Helpers
 {
-    public class FileHelper: IFileHelper
+    public partial class FileHelper: IFileHelper
     {
         readonly string constitutionsPublicPath = @"# Constitution and Terms of Reference #\";
         readonly string policiesPublicPath = @"# Curtin Singapore Corporate Policies #\";
@@ -156,21 +156,25 @@ namespace DocumentController.WPF.Helpers
             Process.Start(destinationFolder);
         }
 
-        public void UpdateFiles(DocumentViewModel document, DocumentVersionViewModel documentVersion)
+        public void UpdateFiles(DocumentViewModel document, DocumentVersionViewModel documentVersion = null, UpdateFilesMethod updateFilesMethod = UpdateFilesMethod.UpdateVersion)
         {
             var (publicPDF, publicEditable, privateCurrentPDF, privateCurrentEditable, privateObselete) = GetUploadPaths(document);
 
             DeleteFile(document, publicPDF);
-            CopyFile(document, documentVersion, documentVersion.Location_PDF, publicPDF);
+            if(updateFilesMethod == UpdateFilesMethod.UpdateVersion)
+                CopyFile(document, documentVersion, documentVersion.Location_PDF, publicPDF);
             MoveFile(document, privateCurrentPDF, privateObselete);
-            CopyFile(document, documentVersion, documentVersion.Location_PDF, privateCurrentPDF);
+            if (updateFilesMethod == UpdateFilesMethod.UpdateVersion)
+                CopyFile(document, documentVersion, documentVersion.Location_PDF, privateCurrentPDF);
             MoveFile(document, privateCurrentEditable, privateObselete);
-            CopyFile(document, documentVersion, documentVersion.Location_Editable, privateCurrentEditable);
+            if (updateFilesMethod == UpdateFilesMethod.UpdateVersion)
+                CopyFile(document, documentVersion, documentVersion.Location_Editable, privateCurrentEditable);
 
             if (document.Type == DocumentType.Form)
             {
                 DeleteFile(document, publicEditable);
-                CopyFile(document, documentVersion, documentVersion.Location_Editable, publicEditable);
+                if (updateFilesMethod == UpdateFilesMethod.UpdateVersion)
+                    CopyFile(document, documentVersion, documentVersion.Location_Editable, publicEditable);
             }
         }
 

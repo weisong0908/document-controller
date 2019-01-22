@@ -113,7 +113,7 @@ namespace DocumentController.WPF.ViewModels
 
         public void UploadDocument()
         {
-            fileHelper.UpdateFiles(_selectedDocument, _selectedDocumentVersion);
+            fileHelper.UpdateFiles(_selectedDocument, _selectedDocumentVersion, UpdateFilesMethod.UpdateVersion);
         }
 
         public void BrowsePDFFile()

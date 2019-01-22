@@ -105,6 +105,7 @@
     <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Helpers\IFileHelper.cs" />
     <Compile Include="Helpers\IWindowHelper.cs" />
+    <Compile Include="Helpers\UpdateFilesMethod.cs" />
     <Compile Include="Helpers\WindowHelper.cs" />
     <Compile Include="Helpers\WindowType.cs" />
     <Compile Include="Mapping\MappingProfile.cs" />

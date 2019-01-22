@@ -112,6 +112,7 @@ namespace DocumentController.WPF.ViewModels
             {
                 documentService.RemoveDocument(mapper.Map<Document>(_selectedDocument));
                 FilteredDocuments.Remove(_selectedDocument);
+                fileHelper.UpdateFiles(_selectedDocument, updateFilesMethod: UpdateFilesMethod.RescindDocument);
             }
         }
 
