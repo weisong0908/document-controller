@@ -19,9 +19,13 @@ namespace DocumentController.WPF.Helpers
         readonly string workInstructionsPublicPath = @"= Controlled Document =\Work Instructions & Guidelines\";
         readonly string organisationChartPublicPath = @"= Controlled Document =\Organisation Chart";
 
-        readonly string databaseLocation = @"\\csing.navitas.local\shared\Documents\z-Public\QA and Compliance\Controlled Document\Controlled Document Master List.mdb";
+        readonly string databaseLocation;
         readonly string backupFolder = @"\\csing.navitas.local\shared\Documents\Quality Assurance\#QA & COMPLIANCE Dept Functions#\Controlled Document\z - Controlled Document Master List backups";
 
+        public FileHelper(string databaseLocation)
+        {
+            this.databaseLocation = databaseLocation;
+        }
 
         public string GetDocumentLocation(DocumentViewModel document)
         {
