@@ -96,5 +96,10 @@ namespace DocumentController.WPF.Services
                 result.IsRemoved = "true";
             });
         }
+
+        public Task<int> GetDocumentVersionId(DocumentVersion documentVersion)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

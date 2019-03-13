@@ -69,5 +69,10 @@ namespace DocumentController.WPF.Services
 
             response.EnsureSuccessStatusCode();
         }
+
+        public Task<int> GetDocumentVersionId(DocumentVersion documentVersion)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

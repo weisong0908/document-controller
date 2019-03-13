@@ -8,6 +8,8 @@ namespace DocumentController.WPF.Services
     {
         Task<IEnumerable<DocumentVersion>> GetAllVersionsByDocumentId(int documentId);
 
+        Task<int> GetDocumentVersionId(DocumentVersion documentVersion);
+
         Task<DocumentVersion> AddNewDocumentVersion(DocumentVersion documentVersion);
 
         Task<DocumentVersion> UpdateDocumentVersion(DocumentVersion documentVersion);

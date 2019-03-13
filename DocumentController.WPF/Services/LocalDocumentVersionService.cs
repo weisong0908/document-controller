@@ -53,6 +53,27 @@ namespace DocumentController.WPF.Services
             return documentVersions.Where(dv => dv.IsRemoved != "true");
         }
 
+        public async Task<int> GetDocumentVersionId(DocumentVersion documentVersion)
+        {
+            dbConnection.Open();
+            command = new OleDbCommand("SELECT ID FROM Versions WHERE Document_ID=@Document_ID AND Version=@Version", dbConnection);
+            command.Parameters.AddWithValue("@Document_ID", documentVersion.DocumentId);
+            command.Parameters.AddWithValue("@Version", documentVersion.VersionNumber);
+
+            dataReader = command.ExecuteReader();
+
+            int id = 0;
+            while (await dataReader.ReadAsync())
+            {
+                id = int.Parse(dataReader["ID"].ToString());
+            }
+
+            dataReader.Close();
+            dbConnection.Close();
+
+            return id;
+        }
+
         public async Task<DocumentVersion> AddNewDocumentVersion(DocumentVersion documentVersion)
         {
             string sql = "INSERT INTO Versions " +

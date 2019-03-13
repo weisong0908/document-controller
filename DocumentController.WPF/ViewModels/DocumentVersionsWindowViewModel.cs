@@ -15,6 +15,7 @@ namespace DocumentController.WPF.ViewModels
     public class DocumentVersionsWindowViewModel : BaseViewModel
     {
         private readonly IDocumentVersionService documentVersionService;
+        private readonly IDocumentTitleChangeService documentTitleChangeService;
         private readonly IFileHelper fileHelper;
         private readonly IWindowHelper windowHelper;
         private IMapper mapper;
@@ -32,31 +33,32 @@ namespace DocumentController.WPF.ViewModels
             get { return _documentVersions; }
             set { SetValue(ref _documentVersions, value); }
         }
-        private DocumentVersionViewModel _selectedDocumentVersion;
 
+        private DocumentVersionViewModel _selectedDocumentVersion;
         public DocumentVersionViewModel SelectedDocumentVersion
         {
             get { return _selectedDocumentVersion; }
             set { SetValue(ref _selectedDocumentVersion, value); }
         }
 
-        private bool _isDocumentNameChanged;
+        private bool _isDocumentTitleChanged;
         public bool IsDocumentNameChanged
         {
-            get { return _isDocumentNameChanged; }
-            set { SetValue(ref _isDocumentNameChanged, value); }
+            get { return _isDocumentTitleChanged; }
+            set { SetValue(ref _isDocumentTitleChanged, value); }
         }
 
         private string _newDocumentName;
-        public string NewDocumentName
+        public string NewDocumentTitle
         {
             get { return _newDocumentName; }
             set { SetValue(ref _newDocumentName, value); }
         }
 
-        public DocumentVersionsWindowViewModel(IDocumentVersionService documentVersionService, IFileHelper fileHelper, IWindowHelper windowHelper, IMapper mapper)
+        public DocumentVersionsWindowViewModel(IDocumentVersionService documentVersionService, IDocumentTitleChangeService documentTitleChangeService, IFileHelper fileHelper, IWindowHelper windowHelper, IMapper mapper)
         {
             this.documentVersionService = documentVersionService;
+            this.documentTitleChangeService = documentTitleChangeService;
             this.fileHelper = fileHelper;
             this.windowHelper = windowHelper;
             this.mapper = mapper;
@@ -103,10 +105,25 @@ namespace DocumentController.WPF.ViewModels
                 }
                 else
                 {
+                    if (_isDocumentTitleChanged)
+                    {
+                        var documentTitleChange = new DocumentTitleChange()
+                        {
+                            DocumentId = _selectedDocument.Id,
+                            DocumentVersionId = _selectedDocumentVersion.Id,
+                            OriginalDocumentTitle = _selectedDocument.Title,
+                            NewDocumentTitle = NewDocumentTitle
+                        };
+
+                        await documentTitleChangeService.AddNewDocumentTitleChange(documentTitleChange);
+                    }
+
                     response = await documentVersionService.UpdateDocumentVersion(documentVersionForChange);
                     if (response == null)
                         windowHelper.Alert("Please update again", "Opps, something went wrong");
                 }
+
+                SelectedDocumentVersion.Id = await documentVersionService.GetDocumentVersionId(response as DocumentVersion);
 
                 var documentVersions = mapper.Map<List<DocumentVersionViewModel>>((await documentVersionService.GetAllVersionsByDocumentId(_selectedDocument.Id)).OrderByDescending(dv => dv.EffectiveDate));
             }

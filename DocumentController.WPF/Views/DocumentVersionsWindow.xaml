@@ -102,7 +102,7 @@
                         <CheckBox IsChecked="{Binding IsDocumentNameChanged}"  DockPanel.Dock="Left" VerticalAlignment="Center" >
                             <TextBlock Text="New document name:"/>
                         </CheckBox>
-                        <TextBox Margin="3 0" VerticalAlignment="Center" IsEnabled="{Binding IsDocumentNameChanged}" Text="{Binding NewDocumentName}" />
+                        <TextBox Margin="3 0" VerticalAlignment="Center" IsEnabled="{Binding IsDocumentTitleChanged}" Text="{Binding NewDocumentTitle}" />
                     </DockPanel>
                 </StackPanel>
             </DockPanel>
