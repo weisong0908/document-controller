@@ -40,6 +40,20 @@ namespace DocumentController.WPF.ViewModels
             set { SetValue(ref _selectedDocumentVersion, value); }
         }
 
+        private bool _isDocumentNameChanged;
+        public bool IsDocumentNameChanged
+        {
+            get { return _isDocumentNameChanged; }
+            set { SetValue(ref _isDocumentNameChanged, value); }
+        }
+
+        private string _newDocumentName;
+        public string NewDocumentName
+        {
+            get { return _newDocumentName; }
+            set { SetValue(ref _newDocumentName, value); }
+        }
+
         public DocumentVersionsWindowViewModel(IDocumentVersionService documentVersionService, IFileHelper fileHelper, IWindowHelper windowHelper, IMapper mapper)
         {
             this.documentVersionService = documentVersionService;

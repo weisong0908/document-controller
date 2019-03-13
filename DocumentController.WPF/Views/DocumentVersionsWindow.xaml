@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DocumentController.WPF.Views"
         mc:Ignorable="d"
-        Title="{Binding SelectedDocument.Title, StringFormat='Edit Document Version - {0}'}" Height="550" Width="650" MinHeight="500" MinWidth="645">
+        Title="{Binding SelectedDocument.Title, StringFormat='Edit Document Version - {0}'}" Height="700" Width="650" MinHeight="500" MinWidth="645">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -66,13 +66,13 @@
             <DockPanel>
                 <StackPanel Margin="4 3">
                     <TextBlock Text="Description of change"/>
-                    <TextBox Height="100" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Text="{Binding SelectedDocumentVersion.DescriptionOfChange, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Height="150" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Text="{Binding SelectedDocumentVersion.DescriptionOfChange, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
             </DockPanel>
             <DockPanel>
                 <StackPanel Margin="4 3">
                     <TextBlock Text="Purpose of change"/>
-                    <TextBox Height="50" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Text="{Binding SelectedDocumentVersion.PurposeOfChange, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Height="100" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Text="{Binding SelectedDocumentVersion.PurposeOfChange, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
             </DockPanel>
             <DockPanel>
@@ -93,6 +93,17 @@
                 <StackPanel Margin="4 3">
                     <TextBlock Text="Remarks"/>
                     <TextBox Height="48" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Text="{Binding SelectedDocumentVersion.Remarks, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+            </DockPanel>
+            <DockPanel>
+                <StackPanel Margin="4 3">
+                <TextBlock Text="Change of name (if applicable)"/>
+                    <DockPanel Margin="0 3">
+                        <CheckBox IsChecked="{Binding IsDocumentNameChanged}"  DockPanel.Dock="Left" VerticalAlignment="Center" >
+                            <TextBlock Text="New document name:"/>
+                        </CheckBox>
+                        <TextBox Margin="3 0" VerticalAlignment="Center" IsEnabled="{Binding IsDocumentNameChanged}" Text="{Binding NewDocumentName}" />
+                    </DockPanel>
                 </StackPanel>
             </DockPanel>
         </StackPanel>
