@@ -20,30 +20,27 @@ namespace DocumentController.WPF.Services
             dbConnection = new OleDbConnection((Application.Current as App).ConnectionString);
         }
 
-        public async Task<IEnumerable<DocumentTitleChange>> GetDocumentTitleChangeByDocumentId(int documentId)
+        public async Task<DocumentTitleChange> GetDocumentTitleChangeByDocumentIdAndDocumentVersionId(int documentId, int documentVersionId)
         {
             dbConnection.Open();
-            command = new OleDbCommand("SELECT * FROM DocumentTitleChanges WHERE document_id =" + documentId, dbConnection);
+            command = new OleDbCommand("SELECT * FROM DocumentTitleChanges WHERE document_id =" + documentId + " AND version_id =" + documentVersionId, dbConnection);
             dataReader = command.ExecuteReader();
 
-            var documentTitleChanges = new List<DocumentTitleChange>();
+            var documentTitleChange = new DocumentTitleChange();
 
             while (await dataReader.ReadAsync())
             {
-                documentTitleChanges.Add(new DocumentTitleChange()
-                {
-                    Id = int.Parse(dataReader["id"].ToString()),
-                    DocumentId = int.Parse(dataReader["id"].ToString()),
-                    DocumentVersionId = int.Parse(dataReader["id"].ToString()),
-                    OriginalDocumentTitle = dataReader["original_document_title"].ToString(),
-                    NewDocumentTitle = dataReader["new_document_title"].ToString()
-                });
+                documentTitleChange.Id = int.Parse(dataReader["id"].ToString());
+                documentTitleChange.DocumentId = int.Parse(dataReader["document_id"].ToString());
+                documentTitleChange.DocumentVersionId = int.Parse(dataReader["version_id"].ToString());
+                documentTitleChange.OriginalDocumentTitle = dataReader["original_document_title"].ToString();
+                documentTitleChange.NewDocumentTitle = dataReader["new_document_title"].ToString();
             }
 
             dataReader.Close();
             dbConnection.Close();
 
-            return documentTitleChanges;
+            return documentTitleChange;
         }
 
         public async Task<DocumentTitleChange> AddNewDocumentTitleChange(DocumentTitleChange documentTitleChange)

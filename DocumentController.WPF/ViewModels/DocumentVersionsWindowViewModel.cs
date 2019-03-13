@@ -142,9 +142,16 @@ namespace DocumentController.WPF.ViewModels
             DocumentVersions.Remove(_selectedDocumentVersion);
         }
 
-        public void UploadDocument()
+        public async void UploadDocument()
         {
-            fileHelper.UpdateFiles(_selectedDocument, _selectedDocumentVersion, UpdateFilesMethod.UpdateVersion);
+            var documentTitleChange = await documentTitleChangeService.GetDocumentTitleChangeByDocumentIdAndDocumentVersionId(_selectedDocument.Id, _selectedDocumentVersion.Id);
+            if (documentTitleChange != null)
+            {
+                var newDocument = new DocumentViewModel() { Title = documentTitleChange.NewDocumentTitle };
+                fileHelper.UpdateFiles(_selectedDocument, newDocument, _selectedDocumentVersion, UpdateFilesMethod.UpdateVersion);
+            }
+            else
+                fileHelper.UpdateFiles(_selectedDocument, _selectedDocumentVersion, UpdateFilesMethod.UpdateVersion);
         }
 
         public void BrowsePDFFile()

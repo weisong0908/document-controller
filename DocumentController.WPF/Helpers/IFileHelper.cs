@@ -12,6 +12,8 @@ namespace DocumentController.WPF.Helpers
 
         void UpdateFiles(DocumentViewModel document, DocumentVersionViewModel documentVersion = null, UpdateFilesMethod updateFilesMethod = UpdateFilesMethod.UpdateVersion);
 
+        void UpdateFiles(DocumentViewModel originalDocument, DocumentViewModel newDocument, DocumentVersionViewModel documentVersion = null, UpdateFilesMethod updateFilesMethod = UpdateFilesMethod.UpdateVersion);
+
         string GetFilePath(FileType fileType);
 
         void BackUpDatabase();

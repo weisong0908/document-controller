@@ -168,21 +168,43 @@ namespace DocumentController.WPF.Helpers
         {
             var (publicPDF, publicEditable, privateCurrentPDF, privateCurrentEditable, privateObselete) = GetUploadPaths(document);
 
-            DeleteFile(document, publicPDF);
+            DeleteFile(document, publicPDF);//touches existing file, need to consider original document title
             if(updateFilesMethod == UpdateFilesMethod.UpdateVersion)
                 CopyFile(document, documentVersion, documentVersion.Location_PDF, publicPDF);
-            MoveFile(document, privateCurrentPDF, privateObselete);
+            MoveFile(document, privateCurrentPDF, privateObselete);//touches existing file, need to consider original document title
             if (updateFilesMethod == UpdateFilesMethod.UpdateVersion)
                 CopyFile(document, documentVersion, documentVersion.Location_PDF, privateCurrentPDF);
-            MoveFile(document, privateCurrentEditable, privateObselete);
+            MoveFile(document, privateCurrentEditable, privateObselete);//touches existing file, need to consider original document title
             if (updateFilesMethod == UpdateFilesMethod.UpdateVersion)
                 CopyFile(document, documentVersion, documentVersion.Location_Editable, privateCurrentEditable);
 
             if (document.Type == DocumentType.Form)
             {
-                DeleteFile(document, publicEditable);
+                DeleteFile(document, publicEditable);//touches existing file, need to consider original document title
                 if (updateFilesMethod == UpdateFilesMethod.UpdateVersion)
                     CopyFile(document, documentVersion, documentVersion.Location_Editable, publicEditable);
+            }
+        }
+
+        public void UpdateFiles(DocumentViewModel originalDocument, DocumentViewModel newDocument, DocumentVersionViewModel documentVersion = null, UpdateFilesMethod updateFilesMethod = UpdateFilesMethod.UpdateVersion)
+        {
+            var (publicPDF, publicEditable, privateCurrentPDF, privateCurrentEditable, privateObselete) = GetUploadPaths(originalDocument);
+
+            DeleteFile(originalDocument, publicPDF);//touches existing file, need to consider original document title
+            if (updateFilesMethod == UpdateFilesMethod.UpdateVersion)
+                CopyFile(newDocument, documentVersion, documentVersion.Location_PDF, publicPDF);
+            MoveFile(originalDocument, privateCurrentPDF, privateObselete);//touches existing file, need to consider original document title
+            if (updateFilesMethod == UpdateFilesMethod.UpdateVersion)
+                CopyFile(newDocument, documentVersion, documentVersion.Location_PDF, privateCurrentPDF);
+            MoveFile(originalDocument, privateCurrentEditable, privateObselete);//touches existing file, need to consider original document title
+            if (updateFilesMethod == UpdateFilesMethod.UpdateVersion)
+                CopyFile(newDocument, documentVersion, documentVersion.Location_Editable, privateCurrentEditable);
+
+            if (originalDocument.Type == DocumentType.Form)
+            {
+                DeleteFile(originalDocument, publicEditable);//touches existing file, need to consider original document title
+                if (updateFilesMethod == UpdateFilesMethod.UpdateVersion)
+                    CopyFile(newDocument, documentVersion, documentVersion.Location_Editable, publicEditable);
             }
         }
 

@@ -7,6 +7,6 @@ namespace DocumentController.WPF.Services
     public interface IDocumentTitleChangeService
     {
         Task<DocumentTitleChange> AddNewDocumentTitleChange(DocumentTitleChange documentTitleChange);
-        Task<IEnumerable<DocumentTitleChange>> GetDocumentTitleChangeByDocumentId(int documentId);
+        Task<DocumentTitleChange> GetDocumentTitleChangeByDocumentIdAndDocumentVersionId(int documentId, int documentVersionId);
     }
 }
