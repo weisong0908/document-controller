@@ -28,6 +28,7 @@ namespace DocumentController.WPF
 
         public IDocumentService DocumentService;
         public IDocumentVersionService DocumentVersionService;
+        public IDocumentTitleChangeService DocumentTitleChangeService;
         public IFileHelper FileHelper;
         public IWindowHelper WindowHelper;
         public IMapper Mapper;
@@ -36,6 +37,7 @@ namespace DocumentController.WPF
         {
             DocumentService = new LocalDocumentService();
             DocumentVersionService = new LocalDocumentVersionService();
+            DocumentTitleChangeService = new LocalDocumentTitleChangeService();
             FileHelper = new FileHelper(_databaseLocation);
             WindowHelper = new WindowHelper();
             Mapper = new MapperConfiguration(c => c.AddProfile<MappingProfile>()).CreateMapper();
