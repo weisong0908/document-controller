@@ -41,11 +41,10 @@ namespace DocumentController.WPF.ViewModels
             set { SetValue(ref _selectedDocumentVersion, value); }
         }
 
-        private bool _isDocumentTitleChanged;
+        private bool _isDocumentTitleChanged = false;
         public bool IsDocumentNameChanged
         {
             get { return _isDocumentTitleChanged; }
-            set { SetValue(ref _isDocumentTitleChanged, value); }
         }
 
         private string _newDocumentName;
