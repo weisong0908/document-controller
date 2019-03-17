@@ -9,6 +9,7 @@ namespace DocumentController.WPF.Models
     public static class DocumentType
     {
         public const string Constitution = "Constitution";
+        public const string TermsOfReference = "Terms of Reference";
         public const string Policy = "Policy";
         public const string Procedure = "Procedure";
         public const string Form = "Form";

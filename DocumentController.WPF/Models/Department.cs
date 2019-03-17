@@ -19,6 +19,7 @@ namespace DocumentController.WPF.Models
         public const string IT = "Information Technology";
         public const string Library = "Library";
         public const string Marketing = "Marketing";
+        public const string MarketingAndAdmission = "Marketing and Admission";
         public const string NavitasEnglish = "Navitas English";
         public const string QualityCompliance = "Quality and Compliance";
         public const string StudentAdministration = "Student Administration";
