@@ -32,11 +32,11 @@
                       IsReadOnly="True" 
                       GridLinesVisibility="None" MouseDoubleClick="DataGrid_MouseDoubleClick">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Title" Width="200" Binding="{Binding Title}" />
-                    <DataGridTextColumn Header="Document No" Width="100" Binding="{Binding DocumentNumber}"/>
+                    <DataGridTextColumn Header="Title" Width="250" Binding="{Binding Title}" />
+                    <!--<DataGridTextColumn Header="Document No" Width="100" Binding="{Binding DocumentNumber}"/>-->
                     <DataGridTextColumn Header="Department" Width="150" Binding="{Binding Department}"/>
-                    <DataGridTextColumn Header="Type" Width="90" Binding="{Binding Type}"/>
-                    <DataGridTextColumn Header="Status" Width="50" Binding="{Binding Status}"/>
+                    <DataGridTextColumn Header="Type" Width="120" Binding="{Binding Type}"/>
+                    <DataGridTextColumn Header="Status" Width="100" Binding="{Binding Status}"/>
                 </DataGrid.Columns>
             </DataGrid>            
         </DockPanel>
