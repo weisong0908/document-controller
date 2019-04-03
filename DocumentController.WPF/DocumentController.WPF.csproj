@@ -112,15 +112,12 @@
     <Compile Include="Helpers\FileType.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\DocumentStatus.cs" />
-    <Compile Include="Models\DocumentTitleChange.cs" />
     <Compile Include="Models\DocumentType.cs" />
     <Compile Include="Models\DocumentVersion.cs" />
     <Compile Include="Models\Function.cs" />
     <Compile Include="Models\Progress.cs" />
     <Compile Include="Services\CloudDocumentService.cs" />
     <Compile Include="Services\CloudDocumentVersionService.cs" />
-    <Compile Include="Services\IDocumentTitleChangeService.cs" />
-    <Compile Include="Services\LocalDocumentTitleChangeService.cs" />
     <Compile Include="Services\FakeDocumentService.cs" />
     <Compile Include="Services\FakeDocumentVersionService.cs" />
     <Compile Include="Services\IDocumentService.cs" />

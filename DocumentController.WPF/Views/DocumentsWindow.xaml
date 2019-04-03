@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DocumentController.WPF.Views"
         mc:Ignorable="d"
-        Title="Document Controller" Height="600" Width="655">
+        Title="Document Controller" Height="600" Width="655" MinHeight="600" MinWidth="655">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>

@@ -95,17 +95,6 @@
                     <TextBox Height="48" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Text="{Binding SelectedDocumentVersion.Remarks, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
             </DockPanel>
-            <DockPanel>
-                <!--<StackPanel Margin="4 3">
-                <TextBlock Text="Change of name (if applicable)"/>
-                    <DockPanel Margin="0 3">
-                        <CheckBox IsChecked="{Binding IsDocumentNameChanged, UpdateSourceTrigger=PropertyChanged}"  DockPanel.Dock="Left" VerticalAlignment="Center" >
-                            <TextBlock Text="New document name:"/>
-                        </CheckBox>
-                        <TextBox Margin="3 0" VerticalAlignment="Center" IsEnabled="{Binding IsDocumentTitleChanged}" Text="{Binding NewDocumentTitle, UpdateSourceTrigger=PropertyChanged}" />
-                    </DockPanel>
-                </StackPanel>-->
-            </DockPanel>
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Background="LightGray">
             <TextBlock Margin="3 6" />
