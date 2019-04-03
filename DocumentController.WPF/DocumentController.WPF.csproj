@@ -116,12 +116,15 @@
     <Compile Include="Models\DocumentVersion.cs" />
     <Compile Include="Models\Function.cs" />
     <Compile Include="Models\Progress.cs" />
+    <Compile Include="Models\AdminUser.cs" />
     <Compile Include="Services\CloudDocumentService.cs" />
     <Compile Include="Services\CloudDocumentVersionService.cs" />
     <Compile Include="Services\FakeDocumentService.cs" />
     <Compile Include="Services\FakeDocumentVersionService.cs" />
+    <Compile Include="Services\IAdminUserService.cs" />
     <Compile Include="Services\IDocumentService.cs" />
     <Compile Include="Services\IDocumentVersionService.cs" />
+    <Compile Include="Services\LocalAdminUserService.cs" />
     <Compile Include="Services\LocalDocumentService.cs" />
     <Compile Include="Services\LocalDocumentVersionService.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />

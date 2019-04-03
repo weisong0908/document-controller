@@ -15,6 +15,7 @@ namespace DocumentController.WPF.ViewModels
     {
         private readonly IDocumentService documentService;
         private readonly IDocumentVersionService documentVersionService;
+        private readonly IAdminUserService adminUserService;
         private readonly IFileHelper fileHelper;
         private readonly IWindowHelper windowHelper;
         private readonly IMapper mapper;
@@ -42,11 +43,13 @@ namespace DocumentController.WPF.ViewModels
                 FilterDocuments();
             }
         }
+        public bool IsAdmin { get; set; }
 
-        public DocumentsWindowViewModel(IDocumentService documentService, IDocumentVersionService documentVersionService, IFileHelper fileHelper, IWindowHelper windowHelper, IMapper mapper)
+        public DocumentsWindowViewModel(IDocumentService documentService, IDocumentVersionService documentVersionService, IAdminUserService adminUserService, IFileHelper fileHelper, IWindowHelper windowHelper, IMapper mapper)
         {
             this.documentService = documentService;
             this.documentVersionService = documentVersionService;
+            this.adminUserService = adminUserService;
             this.fileHelper = fileHelper;
             this.windowHelper = windowHelper;
             this.mapper = mapper;
@@ -58,6 +61,8 @@ namespace DocumentController.WPF.ViewModels
 
         public async void OnActivated()
         {
+            IsAdmin = await adminUserService.IsAdmin(Environment.UserName);
+
             _allDocuments = mapper.Map<IList<DocumentViewModel>>(await documentService.GetDocuments());
             if (_allDocuments == null)
                 return;

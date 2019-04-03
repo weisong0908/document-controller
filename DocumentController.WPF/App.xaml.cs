@@ -19,7 +19,7 @@ namespace DocumentController.WPF
     {
         public string ApiEndPointBaseAddress { get; } = @"http://178.128.119.129/api/";
         //public string ConnectionString { get; } = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=\\csing.navitas.local\shared\Documents\z-Public\QA and Compliance\Controlled Document\Controlled Document Master List.mdb;Persist Security Info=False;Jet OLEDB:Database Password=1234;";
-        private string _databaseLocation = @"\\csing.navitas.local\shared\Documents\Quality Assurance - Shared\Document Control\Controlled Document Master List.mdb";
+        private string _databaseLocation = @"\\csing.navitas.local\shared\Documents\Quality Assurance - Shared\Document Control\Controlled Document Master List - test.mdb";
         public string ConnectionString { get { return $@"Provider=Microsoft.Jet.OLEDB.4.0;Data Source={_databaseLocation};Persist Security Info=False;Jet OLEDB:Database Password=1234;"; } }
         public string SharedDrive { get; set; } = @"\\csing.navitas.local\shared\Documents\";
         //public string SharedDrive { get;} = @"C:\Users\weisong.teng\Desktop\S\";
@@ -28,6 +28,7 @@ namespace DocumentController.WPF
 
         public IDocumentService DocumentService;
         public IDocumentVersionService DocumentVersionService;
+        public IAdminUserService AdminUserService;
         public IFileHelper FileHelper;
         public IWindowHelper WindowHelper;
         public IMapper Mapper;
@@ -36,6 +37,7 @@ namespace DocumentController.WPF
         {
             DocumentService = new LocalDocumentService();
             DocumentVersionService = new LocalDocumentVersionService();
+            AdminUserService = new LocalAdminUserService();
             FileHelper = new FileHelper(_databaseLocation);
             WindowHelper = new WindowHelper();
             Mapper = new MapperConfiguration(c => c.AddProfile<MappingProfile>()).CreateMapper();

@@ -28,10 +28,11 @@ namespace DocumentController.WPF.Views
 
             var documentService = (Application.Current as App).DocumentService;
             var documentVersionService = (Application.Current as App).DocumentVersionService;
+            var adminUserService = (Application.Current as App).AdminUserService;
             var fileHelper = (Application.Current as App).FileHelper;
             var windowHelper = (Application.Current as App).WindowHelper;
             var mapper = (Application.Current as App).Mapper;
-            ViewModel = new DocumentsWindowViewModel(documentService, documentVersionService, fileHelper, windowHelper, mapper);
+            ViewModel = new DocumentsWindowViewModel(documentService, documentVersionService, adminUserService, fileHelper, windowHelper, mapper);
         }
 
         protected override void OnActivated(EventArgs e)
