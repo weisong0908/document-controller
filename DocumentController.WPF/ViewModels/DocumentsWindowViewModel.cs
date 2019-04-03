@@ -44,6 +44,7 @@ namespace DocumentController.WPF.ViewModels
             }
         }
         public bool IsAdmin { get; set; }
+        public string Visibility { get { return (IsAdmin) ? "Visible" : "Collapsed"; } }
 
         public DocumentsWindowViewModel(IDocumentService documentService, IDocumentVersionService documentVersionService, IAdminUserService adminUserService, IFileHelper fileHelper, IWindowHelper windowHelper, IMapper mapper)
         {
