@@ -18,11 +18,11 @@
         </Grid.ColumnDefinitions>
         <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
             <MenuItem Header="_Version">
-                <MenuItem Header="_New" Click="New_Click"/>
-                <MenuItem Header="_Save" Click="Save_Click"/>
-                <MenuItem Header="_Remove" Click="Remove_Click"/>
+                <MenuItem Header="_New" Click="New_Click" Visibility="{Binding Visibility}"/>
+                <MenuItem Header="_Save" Click="Save_Click" Visibility="{Binding Visibility}"/>
+                <MenuItem Header="_Remove" Click="Remove_Click" Visibility="{Binding Visibility}"/>
             </MenuItem>
-            <MenuItem Header="_Tool">
+            <MenuItem Header="_Tool" Visibility="{Binding Visibility}">
                 <MenuItem Header="_Upload document" Click="UploadDocument_Click"/>
             </MenuItem>
         </Menu>
@@ -46,53 +46,53 @@
             <DockPanel>
                 <StackPanel Margin="4 3">
                     <TextBlock Text="Version number"/>
-                    <TextBox Width="100" Text="{Binding SelectedDocumentVersion.VersionNumber, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Width="100" IsReadOnly="{Binding IsReadOnly}" Text="{Binding SelectedDocumentVersion.VersionNumber, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
                 <StackPanel Margin="4 3">
                     <TextBlock Text="Effective date"/>
-                    <DatePicker SelectedDate="{Binding SelectedDocumentVersion.EffectiveDate, UpdateSourceTrigger=PropertyChanged}"/>
+                    <DatePicker IsEnabled="{Binding IsEnabled}" SelectedDate="{Binding SelectedDocumentVersion.EffectiveDate, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
             </DockPanel>
             <DockPanel>
                 <StackPanel Margin="4 3">
                     <TextBlock Text="Progress"/>
-                    <ComboBox Width="100" SelectedItem="{Binding SelectedDocumentVersion.Progress, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Progresses}"/>
+                    <ComboBox Width="100" IsEnabled="{Binding IsEnabled}" SelectedItem="{Binding SelectedDocumentVersion.Progress, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Progresses}"/>
                 </StackPanel>
                 <StackPanel Margin="4 3">
                     <TextBlock Text="Requestor"/>
-                    <TextBox Text="{Binding SelectedDocumentVersion.Requestor, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox IsReadOnly="{Binding IsReadOnly}" Text="{Binding SelectedDocumentVersion.Requestor, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
             </DockPanel>
             <DockPanel>
                 <StackPanel Margin="4 3">
                     <TextBlock Text="Description of change"/>
-                    <TextBox Height="150" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Text="{Binding SelectedDocumentVersion.DescriptionOfChange, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Height="150" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" IsReadOnly="{Binding IsReadOnly}" Text="{Binding SelectedDocumentVersion.DescriptionOfChange, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
             </DockPanel>
             <DockPanel>
                 <StackPanel Margin="4 3">
                     <TextBlock Text="Purpose of change"/>
-                    <TextBox Height="100" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Text="{Binding SelectedDocumentVersion.PurposeOfChange, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Height="100" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" IsReadOnly="{Binding IsReadOnly}" Text="{Binding SelectedDocumentVersion.PurposeOfChange, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
             </DockPanel>
             <DockPanel>
                 <StackPanel Margin="4 3">
                     <TextBlock Text="PDF file location"/>
-                    <TextBox Width="300" Text="{Binding SelectedDocumentVersion.Location_PDF, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Width="300" IsReadOnly="{Binding IsReadOnly}" Text="{Binding SelectedDocumentVersion.Location_PDF, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
-                <Button Margin="3" DockPanel.Dock="Right" Padding="0" Height="24" Width="26" Content="..." Click="FindPdf_Click" />
+                <Button Margin="3" DockPanel.Dock="Right" Padding="0" Height="24" Width="26" Content="..." IsEnabled="{Binding IsEnabled}" Click="FindPdf_Click" />
             </DockPanel>
             <DockPanel>
                 <StackPanel Margin="4 3">
                     <TextBlock Text="Editable file location"/>
-                    <TextBox Width="300" Text="{Binding SelectedDocumentVersion.Location_Editable, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Width="300" IsReadOnly="{Binding IsReadOnly}" Text="{Binding SelectedDocumentVersion.Location_Editable, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
-                <Button Margin="3" DockPanel.Dock="Right" Padding="0" Height="24" Width="26" Content="..." Click="FindEditable_Click"/>
+                <Button Margin="3" DockPanel.Dock="Right" Padding="0" Height="24" Width="26" Content="..." IsEnabled="{Binding IsEnabled}" Click="FindEditable_Click"/>
             </DockPanel>
             <DockPanel>
                 <StackPanel Margin="4 3">
                     <TextBlock Text="Remarks"/>
-                    <TextBox Height="48" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Text="{Binding SelectedDocumentVersion.Remarks, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Height="48" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" IsReadOnly="{Binding IsReadOnly}" Text="{Binding SelectedDocumentVersion.Remarks, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
             </DockPanel>
         </StackPanel>

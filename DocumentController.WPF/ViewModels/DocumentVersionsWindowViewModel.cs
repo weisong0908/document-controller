@@ -15,6 +15,7 @@ namespace DocumentController.WPF.ViewModels
     public class DocumentVersionsWindowViewModel : BaseViewModel
     {
         private readonly IDocumentVersionService documentVersionService;
+        private readonly IAdminUserService adminUserService;
         private readonly IFileHelper fileHelper;
         private readonly IWindowHelper windowHelper;
         private IMapper mapper;
@@ -40,12 +41,6 @@ namespace DocumentController.WPF.ViewModels
             set { SetValue(ref _selectedDocumentVersion, value); }
         }
 
-        private bool _isDocumentTitleChanged = false;
-        public bool IsDocumentNameChanged
-        {
-            get { return _isDocumentTitleChanged; }
-        }
-
         private string _newDocumentName;
         public string NewDocumentTitle
         {
@@ -53,9 +48,16 @@ namespace DocumentController.WPF.ViewModels
             set { SetValue(ref _newDocumentName, value); }
         }
 
-        public DocumentVersionsWindowViewModel(IDocumentVersionService documentVersionService, IFileHelper fileHelper, IWindowHelper windowHelper, IMapper mapper)
+        public bool IsAdmin { get; set; }
+
+        public string Visibility { get { return (IsAdmin) ? "Visible" : "Collapsed"; } }
+        public string IsReadOnly { get { return (IsAdmin) ? "False" : "True"; } }
+        public string IsEnabled { get { return (IsAdmin) ? "True" : "False"; } }
+
+        public DocumentVersionsWindowViewModel(IDocumentVersionService documentVersionService, IAdminUserService adminUserService, IFileHelper fileHelper, IWindowHelper windowHelper, IMapper mapper)
         {
             this.documentVersionService = documentVersionService;
+            this.adminUserService = adminUserService;
             this.fileHelper = fileHelper;
             this.windowHelper = windowHelper;
             this.mapper = mapper;
@@ -66,6 +68,8 @@ namespace DocumentController.WPF.ViewModels
 
         public async void OnStartUp(DocumentViewModel selectedDocument)
         {
+            IsAdmin = await adminUserService.IsAdmin(Environment.UserName);
+
             SelectedDocument = selectedDocument;
             var documentVersions = mapper.Map<List<DocumentVersionViewModel>>((await documentVersionService.GetAllVersionsByDocumentId(_selectedDocument.Id)).OrderByDescending(dv => dv.EffectiveDate));
             DocumentVersions = new ObservableCollection<DocumentVersionViewModel>(documentVersions);
