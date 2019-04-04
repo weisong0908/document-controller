@@ -14,10 +14,10 @@
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         <Menu Grid.Column="0" Grid.Row="0">
-            <MenuItem Header="_Document" Visibility="{Binding DocumentMenuItemVisibility}">
+            <MenuItem Header="_Document">
                 <MenuItem Header="_New" Click="New_Click" Visibility="{Binding Visibility}"/>
                 <MenuItem Header="_Rescind" Click="Rescind_Click" Visibility="{Binding Visibility}"/>
-                <MenuItem Header="_Edit Version" Click="EditVersion_Click"/>
+                <MenuItem Header="_All versions" Click="EditVersion_Click"/>
             </MenuItem>
             <MenuItem Header="_Tool" Visibility="{Binding Visibility}">
                 <MenuItem Header="_Backup database" Click="DatabaseBackup_Click"/>
