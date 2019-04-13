@@ -23,11 +23,12 @@ namespace DocumentController.WebAPI.Persistence
             modelBuilder.Entity<Document>().Property(d => d.Status).HasColumnName("status");
             modelBuilder.Entity<Document>().Property(d => d.Title).HasColumnName("title");
             modelBuilder.Entity<Document>().Property(d => d.Type).HasColumnName("type");
+            modelBuilder.Entity<Document>().Property(d => d.IsRemoved).HasColumnName("is_removed");
 
             modelBuilder.Entity<DocumentVersion>().ToTable("document_versions");
             modelBuilder.Entity<DocumentVersion>().Property(dv => dv.DescriptionOfChange).HasColumnName("description_of_change");
             modelBuilder.Entity<DocumentVersion>().Property(dv => dv.DocumentId).HasColumnName("document_id");
-            modelBuilder.Entity<DocumentVersion>().Property(dv => dv.EffectiveDate).HasColumnName("effective_date");
+            modelBuilder.Entity<DocumentVersion>().Property(dv => dv.EffectiveDate).HasColumnName("effective_date").HasColumnType("date");
             modelBuilder.Entity<DocumentVersion>().Property(dv => dv.Id).HasColumnName("id");
             modelBuilder.Entity<DocumentVersion>().Property(dv => dv.IsRemoved).HasColumnName("is_removed");
             modelBuilder.Entity<DocumentVersion>().Property(dv => dv.Location_Editable).HasColumnName("location_editable");

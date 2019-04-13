@@ -12,11 +12,12 @@ namespace DocumentController.WebAPI.Models
         public string Type { get; set; }
         public string Status { get; set; }
         public string Location { get; set; }
+        public string IsRemoved { get; set; }
         public IList<DocumentVersion> DocumentVersions { get; set; }
 
         public Document()
         {
             DocumentVersions = new List<DocumentVersion>();
-        }        
+        }
     }
 }

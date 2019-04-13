@@ -8,5 +8,7 @@ namespace DocumentController.WebAPI.Persistence
     {
         Task<IEnumerable<Document>> GetAllDocuments();
         Task<Document> GetDocument(int id);
+        Task AddNewDocument(Document document);
+        Task<Document> RemoveDocument(int documentId);
     }
 }

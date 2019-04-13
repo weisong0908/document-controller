@@ -3,15 +3,17 @@ using System;
 using DocumentController.WebAPI.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace DocumentController.WebAPI.Migrations
 {
     [DbContext(typeof(DocumentControllerDbContext))]
-    partial class DocumentControllerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190413085212_Added IsRemoved to Document")]
+    partial class AddedIsRemovedtoDocument
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,8 +76,7 @@ namespace DocumentController.WebAPI.Migrations
                         .HasColumnName("document_id");
 
                     b.Property<DateTime?>("EffectiveDate")
-                        .HasColumnName("effective_date")
-                        .HasColumnType("date");
+                        .HasColumnName("effective_date");
 
                     b.Property<string>("IsRemoved")
                         .HasColumnName("is_removed");

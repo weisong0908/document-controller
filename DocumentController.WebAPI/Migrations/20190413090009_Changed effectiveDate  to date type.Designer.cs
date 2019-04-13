@@ -3,15 +3,17 @@ using System;
 using DocumentController.WebAPI.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace DocumentController.WebAPI.Migrations
 {
     [DbContext(typeof(DocumentControllerDbContext))]
-    partial class DocumentControllerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190413090009_Changed effectiveDate  to date type")]
+    partial class ChangedeffectiveDatetodatetype
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -44,5 +44,29 @@ namespace DocumentController.WebAPI.Controllers
 
             return Ok(document);
         }
+
+        [HttpPost]
+        public async Task<ActionResult<Document>> AddNewDocument(Document document)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            await documentRepository.AddNewDocument(document);
+            await unitOfWork.CompleteAsync();
+
+            return CreatedAtAction(nameof(GetDocument), new { id = document.Id }, document);
+        }
+
+        [HttpDelete("{documentId}")]
+        public async Task<ActionResult<Document>> RemoveDocument(int documentId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var result = await documentRepository.RemoveDocument(documentId);
+            await unitOfWork.CompleteAsync();
+
+            return Ok(result);
+        }
     }
 }

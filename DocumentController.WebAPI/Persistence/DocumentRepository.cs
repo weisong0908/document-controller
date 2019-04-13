@@ -22,5 +22,23 @@ namespace DocumentController.WebAPI.Persistence
         {
             return await dbContext.Documents.SingleOrDefaultAsync(d => d.Id == id);
         }
+
+        public async Task AddNewDocument(Document document)
+        {
+            await dbContext.AddAsync(document);
+        }
+
+        public async Task<Document> RemoveDocument(int documentId)
+        {
+            var documentInDb = await dbContext.Documents.SingleOrDefaultAsync(d => d.Id == documentId);
+
+            if (documentInDb == null)
+                return null;
+            documentInDb.IsRemoved = "true";
+
+            dbContext.Documents.Update(documentInDb);
+
+            return documentInDb;
+        }
     }
 }
