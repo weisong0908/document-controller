@@ -35,14 +35,26 @@ namespace DocumentController.WPF.Services
             return documents.Where(d => d.Status == DocumentStatus.Active);
         }
 
-        public Task<Document> AddNewDocument(Document document)
+        public async Task<Document> AddNewDocument(Document document)
         {
-            throw new NotImplementedException();
+            var setting = new JsonSerializerSettings();
+            setting.DefaultValueHandling = DefaultValueHandling.Ignore;
+
+            var content = new StringContent(JsonConvert.SerializeObject(document), Encoding.UTF8, "application/json");
+            var response = await client.PostAsync("documents", content);
+
+            response.EnsureSuccessStatusCode();
+
+            var result = JsonConvert.DeserializeObject<Document>(await response.Content.ReadAsStringAsync());
+
+            return result;
         }
 
-        public void RemoveDocument(Document document)
+        public async void RemoveDocument(Document document)
         {
-            throw new NotImplementedException();
+            var response = await client.DeleteAsync($"documents/{document.Id}");
+
+            response.EnsureSuccessStatusCode();
         }
     }
 }

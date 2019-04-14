@@ -63,6 +63,7 @@ namespace DocumentController.WPF.ViewModels
         public async void OnActivated()
         {
             IsAdmin = await adminUserService.IsAdmin(Environment.UserName);
+            OnPropertyChanged(nameof(Visibility));
 
             _allDocuments = mapper.Map<IList<DocumentViewModel>>(await documentService.GetDocuments());
             if (_allDocuments == null)

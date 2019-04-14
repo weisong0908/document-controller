@@ -117,8 +117,10 @@
     <Compile Include="Models\Function.cs" />
     <Compile Include="Models\Progress.cs" />
     <Compile Include="Models\AdminUser.cs" />
+    <Compile Include="Services\CloudAdminUserService.cs" />
     <Compile Include="Services\CloudDocumentService.cs" />
     <Compile Include="Services\CloudDocumentVersionService.cs" />
+    <Compile Include="Services\FakeAdminUserService.cs" />
     <Compile Include="Services\FakeDocumentService.cs" />
     <Compile Include="Services\FakeDocumentVersionService.cs" />
     <Compile Include="Services\IAdminUserService.cs" />
