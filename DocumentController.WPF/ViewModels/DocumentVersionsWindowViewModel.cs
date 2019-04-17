@@ -71,6 +71,9 @@ namespace DocumentController.WPF.ViewModels
         public async void OnStartUp(DocumentViewModel selectedDocument)
         {
             IsAdmin = await adminUserService.IsAdmin(Environment.UserName);
+            OnPropertyChanged(nameof(Visibility));
+            OnPropertyChanged(nameof(IsReadOnly));
+            OnPropertyChanged(nameof(IsEnabled));
 
             SelectedDocument = selectedDocument;
             var documentVersions = mapper.Map<List<DocumentVersionViewModel>>((await documentVersionService.GetAllVersionsByDocumentId(_selectedDocument.Id)).OrderByDescending(dv => dv.EffectiveDate));
@@ -113,7 +116,8 @@ namespace DocumentController.WPF.ViewModels
                         windowHelper.Alert("Please update again", "Opps, something went wrong");
                 }
 
-                SelectedDocumentVersion.Id = await documentVersionService.GetDocumentVersionId(response as DocumentVersion);
+                //SelectedDocumentVersion.Id = await documentVersionService.GetDocumentVersionId(response as DocumentVersion);
+                SelectedDocumentVersion.Id = (response as DocumentVersion).Id;
 
                 var documentVersions = mapper.Map<List<DocumentVersionViewModel>>((await documentVersionService.GetAllVersionsByDocumentId(_selectedDocument.Id)).OrderByDescending(dv => dv.EffectiveDate));
             }
