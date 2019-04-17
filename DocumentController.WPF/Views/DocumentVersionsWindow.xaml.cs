@@ -28,10 +28,11 @@ namespace DocumentController.WPF.Views
 
             var documentVersionService = (Application.Current as App).DocumentVersionService;
             var adminUserService = (Application.Current as App).AdminUserService;
+            var changeRequestService = (Application.Current as App).ChangeRequestService;
             var fileHelper = (Application.Current as App).FileHelper;
             var windowHelper = (Application.Current as App).WindowHelper;
             var mapper = (Application.Current as App).Mapper;
-            ViewModel = new DocumentVersionsWindowViewModel(documentVersionService, adminUserService, fileHelper, windowHelper, mapper);
+            ViewModel = new DocumentVersionsWindowViewModel(documentVersionService, adminUserService, changeRequestService, fileHelper, windowHelper, mapper);
             ViewModel.OnStartUp(selectedDocument as DocumentViewModel);
         }
 
@@ -63,6 +64,11 @@ namespace DocumentController.WPF.Views
         private void FindEditable_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.BrowseEditableFile();
+        }
+
+        private void NewFromDCR_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.OnDocumentChangeRequested();
         }
     }
 }

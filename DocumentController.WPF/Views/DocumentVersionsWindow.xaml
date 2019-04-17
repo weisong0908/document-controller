@@ -17,10 +17,11 @@
             <ColumnDefinition Width="380"/>
         </Grid.ColumnDefinitions>
         <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-            <MenuItem Header="_Version">
-                <MenuItem Header="_New" Click="New_Click" Visibility="{Binding Visibility}"/>
-                <MenuItem Header="_Save" Click="Save_Click" Visibility="{Binding Visibility}"/>
-                <MenuItem Header="_Remove" Click="Remove_Click" Visibility="{Binding Visibility}"/>
+            <MenuItem Header="_Version" Visibility="{Binding Visibility}">
+                <MenuItem Header="_New" Click="New_Click" />
+                <MenuItem Header="_New from DCR" Click="NewFromDCR_Click" />
+                <MenuItem Header="_Save" Click="Save_Click"/>
+                <MenuItem Header="_Remove" Click="Remove_Click"/>
             </MenuItem>
             <MenuItem Header="_Tool" Visibility="{Binding Visibility}">
                 <MenuItem Header="_Upload document" Click="UploadDocument_Click"/>

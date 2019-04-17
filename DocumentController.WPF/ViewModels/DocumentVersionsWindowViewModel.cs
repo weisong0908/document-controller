@@ -16,6 +16,7 @@ namespace DocumentController.WPF.ViewModels
     {
         private readonly IDocumentVersionService documentVersionService;
         private readonly IAdminUserService adminUserService;
+        private readonly IChangeRequestService changeRequestService;
         private readonly IFileHelper fileHelper;
         private readonly IWindowHelper windowHelper;
         private IMapper mapper;
@@ -54,10 +55,11 @@ namespace DocumentController.WPF.ViewModels
         public string IsReadOnly { get { return (IsAdmin) ? "False" : "True"; } }
         public string IsEnabled { get { return (IsAdmin) ? "True" : "False"; } }
 
-        public DocumentVersionsWindowViewModel(IDocumentVersionService documentVersionService, IAdminUserService adminUserService, IFileHelper fileHelper, IWindowHelper windowHelper, IMapper mapper)
+        public DocumentVersionsWindowViewModel(IDocumentVersionService documentVersionService, IAdminUserService adminUserService, IChangeRequestService changeRequestService, IFileHelper fileHelper, IWindowHelper windowHelper, IMapper mapper)
         {
             this.documentVersionService = documentVersionService;
             this.adminUserService = adminUserService;
+            this.changeRequestService = changeRequestService;
             this.fileHelper = fileHelper;
             this.windowHelper = windowHelper;
             this.mapper = mapper;
@@ -153,6 +155,11 @@ namespace DocumentController.WPF.ViewModels
                 return;
 
             SelectedDocumentVersion.Location_Editable = filePath;
+        }
+
+        public void OnDocumentChangeRequested()
+        {
+            changeRequestService.ReadDcrForm(@"C:\Users\weisong.teng\Desktop\Document Change Request sample.pdf");
         }
 
         private bool ValidateDocumentVersionInput()
