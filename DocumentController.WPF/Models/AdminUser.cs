@@ -10,5 +10,6 @@ namespace DocumentController.WPF.Models
     {
         public int Id { get; set; }
         public string Username { get; set; }
+        public string IsAdmin { get; set; }
     }
 }

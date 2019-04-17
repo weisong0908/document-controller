@@ -23,7 +23,7 @@ namespace DocumentController.WPF.Services
         public async Task<bool> IsAdmin(string username)
         {
             dbConnection.Open();
-            command = new OleDbCommand("SELECT ID, Username from AdminUsers", dbConnection);
+            command = new OleDbCommand("SELECT * from AdminUsers", dbConnection);
 
             dataReader = command.ExecuteReader();
 
@@ -34,19 +34,20 @@ namespace DocumentController.WPF.Services
                 adminUsers.Add(new AdminUser()
                 {
                     Id = int.Parse(dataReader["ID"].ToString()),
-                    Username = dataReader["Username"].ToString()
+                    Username = dataReader["Username"].ToString(),
+                    IsAdmin = dataReader["IsAdmin"].ToString()
                 });
             }
 
             dataReader.Close();
             dbConnection.Close();
 
-            var usernames = adminUsers.Select(au => au.Username.ToLower()).ToList();
+            var result = adminUsers.SingleOrDefault(au => au.Username.ToLower() == username.ToLower() && au.IsAdmin.ToLower() == "true");
 
-            if (usernames.Contains(username.ToLower()))
-                return true;
+            if (result == null)
+                return false;
 
-            return false;
+            return true;
         }
     }
 }
