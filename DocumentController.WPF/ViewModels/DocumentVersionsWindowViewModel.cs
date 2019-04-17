@@ -16,7 +16,7 @@ namespace DocumentController.WPF.ViewModels
     {
         private readonly IDocumentVersionService documentVersionService;
         private readonly IAdminUserService adminUserService;
-        private readonly IChangeRequestService changeRequestService;
+        private readonly IDocumentChangeRequestService changeRequestService;
         private readonly IFileHelper fileHelper;
         private readonly IWindowHelper windowHelper;
         private IMapper mapper;
@@ -55,7 +55,7 @@ namespace DocumentController.WPF.ViewModels
         public string IsReadOnly { get { return (IsAdmin) ? "False" : "True"; } }
         public string IsEnabled { get { return (IsAdmin) ? "True" : "False"; } }
 
-        public DocumentVersionsWindowViewModel(IDocumentVersionService documentVersionService, IAdminUserService adminUserService, IChangeRequestService changeRequestService, IFileHelper fileHelper, IWindowHelper windowHelper, IMapper mapper)
+        public DocumentVersionsWindowViewModel(IDocumentVersionService documentVersionService, IAdminUserService adminUserService, IDocumentChangeRequestService changeRequestService, IFileHelper fileHelper, IWindowHelper windowHelper, IMapper mapper)
         {
             this.documentVersionService = documentVersionService;
             this.adminUserService = adminUserService;
@@ -116,7 +116,6 @@ namespace DocumentController.WPF.ViewModels
                         windowHelper.Alert("Please update again", "Opps, something went wrong");
                 }
 
-                //SelectedDocumentVersion.Id = await documentVersionService.GetDocumentVersionId(response as DocumentVersion);
                 SelectedDocumentVersion.Id = (response as DocumentVersion).Id;
 
                 var documentVersions = mapper.Map<List<DocumentVersionViewModel>>((await documentVersionService.GetAllVersionsByDocumentId(_selectedDocument.Id)).OrderByDescending(dv => dv.EffectiveDate));
@@ -163,7 +162,21 @@ namespace DocumentController.WPF.ViewModels
 
         public void OnDocumentChangeRequested()
         {
-            changeRequestService.ReadDcrForm(@"C:\Users\weisong.teng\Desktop\Document Change Request sample.pdf");
+            var dcrFormPath = fileHelper.GetFilePath(FileType.PDF);
+            var documentChangeRequest = changeRequestService.ReadDcrForm(dcrFormPath);
+            if (documentChangeRequest == null)
+                return;
+
+            CreateNewDocumentVersion();
+
+            SelectedDocumentVersion.DescriptionOfChange = documentChangeRequest.DescriptionOfChange;
+            var effectiveDate = new DateTime();
+            if (DateTime.TryParse(documentChangeRequest.RevisedEffectiveDate, out effectiveDate))
+                SelectedDocumentVersion.EffectiveDate = effectiveDate;
+            SelectedDocumentVersion.PurposeOfChange = documentChangeRequest.PurposeOfChange;
+            SelectedDocumentVersion.Requestor = documentChangeRequest.RequestorName;
+            SelectedDocumentVersion.VersionNumber = documentChangeRequest.RevisedVersionNumber;
+            SelectedDocumentVersion.Remarks = documentChangeRequest.Remarks;
         }
 
         private bool ValidateDocumentVersionInput()

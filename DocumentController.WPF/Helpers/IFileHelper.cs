@@ -6,7 +6,7 @@ namespace DocumentController.WPF.Helpers
 {
     public interface IFileHelper
     {
-        string GetDocumentLocation(DocumentViewModel document);
+        string CalculateDocumentLocation(DocumentViewModel document);
 
         void GoToFile(DocumentViewModel document);
 

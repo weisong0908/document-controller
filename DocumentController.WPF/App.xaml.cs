@@ -18,7 +18,7 @@ namespace DocumentController.WPF
     public partial class App : Application
     {
         public string ApiEndPointBaseAddress { get; } = @"http://documentcontroller.weisong.me/api/";
-        private string _databaseLocation = @"\\csing.navitas.local\shared\Documents\Quality Assurance - Shared\Document Control\Controlled Document Master List.mdb";
+        private string _databaseLocation = @"\\csing.navitas.local\shared\Documents\Quality Assurance - Shared\Document Control\Controlled Document Master List - Copy.mdb";
         public string ConnectionString { get { return $@"Provider=Microsoft.Jet.OLEDB.4.0;Data Source={_databaseLocation};Persist Security Info=False;Jet OLEDB:Database Password=1234;"; } }
         public string SharedDrive { get; set; } = @"\\csing.navitas.local\shared\Documents\";
         public string ArchivedFolder { get; set; } = @"\\csing.navitas.local\shared\Documents\Quality Assurance\#QA & COMPLIANCE Dept Functions#\Controlled Document\";
@@ -26,7 +26,7 @@ namespace DocumentController.WPF
         public IDocumentService DocumentService;
         public IDocumentVersionService DocumentVersionService;
         public IAdminUserService AdminUserService;
-        public IChangeRequestService ChangeRequestService;
+        public IDocumentChangeRequestService ChangeRequestService;
         public IFileHelper FileHelper;
         public IWindowHelper WindowHelper;
         public IMapper Mapper;
@@ -36,7 +36,7 @@ namespace DocumentController.WPF
             DocumentService = new LocalDocumentService();
             DocumentVersionService = new LocalDocumentVersionService();
             AdminUserService = new LocalAdminUserService();
-            ChangeRequestService = new ChangeRequestService();
+            ChangeRequestService = new DocumentChangeRequestService();
             FileHelper = new FileHelper(_databaseLocation);
             WindowHelper = new WindowHelper();
             Mapper = new MapperConfiguration(c => c.AddProfile<MappingProfile>()).CreateMapper();

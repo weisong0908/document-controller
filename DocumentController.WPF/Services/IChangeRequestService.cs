@@ -1,7 +1,9 @@
-﻿namespace DocumentController.WPF.Services
+﻿using DocumentController.WPF.Models;
+
+namespace DocumentController.WPF.Services
 {
-    public interface IChangeRequestService
+    public interface IDocumentChangeRequestService
     {
-        void ReadDcrForm(string dcrFormPath);
+        DocumentChangeRequest ReadDcrForm(string dcrFormPath);
     }
 }

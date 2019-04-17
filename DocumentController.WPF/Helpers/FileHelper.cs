@@ -27,7 +27,7 @@ namespace DocumentController.WPF.Helpers
             this.databaseLocation = databaseLocation;
         }
 
-        public string GetDocumentLocation(DocumentViewModel document)
+        public string CalculateDocumentLocation(DocumentViewModel document)
         {
             string sharedDrive = (System.Windows.Application.Current as App).SharedDrive;
             string mainFolder = "";

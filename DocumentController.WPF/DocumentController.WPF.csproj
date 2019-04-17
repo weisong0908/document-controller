@@ -147,13 +147,14 @@
     <Compile Include="Mapping\MappingProfile.cs" />
     <Compile Include="Helpers\FileType.cs" />
     <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\DocumentChangeRequest.cs" />
     <Compile Include="Models\DocumentStatus.cs" />
     <Compile Include="Models\DocumentType.cs" />
     <Compile Include="Models\DocumentVersion.cs" />
     <Compile Include="Models\Function.cs" />
     <Compile Include="Models\Progress.cs" />
     <Compile Include="Models\AdminUser.cs" />
-    <Compile Include="Services\ChangeRequestService.cs" />
+    <Compile Include="Services\DocumentChangeRequestService.cs" />
     <Compile Include="Services\CloudDocumentService.cs" />
     <Compile Include="Services\CloudDocumentVersionService.cs" />
     <Compile Include="Services\FakeDocumentService.cs" />
