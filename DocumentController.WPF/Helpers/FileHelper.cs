@@ -225,6 +225,21 @@ namespace DocumentController.WPF.Helpers
             }
         }
 
+        public string SaveFile(string filename)
+        {
+            using (var saveDialog = new SaveFileDialog())
+            {
+                saveDialog.Title = "Save New DCR";
+                saveDialog.FileName = filename;
+                saveDialog.Filter = "PDF files (*.PDF)|*.PDF";
+
+                if (saveDialog.ShowDialog() == DialogResult.OK)
+                    return saveDialog.FileName;
+            }
+
+            return string.Empty;
+        }
+
         public void BackUpDatabase()
         {
             var now = DateTime.Now;

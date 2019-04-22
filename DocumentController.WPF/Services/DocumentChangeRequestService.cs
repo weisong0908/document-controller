@@ -8,6 +8,9 @@ using iText.Forms;
 using iText.Forms.Fields;
 using DocumentController.WPF.Models;
 using System.IO;
+using System.Diagnostics;
+using DocumentController.WPF.ViewModels;
+using iText.Kernel.Font;
 
 namespace DocumentController.WPF.Services
 {
@@ -52,6 +55,26 @@ namespace DocumentController.WPF.Services
             pdfDocument.Close();
 
             return documentChangeRequest;
+        }
+
+        public void WriteDcrForm(string dcrFormTemplatePath, string dcrFormDestinationPath, DocumentViewModel currentDocument)
+        {
+            pdfDocument = new PdfDocument(new PdfReader(dcrFormTemplatePath), new PdfWriter(dcrFormDestinationPath));
+            var dcrForm = PdfAcroForm.GetAcroForm(pdfDocument, createIfNotExist: true);
+
+            dcrForm.SetDefaultAppearance("true");
+            dcrForm.GetField("Request date").SetValue(DateTime.Today.ToShortDateString());
+            dcrForm.GetField("Requestor name").SetValue(Environment.UserName);
+            dcrForm.GetField("Current document title").SetValue(currentDocument.Title);
+            dcrForm.GetField("Current document number").SetValue(currentDocument.DocumentNumber);
+            dcrForm.GetField("Revised document title").SetValue(currentDocument.Title);
+            dcrForm.GetField("Revised document number").SetValue(currentDocument.DocumentNumber);
+            dcrForm.GetField("Current version number").SetValue(currentDocument.VersionNumber);
+            dcrForm.GetField("Current effective date").SetValue(currentDocument.EffectiveDate.Value.ToShortDateString());
+
+            pdfDocument.Close();
+
+            Process.Start(dcrFormDestinationPath);
         }
     }
 }

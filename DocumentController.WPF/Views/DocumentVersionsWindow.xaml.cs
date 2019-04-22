@@ -68,7 +68,12 @@ namespace DocumentController.WPF.Views
 
         private void NewFromDCR_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.OnDocumentChangeRequested();
+            ViewModel.OnImportDocumentChangeRequest();
+        }
+
+        private void NewVersionRequest_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.OnCreateNewDocumentChangeRequested();
         }
     }
 }

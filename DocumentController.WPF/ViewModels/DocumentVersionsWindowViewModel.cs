@@ -160,7 +160,14 @@ namespace DocumentController.WPF.ViewModels
             SelectedDocumentVersion.Location_Editable = filePath;
         }
 
-        public void OnDocumentChangeRequested()
+        public void OnCreateNewDocumentChangeRequested()
+        {
+            var filename = fileHelper.SaveFile($"DCR - {_selectedDocument.Title} - {DateTime.Today.ToString("yyyy-MM-dd")}");
+
+            changeRequestService.WriteDcrForm(@"C:\Users\weisong.teng\Desktop\Document Change Request - V4.pdf", filename, SelectedDocument);
+        }
+
+        public void OnImportDocumentChangeRequest()
         {
             var dcrFormPath = fileHelper.GetFilePath(FileType.PDF);
             var documentChangeRequest = changeRequestService.ReadDcrForm(dcrFormPath);

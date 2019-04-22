@@ -16,6 +16,8 @@ namespace DocumentController.WPF.Helpers
 
         string GetFilePath(FileType fileType);
 
+        string SaveFile(string filename);
+
         void BackUpDatabase();
     }
 }
