@@ -73,7 +73,7 @@ namespace DocumentController.WPF.Views
 
         private void NewVersionRequest_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.OnCreateNewDocumentChangeRequested();
+            ViewModel.OnCreateNewDocumentChangeRequest();
         }
     }
 }

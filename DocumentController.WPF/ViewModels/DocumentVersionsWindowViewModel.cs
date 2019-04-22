@@ -160,7 +160,7 @@ namespace DocumentController.WPF.ViewModels
             SelectedDocumentVersion.Location_Editable = filePath;
         }
 
-        public void OnCreateNewDocumentChangeRequested()
+        public void OnCreateNewDocumentChangeRequest()
         {
             var filename = fileHelper.SaveFile($"DCR - {_selectedDocument.Title} - {DateTime.Today.ToString("yyyy-MM-dd")}");
 
