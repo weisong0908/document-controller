@@ -19,9 +19,9 @@
                 <MenuItem Header="_Rescind" Click="Rescind_Click" Visibility="{Binding Visibility}"/>
                 <MenuItem Header="_All versions" Click="EditVersion_Click"/>
             </MenuItem>
-            <MenuItem Header="_Tool" Visibility="{Binding Visibility}">
+            <!--<MenuItem Header="_Tool" Visibility="{Binding Visibility}">
                 <MenuItem Header="_Backup database" Click="DatabaseBackup_Click"/>
-            </MenuItem>
+            </MenuItem>-->
         </Menu>
         <DockPanel Grid.Row="1">
             <TextBlock DockPanel.Dock="Top" Margin="6 0" FontSize="10" Text="Search by document title or document number"/>

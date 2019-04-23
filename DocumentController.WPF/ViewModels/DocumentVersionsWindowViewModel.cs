@@ -164,6 +164,9 @@ namespace DocumentController.WPF.ViewModels
         {
             var filename = fileHelper.SaveFile($"DCR - {_selectedDocument.Title} - {DateTime.Today.ToString("yyyy-MM-dd")}");
 
+            if (string.IsNullOrWhiteSpace(filename))
+                return;
+
             changeRequestService.WriteDcrForm(@"C:\Users\weisong.teng\Desktop\Document Change Request - V4.pdf", filename, SelectedDocument);
         }
 
@@ -171,6 +174,7 @@ namespace DocumentController.WPF.ViewModels
         {
             var dcrFormPath = fileHelper.GetFilePath(FileType.PDF);
             var documentChangeRequest = changeRequestService.ReadDcrForm(dcrFormPath);
+
             if (documentChangeRequest == null)
                 return;
 
