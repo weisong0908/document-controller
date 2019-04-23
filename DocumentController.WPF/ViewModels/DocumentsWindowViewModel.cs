@@ -115,7 +115,7 @@ namespace DocumentController.WPF.ViewModels
             if (_selectedDocument == null)
                 return;
 
-            if(windowHelper.Confirmation($"Are you sure you want to rescind {_selectedDocument.Title}?", "Rescind document"))
+            if (windowHelper.Confirmation($"Are you sure you want to rescind {_selectedDocument.Title}?", "Rescind document"))
             {
                 documentService.RemoveDocument(mapper.Map<Document>(_selectedDocument));
                 FilteredDocuments.Remove(_selectedDocument);
